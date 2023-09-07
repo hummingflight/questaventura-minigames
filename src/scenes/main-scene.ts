@@ -1,5 +1,5 @@
 import { EndlessLoopVImages } from '../objects/endlessLoopVImages';
-import { Redhat } from '../objects/redhat';
+import { init_gamebox } from '../utilities/documentUtils';
 
 export class MainScene extends Phaser.Scene {
 
@@ -15,6 +15,9 @@ export class MainScene extends Phaser.Scene {
   }
 
   create(): void {
+    
+    this.prepareGameDivContainer();   
+    
     const particles = this.add.particles('redParticle');
 
     const emitter = particles.createEmitter({
@@ -36,6 +39,15 @@ export class MainScene extends Phaser.Scene {
     this.cameras.main.scrollY = this._y;
     this._m_endlessLoopVImageTest.y = this._y;
     this._m_endlessLoopVImageTest.updateImagesPositions();
+  }
+
+  private prepareGameDivContainer()
+  {
+    // The scale mode should fit the game's container.
+    this.game.scale.scaleMode = Phaser.Scale.ScaleModes.FIT;
+
+    // initialize the game's container.
+    init_gamebox();
   }
 
   private _m_endlessLoopVImageTest: EndlessLoopVImages;

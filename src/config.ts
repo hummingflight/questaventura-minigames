@@ -1,14 +1,16 @@
 import { MainScene } from './scenes/main-scene';
 
 export const GameConfig: Phaser.Types.Core.GameConfig = {
-  title: 'Webpack-Boilerplate',
-  url: 'https://github.com/digitsensitive/phaser3-typescript',
-  version: '2.0',
+  title: 'questaventura-minigame',
+  url: 'https://hummingflight.com',
+  version: '1.0',
   width: 1080,
-  height: 1200,
+  height: 1920,
   backgroundColor: 0x3a404d,
-  type: Phaser.AUTO,
-  parent: 'game',
+  type: Phaser.WEBGL,
+  parent: 'phaser-game',
+  autoCenter: Phaser.Scale.CENTER_BOTH,
+  mode: Phaser.Scale.FIT,
   physics: {
     default: 'arcade',
     arcade: {

@@ -13,8 +13,7 @@ QuestAventura minigames.
 1. `npm i`
 
 ## Run and Debug
-1. `npx webpack build`
-2. `npx webpack serve`
-3. Run Debugger: Launch Chrome against localhost
+1. `npm run dev`
+2. Run Debugger: Launch Chrome against localhost
 
 ## Common Problems

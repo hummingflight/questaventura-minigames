@@ -1,15 +1,16 @@
+import { EndlessLoopVImages } from '../objects/endlessLoopVImages';
 import { Redhat } from '../objects/redhat';
 
 export class MainScene extends Phaser.Scene {
-  private myRedhat: Redhat;
+
+  private _y: number = 0;
 
   constructor() {
     super({ key: 'MainScene' });
   }
 
   preload(): void {
-    this.load.image('redhat', '../assets/redhat.png');
-    this.load.image('redParticle', '../assets/red.png');
+    this.load.image('forest-bg-1', '../assets/images/forest-bg-1.png');
     
   }
 
@@ -22,13 +23,20 @@ export class MainScene extends Phaser.Scene {
       blendMode: 'ADD'
     });
 
-    this.myRedhat = new Redhat({
-      scene: this,
-      x: 400,
-      y: 300,
-      texture: 'redhat'
-    });
-
-    emitter.startFollow(this.myRedhat);
+    this._m_endlessLoopVImageTest = new EndlessLoopVImages(
+      this,
+      'forest-bg-1',
+      1920
+    );
   }
+
+  update(time: number, delta: number): void
+  {
+    this._y += 100 * delta * 0.001;
+    this.cameras.main.scrollY = this._y;
+    this._m_endlessLoopVImageTest.y = this._y;
+    this._m_endlessLoopVImageTest.updateImagesPositions();
+  }
+
+  private _m_endlessLoopVImageTest: EndlessLoopVImages;
 }

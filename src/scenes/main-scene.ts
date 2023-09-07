@@ -26,9 +26,21 @@ export class MainScene extends Phaser.Scene {
       blendMode: 'ADD'
     });
 
-    this._m_endlessLoopVImageTest = new EndlessLoopVImages(
+    this._m_cloudsEndless = new EndlessLoopVImages(
       this,
-      'forest-bg-1',
+      'clouds',
+      1920
+    );
+
+    this._m_sidesEndless = new EndlessLoopVImages(
+      this,
+      'sides',
+      1920
+    );
+
+    this._m_decorEndless = new EndlessLoopVImages(
+      this,
+      'decor',
       1920
     );
   }
@@ -37,8 +49,14 @@ export class MainScene extends Phaser.Scene {
   {
     this._y += 100 * delta * 0.001;
     this.cameras.main.scrollY = this._y;
-    this._m_endlessLoopVImageTest.y = this._y;
-    this._m_endlessLoopVImageTest.updateImagesPositions();
+    this._m_sidesEndless.y = this._y;
+    this._m_sidesEndless.updateImagesPositions();
+
+    this._m_decorEndless.y = this._y;
+    this._m_decorEndless.updateImagesPositions();
+
+    this._m_cloudsEndless.y = this._y;
+    this._m_cloudsEndless.updateImagesPositions();
   }
 
   private prepareGameDivContainer()
@@ -50,5 +68,7 @@ export class MainScene extends Phaser.Scene {
     init_gamebox();
   }
 
-  private _m_endlessLoopVImageTest: EndlessLoopVImages;
+  private _m_sidesEndless: EndlessLoopVImages;
+  private _m_decorEndless: EndlessLoopVImages;
+  private _m_cloudsEndless: EndlessLoopVImages;
 }

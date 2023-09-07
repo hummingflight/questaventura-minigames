@@ -1,3 +1,5 @@
+import { BootScene } from './scenes/boot-scene';
+import { LoaderScene } from './scenes/loader-scene';
 import { MainScene } from './scenes/main-scene';
 
 export const GameConfig: Phaser.Types.Core.GameConfig = {
@@ -17,5 +19,5 @@ export const GameConfig: Phaser.Types.Core.GameConfig = {
       gravity: { y: 200 }
     }
   },
-  scene: [MainScene]
+  scene: [BootScene, LoaderScene, MainScene]
 };

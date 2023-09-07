@@ -1,0 +1,25 @@
+{
+  "gameName": "Forest",
+  "loader" : 
+  {
+    "assetFolderPath": "../assets/",
+    "images": [
+      {
+        "key": "sides",
+        "path": "images/sides.png"
+      },
+      {
+        "key": "ground_start",
+        "path": "images/ground_start.png"
+      },
+      {
+        "key": "decor",
+        "path": "images/decor.png"
+      },
+      {
+        "key": "clouds",
+        "path": "images/clouds.png"
+      }
+    ]
+  }
+}

@@ -4,17 +4,20 @@ export class EndlessLoopVImages extends Phaser.GameObjects.Container
    * Constructor.
    * 
    * @param scene Phaser scene.
-   * @param textureKey The key of the enless texture.
+   * @param textureKey The key of the endless texture.
    * @param canvasHeight The height of the canvas.
+   * @param depth The depth of the endless texture.
    */
   constructor(
     scene: Phaser.Scene,
     textureKey: string,
-    canvasHeight: number
+    canvasHeight: number,
+    depth: number
   )
   {
     super(scene, 0, 0);
 
+    this._m_depth = depth;
     this._m_canvasHeight = canvasHeight;
     this.initImages(scene, textureKey);
     scene.add.existing(this);
@@ -27,7 +30,7 @@ export class EndlessLoopVImages extends Phaser.GameObjects.Container
   public updateImagesPositions()
   {
     this._m_imagesContainer.setY(
-      -this._m_imageHeight + (this.y % this._m_imageHeight)
+      -this._m_imageHeight + ((this.y * (1.0 - this._m_depth)) % this._m_imageHeight)
     );
   }
 
@@ -84,4 +87,9 @@ export class EndlessLoopVImages extends Phaser.GameObjects.Container
    * The number of images that this EndlessLoopVImages instance has.
    */
   private _m_numImages: number;
+
+  /**
+   * the depth of the image.
+   */
+  private _m_depth: number;
 }

@@ -21,5 +21,23 @@
         "path": "images/clouds.png"
       }
     ]
+  },
+
+  "endlessBackground": 
+  {
+    "layers" : [
+      {
+        "imageKey" : "clouds",
+        "depth": 0.7
+      },
+      {
+        "imageKey" : "sides",
+        "depth": 0
+      },
+      {
+        "imageKey" : "decor",
+        "depth": 0
+      }
+    ]
   }
 }

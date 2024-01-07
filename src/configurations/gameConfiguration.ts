@@ -1,5 +1,7 @@
 import { EndlessBackgroundConfiguration } from "./endlessBackground/endlessBackgroundConfiguration";
+import { GameViewConfiguration } from "./gameViewConfiguration/gameViewConfiguration";
 import { LoaderConfiguration } from "./loaderConfiguration";
+import { PadsManagerConfiguration } from "./padsManager/padsManagerConfiguration";
 
 export class GameConfiguration
 {
@@ -9,6 +11,11 @@ export class GameConfiguration
   public gameName: string;
 
   /**
+   * The configuration for the game view.
+   */
+  public gameView: GameViewConfiguration;
+  
+  /**
    * Describes the assets to load for this game.
    */
   public loader: LoaderConfiguration;
@@ -17,4 +24,9 @@ export class GameConfiguration
    * The configuration of the endless bakcground.
    */
   public endlessBackground: EndlessBackgroundConfiguration;
+
+  /**
+   * The configuration of the pads manager.
+   */
+  public padsManager: PadsManagerConfiguration
 }

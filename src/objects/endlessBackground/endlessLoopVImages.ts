@@ -30,7 +30,7 @@ export class EndlessLoopVImages extends Phaser.GameObjects.Container
   public updateImagesPositions()
   {
     this._m_imagesContainer.setY(
-      -this._m_imageHeight + ((this.y * (1.0 - this._m_depth)) % this._m_imageHeight)
+      -this._m_imageHeight - ((this.y * (1.0 - this._m_depth)) % this._m_imageHeight)
     );
   }
 

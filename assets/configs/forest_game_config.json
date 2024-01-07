@@ -1,5 +1,11 @@
 {
   "gameName": "Forest",
+  
+  "gameView": {
+    "canvasHeight": 1920,
+    "canvasWidth": 1080
+  },
+  
   "loader" : 
   {
     "assetFolderPath": "../assets/",
@@ -19,6 +25,14 @@
       {
         "key": "clouds",
         "path": "images/clouds.png"
+      },
+      {
+        "key": "pad1",
+        "path": "images/Pad_02_1.png"
+      },
+      {
+        "key": "pad2",
+        "path": "images/Pad_02_2.png"
       }
     ]
   },
@@ -37,6 +51,52 @@
       {
         "imageKey" : "decor",
         "depth": 0
+      }
+    ]
+  },
+
+  "padsManager":
+  {
+    "inBetweenVSpace": 350,
+
+    "pads": [
+      {
+        "key": "pad1",
+        "imageKey": "pad1",
+        "scaleY": 0.3,
+        "scaleX": 0.3
+      },
+      {
+        "key": "pad2",
+        "imageKey": "pad2",
+        "scaleY": 0.3,
+        "scaleX": 0.3
+      }
+    ],
+
+    "padsChance": [
+      {
+        "key": "pad1",
+        "chance": 0.8
+      },
+      {
+        "key": "pad2",
+        "chance" : 0.2
+      }
+    ],
+
+    "padsRows": [
+      {
+        "numPads": 1,
+        "chance": 0.3
+      },
+      {
+        "numPads": 2,
+        "chance": 0.4
+      },
+      {
+        "numPads": 3,
+        "chance": 0.3
       }
     ]
   }

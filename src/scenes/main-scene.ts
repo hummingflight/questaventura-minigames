@@ -23,6 +23,9 @@ export class MainScene extends Phaser.Scene {
 
     this.prepareGameDivContainer();   
     
+    this._halfHeight = gameConfiguration.gameView.canvasHeight / 2;
+    this._y = this._halfHeight;
+
     this._endlessBackground = new EndlessBackground(this);
     this._endlessBackground.init(
       gameConfiguration.endlessBackground,
@@ -38,34 +41,40 @@ export class MainScene extends Phaser.Scene {
       this
     );
 
-    let player = new Player(
+    this._player = new Player(
       this,
       gameConfiguration.gameView.canvasWidth / 2,
       gameConfiguration.gameView.canvasHeight / 2,
       gameConfiguration.player.spriteKey,
     );
-    this.add.existing(player);
-    this.physics.add.existing(player);
-    player.init(gameConfiguration.player);
+    this._player.setOrigin(0.5, 0.5);
+    this.add.existing(this._player);
+    this.physics.add.existing(this._player);
+    this._player.init(gameConfiguration.player);
 
     this._inputManager = new InputManager();
-    this._inputManager.init(this, player);
+    this._inputManager.init(this, this._player);
 
     this._collisionManager = new CollisionManager();
     this._collisionManager.init(
       this,
-      player,
+      this._player,
       padStaticGroup
     );
   }
 
   update(time: number, delta: number): void
-  {
-    this._y -= 100 * delta * 0.001;
-    this.cameras.main.scrollY = this._y;
-    this._endlessBackground.setY(this._y);
+  {    
+    if (this._player.y < this._y)
+    {
+      this._y = this._player.y;
+    }
+      
+    let scrollY = this._y - this._halfHeight;
+    this.cameras.main.scrollY = scrollY;
+    this._endlessBackground.setY(scrollY);
     this._endlessBackground.update();
-    this._padsManager.update(this._y);
+    this._padsManager.update(scrollY);
     this._inputManager.update();
   }
 
@@ -79,8 +88,10 @@ export class MainScene extends Phaser.Scene {
   }
 
   private _y: number = 0;
+  private _halfHeight: number = 0;
   private _endlessBackground: EndlessBackground;
   private _padsManager: PadsManager;
   private _inputManager: InputManager;
   private _collisionManager: CollisionManager;
+  private _player: Player;
 }

@@ -1,6 +1,9 @@
 import { GameConfiguration } from '../configurations/gameConfiguration';
+import { CollisionManager } from '../objects/collisionManager/collisionManager';
 import { EndlessBackground } from '../objects/endlessBackground/endlessBackground';
+import { InputManager } from '../objects/inputManager/inputManager';
 import { PadsManager } from '../objects/padsManager/padsManager';
+import { Player } from '../objects/player/player';
 import { init_gamebox } from '../utilities/documentUtils';
 
 export class MainScene extends Phaser.Scene {
@@ -26,11 +29,33 @@ export class MainScene extends Phaser.Scene {
       1920
     );
 
+    let padStaticGroup = this.physics.add.staticGroup();
     this._padsManager = new PadsManager();
     this._padsManager.init(
       gameConfiguration.padsManager,
       gameConfiguration.gameView,
+      padStaticGroup,
       this
+    );
+
+    let player = new Player(
+      this,
+      gameConfiguration.gameView.canvasWidth / 2,
+      gameConfiguration.gameView.canvasHeight / 2,
+      gameConfiguration.player.spriteKey,
+    );
+    this.add.existing(player);
+    this.physics.add.existing(player);
+    player.init(gameConfiguration.player);
+
+    this._inputManager = new InputManager();
+    this._inputManager.init(this, player);
+
+    this._collisionManager = new CollisionManager();
+    this._collisionManager.init(
+      this,
+      player,
+      padStaticGroup
     );
   }
 
@@ -41,6 +66,7 @@ export class MainScene extends Phaser.Scene {
     this._endlessBackground.setY(this._y);
     this._endlessBackground.update();
     this._padsManager.update(this._y);
+    this._inputManager.update();
   }
 
   private prepareGameDivContainer()
@@ -55,4 +81,6 @@ export class MainScene extends Phaser.Scene {
   private _y: number = 0;
   private _endlessBackground: EndlessBackground;
   private _padsManager: PadsManager;
+  private _inputManager: InputManager;
+  private _collisionManager: CollisionManager;
 }

@@ -27,14 +27,19 @@ export class PadsManager
   private idlePads: Array<Pad>;
 
   /**
-   * The scene of the game.
+   * The last pad height.
+   */
+  private lastPadHeight: number;
+
+  /**
+   * The scene of the pads manager.
    */
   private scene: Phaser.Scene;
 
   /**
-   * The last pad height.
+   * The physics static group of the pads.
    */
-  private lastPadHeight: number;
+  private physicsStaticGroup: Phaser.Physics.Arcade.StaticGroup;
 
   /**
    * Initializes the pads manager.
@@ -45,15 +50,17 @@ export class PadsManager
   init(
     configuration: PadsManagerConfiguration,
     gameViewConfiguration: GameViewConfiguration,
+    physicsStaticGroup: Phaser.Physics.Arcade.StaticGroup,
     scene: Phaser.Scene
   )
   { 
     this.configuration = configuration;
     this.gameViewConfiguration = gameViewConfiguration;
-    this.scene = scene;
     this.lastPadHeight = gameViewConfiguration.canvasHeight;
     this.inGamePads = new Array<Pad>();
     this.idlePads = new Array<Pad>();
+    this.physicsStaticGroup = physicsStaticGroup;
+    this.scene = scene;
   }
 
   update(currentViewTopValue: number)
@@ -122,7 +129,9 @@ export class PadsManager
       {
         this.inGamePads.splice(i, 1);
         this.idlePads.push(pad);
+        
         pad.setVisible(false);
+        pad.disableBody(true, true);
       }
     }
   }
@@ -141,8 +150,7 @@ export class PadsManager
     {
       console.error("No pad configuration found");
       return;
-    }
-      
+    }      
 
     if (this.idlePads.length == 0)
     {
@@ -151,6 +159,7 @@ export class PadsManager
         yPosition,
         padConfiguration.key
       );
+
       this.inGamePads.push(pad);
     }
     else
@@ -163,6 +172,9 @@ export class PadsManager
 
       pad.setTexture(padConfiguration.key);
       pad.setVisible(true);
+      pad.enableBody(true, pad.x, pad.y, true, true);
+      pad.refreshBody();
+
       this.inGamePads.push(pad); 
     }
   }
@@ -190,12 +202,16 @@ export class PadsManager
     );
 
     this.scene.add.existing(pad);
+    this.physicsStaticGroup.add(pad);
 
     pad.setOrigin(0.5, 0);
     pad.setScale(
       this.configuration.pads[0].scaleX,
       this.configuration.pads[0].scaleY
     );
+
+    pad.body.checkCollision.down = false;
+    pad.refreshBody();
 
     return pad;
   }

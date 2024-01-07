@@ -2,6 +2,7 @@ import { EndlessBackgroundConfiguration } from "./endlessBackground/endlessBackg
 import { GameViewConfiguration } from "./gameViewConfiguration/gameViewConfiguration";
 import { LoaderConfiguration } from "./loaderConfiguration";
 import { PadsManagerConfiguration } from "./padsManager/padsManagerConfiguration";
+import { PlayerConfiguration } from "./player/playerConfiguration";
 
 export class GameConfiguration
 {
@@ -28,5 +29,10 @@ export class GameConfiguration
   /**
    * The configuration of the pads manager.
    */
-  public padsManager: PadsManagerConfiguration
+  public padsManager: PadsManagerConfiguration;
+
+  /**
+   * The configuration of the player.
+   */
+  public player: PlayerConfiguration;
 }

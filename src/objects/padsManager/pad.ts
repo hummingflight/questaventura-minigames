@@ -1,4 +1,4 @@
-export class Pad extends Phaser.GameObjects.Sprite
+export class Pad extends Phaser.Physics.Arcade.Sprite
 {
   public isOutOfBounds(
     currentViewTopValue: number,

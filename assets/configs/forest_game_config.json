@@ -5,6 +5,14 @@
     "canvasHeight": 1920,
     "canvasWidth": 1080
   },
+
+  "player": {
+    "spriteKey": "player",
+    "scaleX": 0.2,
+    "scaleY": 0.2,
+    "jumpVelocity": 600,
+    "movementVelocity": 200
+  },
   
   "loader" : 
   {
@@ -33,6 +41,10 @@
       {
         "key": "pad2",
         "path": "images/Pad_02_2.png"
+      },
+      {
+        "key": "player",
+        "path": "images/player.png"
       }
     ]
   },

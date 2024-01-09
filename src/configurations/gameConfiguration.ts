@@ -1,8 +1,9 @@
 import { EndlessBackgroundConfiguration } from "./endlessBackground/endlessBackgroundConfiguration";
 import { GameViewConfiguration } from "./gameViewConfiguration/gameViewConfiguration";
-import { LoaderConfiguration } from "./loaderConfiguration";
+import { LoaderConfiguration } from "./loader/loaderConfiguration";
 import { PadsManagerConfiguration } from "./padsManager/padsManagerConfiguration";
 import { PlayerConfiguration } from "./player/playerConfiguration";
+import { ScoreManagerConfiguration } from "./scoreManager/scoreManagerConfiguration";
 
 export class GameConfiguration
 {
@@ -35,4 +36,9 @@ export class GameConfiguration
    * The configuration of the player.
    */
   public player: PlayerConfiguration;
+
+  /**
+   * The configuration of the score manager.
+   */
+  public scoreManager: ScoreManagerConfiguration
 }

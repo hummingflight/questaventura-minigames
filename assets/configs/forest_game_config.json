@@ -45,6 +45,22 @@
       {
         "key": "player",
         "path": "images/player.png"
+      },
+      {
+        "key": "losePopup",
+        "path": "images/lose.png"
+      },
+      {
+        "key": "winPopup",
+        "path": "images/won.png"
+      }
+    ],
+
+    "bitmapFonts": [
+      {
+        "key": "font_a",
+        "textureURL": "bitmapfonts/azo-fire.png",
+        "fontDataURL": "bitmapfonts/azo-fire.xml"
       }
     ]
   },
@@ -65,6 +81,12 @@
         "depth": 0
       }
     ]
+  },
+
+  "scoreManager":
+  {
+    "scoreToWin": 1000,
+    "pointsPerHeightUnit": 0.1
   },
 
   "padsManager":

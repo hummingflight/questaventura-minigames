@@ -1,15 +1,35 @@
 import { PlayerConfiguration } from "../../configurations/player/playerConfiguration";
-import { Pad } from "../padsManager/pad";
+import { IPlayerListener } from "./iPlayerListener";
 
 export class Player extends Phaser.Physics.Arcade.Sprite
 {
+  private canvasHeight: number;
   private playerConfiguration: PlayerConfiguration;
+  private playerListeners: IPlayerListener[];
 
-  public init(configuration: PlayerConfiguration)
+  public init(configuration: PlayerConfiguration, canvasHeight: number): void
   {
     this.playerConfiguration = configuration;
+    this.playerListeners = [];
+    this.canvasHeight = canvasHeight;
     this.setScale(configuration.scaleX, configuration.scaleY);
     this.refreshBody();
+  }
+
+  public update(cameraY: number)
+  {
+    if (this.isOutOfBounds(cameraY, this.canvasHeight))
+      this.playerListeners.forEach((listener) => listener.onPlayerDied());
+  }
+
+  /**
+   * Adds a listener to the player.
+   * 
+   * @param listener The listener to add.
+   */
+  public addPlayerListener(listener: IPlayerListener): void
+  {
+    this.playerListeners.push(listener);
   }
 
   public moveLeft()

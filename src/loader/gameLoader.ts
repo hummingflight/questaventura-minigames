@@ -1,4 +1,4 @@
-import { LoaderConfiguration } from "../configurations/loaderConfiguration";
+import { LoaderConfiguration } from "../configurations/loader/loaderConfiguration";
 
 export class GameLoader
 {
@@ -14,6 +14,16 @@ export class GameLoader
         imageLoadConfig.key,
         loaderConfig.assetFolderPath + imageLoadConfig.path
       );  
+    });
+
+    // Load Bitamp Fonts
+    loaderConfig.bitmapFonts.forEach(bitmapFontLoadConfig =>
+    {
+      loader.bitmapFont(
+        bitmapFontLoadConfig.key,
+        loaderConfig.assetFolderPath + bitmapFontLoadConfig.textureURL,
+        loaderConfig.assetFolderPath + bitmapFontLoadConfig.fontDataURL
+      );
     });
   }  
 }

@@ -1,4 +1,4 @@
-import { EndlessBackgroundConfiguration } from "./endlessBackground/endlessBackgroundConfiguration";
+import { EnviromentConfiguration } from "./enviroment/enviromentConfiguration";
 import { GameViewConfiguration } from "./gameViewConfiguration/gameViewConfiguration";
 import { LoaderConfiguration } from "./loader/loaderConfiguration";
 import { PadsManagerConfiguration } from "./padsManager/padsManagerConfiguration";
@@ -23,9 +23,9 @@ export class GameConfiguration
   public loader: LoaderConfiguration;
 
   /**
-   * The configuration of the endless bakcground.
+   * The configuration of the game enviroment.
    */
-  public endlessBackground: EndlessBackgroundConfiguration;
+  public enviroment: EnviromentConfiguration;
 
   /**
    * The configuration of the pads manager.

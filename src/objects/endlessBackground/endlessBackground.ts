@@ -1,4 +1,4 @@
-import { EndlessBackgroundConfiguration } from "../../configurations/endlessBackground/endlessBackgroundConfiguration";
+import { EndlessBackgroundConfiguration } from "../../configurations/enviroment/endlessBackgroundConfiguration";
 import { EndlessLoopVImages } from "./endlessLoopVImages";
 
 export class EndlessBackground extends Phaser.GameObjects.Group

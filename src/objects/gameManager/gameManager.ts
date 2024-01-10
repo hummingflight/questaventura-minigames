@@ -3,6 +3,7 @@ import { CollisionManager } from "../collisionManager/collisionManager";
 import { EndlessBackground } from "../endlessBackground/endlessBackground";
 import { InputManager } from "../inputManager/inputManager";
 import { PadsManager } from "../padsManager/padsManager";
+import { ParallaxBackground } from "../parallaxBackground/parallaxBackground";
 import { IPlayerListener } from "../player/iPlayerListener";
 import { Player } from "../player/player";
 import { PlayerManager } from "../player/playerManager";
@@ -25,6 +26,7 @@ export class GameManager implements IScoreManagerListener, IPlayerListener
 
   private highestY: number = 0;
   private halfHeight: number = 0;
+  private parallaxBackground: ParallaxBackground;
   private endlessBackground: EndlessBackground;
   private inputManager: InputManager;
   private scoreManager: ScoreManager;
@@ -145,9 +147,16 @@ export class GameManager implements IScoreManagerListener, IPlayerListener
 
     // Setup the Managers.
 
+    this.parallaxBackground = new ParallaxBackground();
+    this.parallaxBackground.init(
+      scene,
+      gameConfiguration.enviroment.parallaxBackgroundLayers,
+      gameConfiguration.gameView.canvasHeight
+    );
+
     this.endlessBackground = new EndlessBackground(scene);
     this.endlessBackground.init(
-      gameConfiguration.endlessBackground,
+      gameConfiguration.enviroment.endlessBackground,
       gameConfiguration.gameView.canvasHeight
     );
 

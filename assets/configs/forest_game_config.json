@@ -20,6 +20,18 @@
     "assetFolderPath": "../assets/",
     "images": [
       {
+        "key": "sky",
+        "path": "images/sky.png"
+      },
+      {
+        "key": "parallax_bg_1",
+        "path": "images/forest.png"
+      },
+      {
+        "key": "parallax_bg_2",
+        "path": "images/ground_start.png"
+      },
+      {
         "key": "sides",
         "path": "images/sides.png"
       },
@@ -66,22 +78,40 @@
     ]
   },
 
-  "endlessBackground": 
+  "enviroment":
   {
-    "layers" : [
+    "backgroundKey": "sky",
+    "parallaxBackgroundLayers": [
       {
-        "imageKey" : "clouds",
-        "depth": 0.7
-      },
-      {
-        "imageKey" : "sides",
+        "imageKey": "sky",
         "depth": 0
       },
       {
-        "imageKey" : "decor",
-        "depth": 0
+        "imageKey": "parallax_bg_1",
+        "depth": 0.5
+      },
+      {
+        "imageKey": "parallax_bg_2",
+        "depth": 0.6
       }
-    ]
+    ],
+    "endlessBackground": 
+    {
+      "layers" : [
+        {
+          "imageKey" : "clouds",
+          "depth": 0.7
+        },
+        {
+          "imageKey" : "sides",
+          "depth": 0
+        },
+        {
+          "imageKey" : "decor",
+          "depth": 0
+        }
+      ]
+    }
   },
 
   "scoreManager":

@@ -157,7 +157,7 @@ export class PadsManager
       let pad = this.createPad(
         xPosition,
         yPosition,
-        padConfiguration.key
+        padConfiguration
       );
 
       this.inGamePads.push(pad);
@@ -170,7 +170,7 @@ export class PadsManager
         yPosition
       );
 
-      pad.setTexture(padConfiguration.key);
+      pad.init(padConfiguration);
       pad.setVisible(true);
       pad.enableBody(true, pad.x, pad.y, true, true);
       pad.refreshBody();
@@ -191,28 +191,20 @@ export class PadsManager
   private createPad(
     xPosition: number,
     yPosition: number,
-    textureKey: string
+    configuration: PadConfiguration
   ): Pad
   {
     let pad = new Pad(
       this.scene,
       xPosition,
       yPosition,
-      textureKey
+      configuration.imageKey
     );
 
     this.scene.add.existing(pad);
     this.physicsStaticGroup.add(pad);
 
-    pad.setOrigin(0.5, 0);
-    pad.setScale(
-      this.configuration.pads[0].scaleX,
-      this.configuration.pads[0].scaleY
-    );
-
-    pad.body.checkCollision.down = false;
-    pad.refreshBody();
-
+    pad.init(configuration);
     return pad;
   }
 

@@ -11,7 +11,8 @@
     "scaleX": 0.2,
     "scaleY": 0.2,
     "jumpVelocity": 600,
-    "movementVelocity": 200
+    "movementVelocity": 200,
+    "numLives": 3
   },
   
   "loader" : 
@@ -98,13 +99,15 @@
         "key": "pad1",
         "imageKey": "pad1",
         "scaleY": 0.3,
-        "scaleX": 0.3
+        "scaleX": 0.3,
+        "type": "normal"
       },
       {
         "key": "pad2",
         "imageKey": "pad2",
         "scaleY": 0.3,
-        "scaleX": 0.3
+        "scaleX": 0.3,
+        "type": "dangerous"
       }
     ],
 

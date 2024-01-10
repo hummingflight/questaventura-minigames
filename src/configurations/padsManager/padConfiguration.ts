@@ -18,4 +18,9 @@ export class PadConfiguration{
    * The scale of the pad in the Y axis.
    */
   public scaleY: number;
+
+  /**
+   * The type of the pad.
+   */
+  public type: String;
 }

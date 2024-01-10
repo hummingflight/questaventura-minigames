@@ -1,3 +1,4 @@
+import { Pad } from "../padsManager/pad";
 import { Player } from "../player/player";
 
 export class CollisionManager {
@@ -16,6 +17,6 @@ export class CollisionManager {
     pad: Phaser.Physics.Arcade.Sprite
   ): void {
     let playerInstance: Player = <Player>player;
-    playerInstance.OnPadCollision();
+    playerInstance.OnPadCollision(<Pad>pad);
   }
 }

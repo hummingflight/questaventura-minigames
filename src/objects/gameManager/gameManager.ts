@@ -5,6 +5,7 @@ import { InputManager } from "../inputManager/inputManager";
 import { PadsManager } from "../padsManager/padsManager";
 import { IPlayerListener } from "../player/iPlayerListener";
 import { Player } from "../player/player";
+import { PlayerManager } from "../player/playerManager";
 import { IScoreManagerListener } from "../scoreManager/iScoreManagerListener";
 import { ScoreManager } from "../scoreManager/scoreManager";
 import { GameStatus } from "./gameStatus";
@@ -28,8 +29,8 @@ export class GameManager implements IScoreManagerListener, IPlayerListener
   private inputManager: InputManager;
   private scoreManager: ScoreManager;
   private padsManager: PadsManager;
+  private playerManager: PlayerManager;
   private collisionManager: CollisionManager;
-  private player: Player;
   private scene: Phaser.Scene;
 
   /**
@@ -77,6 +78,11 @@ export class GameManager implements IScoreManagerListener, IPlayerListener
     return this.collisionManager;
   }
 
+  public getPlayerManager(): PlayerManager
+  {
+    return this.playerManager;
+  }
+
   /**
    * Gets the Player of the game.
    * 
@@ -84,7 +90,7 @@ export class GameManager implements IScoreManagerListener, IPlayerListener
    */
   public getPlayer(): Player
   {
-    return this.player;
+    return this.playerManager.getPlayer();
   }
 
   /**
@@ -94,7 +100,7 @@ export class GameManager implements IScoreManagerListener, IPlayerListener
    */
   public getPlayerY(): number
   {
-    return this.player.y;
+    return this.playerManager.getPlayer().y;
   }
 
   /**
@@ -153,39 +159,34 @@ export class GameManager implements IScoreManagerListener, IPlayerListener
       padStaticGroup,
       scene
     );
-
-    this.player = new Player(
+    
+    this.playerManager = new PlayerManager();
+    this.playerManager.init(
       scene,
-      gameConfiguration.gameView.canvasWidth / 2,
-      gameConfiguration.gameView.canvasHeight / 2,
-      gameConfiguration.player.spriteKey,
+      gameConfiguration.player,
+      gameConfiguration.gameView
     );
 
-    this.player.setOrigin(0.5, 0.5);
-    scene.add.existing(this.player);
-    scene.physics.add.existing(this.player);
-    this.player.init(gameConfiguration.player, gameConfiguration.gameView.canvasHeight);
-
     this.inputManager = new InputManager();
-    this.inputManager.init(scene, this.player);
+    this.inputManager.init(scene, this.getPlayer());
 
     this.collisionManager = new CollisionManager();
     this.collisionManager.init(
       scene,
-      this.player,
+      this.getPlayer(),
       padStaticGroup
     );
 
     this.scoreManager = new ScoreManager();
     this.scoreManager.init(
       gameConfiguration.scoreManager,
-      this.player.y
+      this.getPlayerY()
     );
 
     // Setup the listeners.
 
     this.scoreManager.addListener(this);
-    this.player.addPlayerListener(this);
+    this.getPlayer().addPlayerListener(this);
   }
 
   public update(): void
@@ -194,13 +195,13 @@ export class GameManager implements IScoreManagerListener, IPlayerListener
       return;
 
     // Update the highest Y.
-    if (this.player.y < this.highestY)
-      this.highestY = this.player.y;
+    if (this.getPlayerY() < this.highestY)
+      this.highestY = this.getPlayerY();
     
     let scrollY = this.highestY - this.halfHeight;
 
     this.scene.cameras.main.scrollY = scrollY;
-    this.player.update(scrollY);
+    this.playerManager.update(scrollY);
     this.padsManager.update(scrollY);
     this.inputManager.update();
     this.scoreManager.update(this.highestY);

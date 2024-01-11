@@ -1,5 +1,8 @@
 import { Player } from "./player";
 
+/**
+ * Class that handles the warping of the player.
+ */
 export class PlayerWarp
 {
   private player: Player;

@@ -147,6 +147,15 @@ export class GameManager implements IScoreManagerListener, IPlayerListener
 
     // Setup the Managers.
 
+    let foregroundLayer = scene.add.image(
+      0,
+      0,
+      gameConfiguration.enviroment.foregroundLayer
+    );
+    foregroundLayer.setOrigin(0, 0);
+    foregroundLayer.setPosition(0, gameConfiguration.gameView.canvasHeight - foregroundLayer.height);
+    foregroundLayer.setDepth(10);
+
     this.parallaxBackground = new ParallaxBackground();
     this.parallaxBackground.init(
       scene,

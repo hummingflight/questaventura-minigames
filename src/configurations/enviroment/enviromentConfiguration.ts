@@ -3,7 +3,7 @@ import { EndlessBackgroundConfiguration } from "./endlessBackgroundConfiguration
 
 export class EnviromentConfiguration
 {
-  public backgroundKey: string;
+  public foregroundLayer: string;
 
   public parallaxBackgroundLayers: Array<BackgroundLayerConfiguration>; 
   

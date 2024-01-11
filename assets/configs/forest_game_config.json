@@ -66,6 +66,10 @@
       {
         "key": "winPopup",
         "path": "images/won.png"
+      },
+      {
+        "key": "wood_panel",
+        "path": "images/wood-up.png"
       }
     ],
 
@@ -80,7 +84,7 @@
 
   "enviroment":
   {
-    "backgroundKey": "sky",
+    "foregroundLayer": "parallax_bg_2",
     "parallaxBackgroundLayers": [
       {
         "imageKey": "sky",

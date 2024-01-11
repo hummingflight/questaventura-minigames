@@ -2,6 +2,7 @@ import { PlayerConfiguration } from "../../configurations/player/playerConfigura
 import { Pad } from "../padsManager/pad";
 import { IPlayerListener } from "./iPlayerListener";
 import { PlayerLives } from "./playerLives";
+import { PlayerWarp } from "./playerWarp";
 
 export class Player extends Phaser.Physics.Arcade.Sprite
 {
@@ -10,8 +11,13 @@ export class Player extends Phaser.Physics.Arcade.Sprite
   private playerListeners: IPlayerListener[];
 
   private playerLives: PlayerLives;
+  private playerWarp: PlayerWarp;
 
-  public init(configuration: PlayerConfiguration, canvasHeight: number): void
+  public init(
+    configuration: PlayerConfiguration,
+    canvasWidth: number,
+    canvasHeight: number
+  ): void
   {
     this.playerConfiguration = configuration;
     this.playerListeners = [];
@@ -21,6 +27,9 @@ export class Player extends Phaser.Physics.Arcade.Sprite
 
     this.playerLives = new PlayerLives();
     this.playerLives.init(configuration.numLives);
+
+    this.playerWarp = new PlayerWarp();
+    this.playerWarp.init(this, canvasWidth);
   }
 
   /**
@@ -40,6 +49,8 @@ export class Player extends Phaser.Physics.Arcade.Sprite
 
     if (this.playerLives.getLives() <= 0)
       this.playerListeners.forEach((listener) => listener.onPlayerDied());
+
+    this.playerWarp.update();
   }
 
   /**

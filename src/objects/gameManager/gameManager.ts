@@ -122,7 +122,7 @@ export class GameManager implements IScoreManagerListener, IPlayerListener
     if (this.gameStatus !== GameStatus.RUNNING)
       return;
 
-    this.gameStatus = GameStatus.WON;
+    this.gameStatus = GameStatus.STOPPED;
     this.listeners.forEach((listener) => listener.onGameWon());
   }
 
@@ -131,8 +131,11 @@ export class GameManager implements IScoreManagerListener, IPlayerListener
     if (this.gameStatus !== GameStatus.RUNNING)
       return;
 
-    this.gameStatus = GameStatus.LOST;
-    this.listeners.forEach((listener) => listener.onGameLost());
+    this.gameStatus = GameStatus.STOPPED;
+    if (this.playerManager.getPlayer().getLives().getLives() > 0)
+      this.resetLevel();
+    else
+      this.listeners.forEach((listener) => listener.onGameLost());
   }
 
   public init(gameConfiguration: GameConfiguration, scene: Phaser.Scene): void
@@ -235,5 +238,19 @@ export class GameManager implements IScoreManagerListener, IPlayerListener
   public addListener(listener: IGameManagerListener): void
   {
     this.listeners.push(listener);
+  }
+
+  /**
+   * 
+   */
+  private resetLevel(): void
+  {
+    this.gameStatus = GameStatus.STOPPED;
+
+    this.scene.cameras.main.once('camerafadeoutcomplete', function (camera: Phaser.Cameras.Scene2D.Camera) {
+      camera.fadeIn(this.gameConfiguration.gameEffects.fadeIn);
+    }, this);
+
+    this.scene.cameras.main.fadeOut(this.gameConfiguration.gameEffects.fadeout);
   }
 }

@@ -1,4 +1,5 @@
 import { EnviromentConfiguration } from "./enviroment/enviromentConfiguration";
+import { GameEffectsConfiguration } from "./gameEffectsConfiguration/gameEffectsConfiguration";
 import { GameViewConfiguration } from "./gameViewConfiguration/gameViewConfiguration";
 import { LoaderConfiguration } from "./loader/loaderConfiguration";
 import { PadsManagerConfiguration } from "./padsManager/padsManagerConfiguration";
@@ -41,4 +42,9 @@ export class GameConfiguration
    * The configuration of the score manager.
    */
   public scoreManager: ScoreManagerConfiguration
+
+  /**
+   * The configuration of the game effects.
+   */
+  public gameEffects: GameEffectsConfiguration;
 }

@@ -1,6 +1,7 @@
 import { PlayerConfiguration } from "../../configurations/player/playerConfiguration";
 import { Pad } from "../padsManager/pad";
 import { IPlayerListener } from "./iPlayerListener";
+import { PlayerHearts } from "./playerHearts";
 import { PlayerLives } from "./playerLives";
 import { PlayerWarp } from "./playerWarp";
 
@@ -10,6 +11,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite
   private playerConfiguration: PlayerConfiguration;
   private playerListeners: IPlayerListener[];
 
+  private playerHearts: PlayerHearts;
   private playerLives: PlayerLives;
   private playerWarp: PlayerWarp;
 
@@ -24,6 +26,9 @@ export class Player extends Phaser.Physics.Arcade.Sprite
     this.canvasHeight = canvasHeight;
     this.setScale(configuration.scaleX, configuration.scaleY);
     this.refreshBody();
+
+    this.playerHearts = new PlayerHearts();
+    this.playerHearts.init(configuration.numHearts);
 
     this.playerLives = new PlayerLives();
     this.playerLives.init(configuration.numLives);
@@ -42,13 +47,29 @@ export class Player extends Phaser.Physics.Arcade.Sprite
     return this.playerLives;
   }
 
+  /**
+   * Gets the PlayerHearts class of this Player.
+   * 
+   * @returns The PlayerHearts class of this Player. 
+   */
+  public getHearts(): PlayerHearts
+  {
+    return this.playerHearts;
+  }
+
   public update(cameraY: number)
   {
     if (this.isOutOfBounds(cameraY, this.canvasHeight))
+    {
+      this.playerLives.loseLife();
       this.playerListeners.forEach((listener) => listener.onPlayerDied());
+    } 
 
-    if (this.playerLives.getLives() <= 0)
+    if (this.playerHearts.getNumHearts() <= 0)
+    {
+      this.playerLives.loseLife();
       this.playerListeners.forEach((listener) => listener.onPlayerDied());
+    }
 
     this.playerWarp.update();
   }
@@ -88,7 +109,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite
     if (this.body.touching.down && this.body.velocity.y >= 0)
     {
       if (pad.getPadConfiguration().type == "dangerous")
-        this.playerLives.loseLife();
+        this.playerHearts.loseHeart();
 
       this.setVelocityY(-this.playerConfiguration.jumpVelocity);
     }

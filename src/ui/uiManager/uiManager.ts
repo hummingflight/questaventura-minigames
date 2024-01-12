@@ -1,4 +1,5 @@
 import { GameManager } from "../../objects/gameManager/gameManager";
+import { UiPlayerHearts } from "../uiPlayerHearts";
 import { UiPlayerLives } from "../uiPlayerLives";
 import { UiScore } from "../uiScore";
 import { UiWonLosePopup } from "../uiWonLosePopup";
@@ -9,6 +10,7 @@ export class UiManager
   private uiWonLosePopup: UiWonLosePopup;
   private uiScore: UiScore;
   private uiPlayerLives: UiPlayerLives;
+  private uiPalyerHearts: UiPlayerHearts;
   private gameManager: GameManager;
 
   public init(
@@ -29,6 +31,13 @@ export class UiManager
     this.uiScore = new UiScore();
     this.uiScore.init(scene, this.container, canvasWidth);
 
+    this.uiPalyerHearts = new UiPlayerHearts();
+    this.uiPalyerHearts.init(
+      scene,
+      this.container,
+      gameManager.getPlayer().getHearts().getNumHearts()
+    );
+
     this.uiPlayerLives = new UiPlayerLives();
     this.uiPlayerLives.init(
       scene,
@@ -40,6 +49,7 @@ export class UiManager
     gameManager.addListener(this.uiWonLosePopup);
     gameManager.getScoreManager().addListener(this.uiScore);
     gameManager.getPlayer().getLives().addListener(this.uiPlayerLives);
+    gameManager.getPlayer().getHearts().addListener(this.uiPalyerHearts);
   }
 
   public update(): void

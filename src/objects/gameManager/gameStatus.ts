@@ -13,5 +13,15 @@ export enum GameStatus
   /**
    * The game is lost.
    */
-  LOST
+  LOST,
+
+  /**
+   * The game is paused.
+   */
+  PAUSED,
+
+  /**
+   * The game is stopped.
+   */
+  STOPPED
 }

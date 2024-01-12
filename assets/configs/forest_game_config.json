@@ -6,13 +6,19 @@
     "canvasWidth": 1080
   },
 
+  "gameEffects": {
+    "fadein": 500,
+    "fadeout": 500
+  },
+
   "player": {
     "spriteKey": "player",
     "scaleX": 0.2,
     "scaleY": 0.2,
     "jumpVelocity": 600,
     "movementVelocity": 200,
-    "numLives": 3
+    "numLives": 3,
+    "numHearts": 3
   },
   
   "loader" : 

@@ -1,6 +1,7 @@
 import { GameConfiguration } from "../../configurations/gameConfiguration";
 import { CollisionManager } from "../collisionManager/collisionManager";
 import { EndlessBackground } from "../endlessBackground/endlessBackground";
+import { EnviromentManager } from "../enviromentManager/enviromentManager";
 import { InputManager } from "../inputManager/inputManager";
 import { PadsManager } from "../padsManager/padsManager";
 import { ParallaxBackground } from "../parallaxBackground/parallaxBackground";
@@ -26,8 +27,7 @@ export class GameManager implements IScoreManagerListener, IPlayerListener
 
   private highestY: number = 0;
   private halfHeight: number = 0;
-  private parallaxBackground: ParallaxBackground;
-  private endlessBackground: EndlessBackground;
+  private enviromentManager: EnviromentManager;
   private inputManager: InputManager;
   private scoreManager: ScoreManager;
   private padsManager: PadsManager;
@@ -150,26 +150,11 @@ export class GameManager implements IScoreManagerListener, IPlayerListener
 
     // Setup the Managers.
 
-    let foregroundLayer = scene.add.image(
-      0,
-      0,
-      gameConfiguration.enviroment.foregroundLayer
-    );
-    foregroundLayer.setOrigin(0, 0);
-    foregroundLayer.setPosition(0, gameConfiguration.gameView.canvasHeight - foregroundLayer.height);
-    foregroundLayer.setDepth(10);
-
-    this.parallaxBackground = new ParallaxBackground();
-    this.parallaxBackground.init(
+    this.enviromentManager = new EnviromentManager();
+    this.enviromentManager.init(
       scene,
-      gameConfiguration.enviroment.parallaxBackgroundLayers,
-      gameConfiguration.gameView.canvasHeight
-    );
-
-    this.endlessBackground = new EndlessBackground(scene);
-    this.endlessBackground.init(
-      gameConfiguration.enviroment.endlessBackground,
-      gameConfiguration.gameView.canvasHeight
+      gameConfiguration.enviroment,
+      gameConfiguration.gameView
     );
 
     let padStaticGroup = scene.physics.add.staticGroup();
@@ -226,8 +211,7 @@ export class GameManager implements IScoreManagerListener, IPlayerListener
     this.padsManager.update(scrollY);
     this.inputManager.update();
     this.scoreManager.update(this.highestY);
-    this.endlessBackground.setY(scrollY);
-    this.endlessBackground.update();
+    this.enviromentManager.update(scrollY);
   }
 
   /**
@@ -251,6 +235,16 @@ export class GameManager implements IScoreManagerListener, IPlayerListener
       camera.fadeIn(this.gameConfiguration.gameEffects.fadeIn);
     }, this);
 
+    this.scene.cameras.main.once('camerafadeincomplete', function (camera: Phaser.Cameras.Scene2D.Camera) {
+      this.resetGameObjects();
+      this.gameStatus = GameStatus.RUNNING;
+    }, this);
+
     this.scene.cameras.main.fadeOut(this.gameConfiguration.gameEffects.fadeout);
+  }
+
+  private resetGameObjects()
+  {
+
   }
 }

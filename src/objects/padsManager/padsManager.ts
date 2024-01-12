@@ -47,7 +47,7 @@ export class PadsManager
    * @param configuration The configuration of the pads manager.
    * @param gameViewConfiguration The configuration of the game view.
    */
-  init(
+  public init(
     configuration: PadsManagerConfiguration,
     gameViewConfiguration: GameViewConfiguration,
     physicsStaticGroup: Phaser.Physics.Arcade.StaticGroup,
@@ -63,7 +63,7 @@ export class PadsManager
     this.scene = scene;
   }
 
-  update(currentViewTopValue: number)
+  public update(currentViewTopValue: number)
   {
     this.updatePads(currentViewTopValue);
     
@@ -73,6 +73,21 @@ export class PadsManager
       this.lastPadHeight -= this.configuration.inBetweenVSpace;
       return;
     }
+  }
+
+  /**
+   * Called by the GameManager when the level is reset.
+   */
+  public onLevelReset()
+  {
+    this.inGamePads.forEach((pad) => {
+      pad.setVisible(false);
+      pad.disableBody(true, true);
+      this.idlePads.push(pad);
+    });
+
+    this.inGamePads = new Array<Pad>();
+    this.lastPadHeight = this.gameViewConfiguration.canvasHeight;
   }
 
   /**

@@ -39,4 +39,13 @@ export class ScoreManager
   {
     this.listeners.push(listener);
   }
+
+  /**
+   * Called by the GameManager when the level is reset.
+   */
+  public onLevelReset(): void
+  {
+    this.score = 0;
+    this.listeners.forEach((listener) => listener.onScoreChanged(this.score));
+  }
 }

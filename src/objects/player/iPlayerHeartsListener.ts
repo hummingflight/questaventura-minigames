@@ -17,4 +17,11 @@ export interface IPlayerHeartsListener
    * @param hearts The number of hearts. 
    */
   onGetHeart(hearts: number): void;
+
+  /**
+   * Called when the player's number of hearts change.
+   * 
+   * @param hearts The number of hearts. 
+   */
+  onHeartsChanged(hearts: number): void;
 }

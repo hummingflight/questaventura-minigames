@@ -232,19 +232,22 @@ export class GameManager implements IScoreManagerListener, IPlayerListener
     this.gameStatus = GameStatus.STOPPED;
 
     this.scene.cameras.main.once('camerafadeoutcomplete', function (camera: Phaser.Cameras.Scene2D.Camera) {
+      this.resetGameManagers();
+      this.gameStatus = GameStatus.RUNNING;
       camera.fadeIn(this.gameConfiguration.gameEffects.fadeIn);
     }, this);
 
-    this.scene.cameras.main.once('camerafadeincomplete', function (camera: Phaser.Cameras.Scene2D.Camera) {
-      this.resetGameObjects();
-      this.gameStatus = GameStatus.RUNNING;
+    this.scene.cameras.main.once('camerafadeincomplete', function (camera: Phaser.Cameras.Scene2D.Camera) {      
     }, this);
 
     this.scene.cameras.main.fadeOut(this.gameConfiguration.gameEffects.fadeout);
   }
 
-  private resetGameObjects()
+  private resetGameManagers()
   {
-
+    this.highestY = this.halfHeight;
+    this.scoreManager.onLevelReset();
+    this.padsManager.onLevelReset();
+    this.playerManager.onLevelReset();
   }
 }

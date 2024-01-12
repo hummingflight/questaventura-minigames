@@ -31,6 +31,7 @@ export class PlayerHearts
   {
     this.hearts--;
     this.listeners.forEach((listener) => listener.onLoseHeart(this.hearts));
+    this.listeners.forEach((listener) => listener.onHeartsChanged(this.hearts));
   }
 
   /**
@@ -40,6 +41,18 @@ export class PlayerHearts
   {
     this.hearts++;
     this.listeners.forEach((listener) => listener.onGetHeart(this.hearts));
+    this.listeners.forEach((listener) => listener.onHeartsChanged(this.hearts));
+  }
+
+  /**
+   * Sets the number of hearts.
+   * 
+   * @param numHearts The number of hearts. 
+   */
+  public setNumHeart(numHearts: number): void
+  {
+    this.hearts = numHearts;
+    this.listeners.forEach((listener) => listener.onHeartsChanged(this.hearts));
   }
 
   public addListener(listener: IPlayerHeartsListener): void

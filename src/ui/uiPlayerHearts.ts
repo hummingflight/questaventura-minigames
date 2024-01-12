@@ -1,14 +1,18 @@
 import { IPlayerHeartsListener } from "../objects/player/iPlayerHeartsListener";
 
 export class UiPlayerHearts implements IPlayerHeartsListener
-{ 
+{
   private heartsText: Phaser.GameObjects.Text;
 
-  onLoseHeart(hearts: number): void {
+  public onLoseHeart(hearts: number): void {
     this.heartsText.text = "Hearts: " + hearts.toString();
   }
 
-  onGetHeart(hearts: number): void {
+  public onGetHeart(hearts: number): void {
+    this.heartsText.text = "Hearts: " + hearts.toString();
+  }
+
+  public onHeartsChanged(hearts: number): void {
     this.heartsText.text = "Hearts: " + hearts.toString();
   }
 

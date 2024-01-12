@@ -5,6 +5,8 @@ import { Player } from "./player";
 export class PlayerManager
 {
   private player: Player;
+  private playerConfiguration: PlayerConfiguration;
+  private gameViewConfiguration: GameViewConfiguration;
 
   /**
    * Gets the player.
@@ -22,6 +24,9 @@ export class PlayerManager
     gameViewConfiguration: GameViewConfiguration
   ): void
   {
+    this.playerConfiguration = playerConfiguration;
+    this.gameViewConfiguration = gameViewConfiguration;
+
     this.player = new Player(
       scene,
       gameViewConfiguration.canvasWidth / 2,
@@ -43,5 +48,17 @@ export class PlayerManager
   public update(cameraY: number): void
   {
     this.player.update(cameraY);
+  }
+
+  /**
+   * Called by the GameManager when the level is reset.
+   */
+  public onLevelReset(): void
+  {
+    this.player.getHearts().setNumHeart(this.playerConfiguration.numHearts);
+    this.player.body.reset(
+    this.gameViewConfiguration.canvasWidth / 2,
+      this.gameViewConfiguration.canvasHeight / 2
+    );
   }
 }

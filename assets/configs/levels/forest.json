@@ -1,15 +1,5 @@
 {
-  "gameName": "Forest",
-  
-  "gameView": {
-    "canvasHeight": 1920,
-    "canvasWidth": 1080
-  },
-
-  "gameEffects": {
-    "fadein": 500,
-    "fadeout": 500
-  },
+  "levelName": "Forest",  
 
   "player": {
     "spriteKey": "player",
@@ -19,73 +9,6 @@
     "movementVelocity": 200,
     "numLives": 3,
     "numHearts": 3
-  },
-  
-  "loader" : 
-  {
-    "assetFolderPath": "../assets/",
-    "images": [
-      {
-        "key": "sky",
-        "path": "images/sky.png"
-      },
-      {
-        "key": "parallax_bg_1",
-        "path": "images/forest.png"
-      },
-      {
-        "key": "parallax_bg_2",
-        "path": "images/ground_start.png"
-      },
-      {
-        "key": "sides",
-        "path": "images/sides.png"
-      },
-      {
-        "key": "ground_start",
-        "path": "images/ground_start.png"
-      },
-      {
-        "key": "decor",
-        "path": "images/decor.png"
-      },
-      {
-        "key": "clouds",
-        "path": "images/clouds.png"
-      },
-      {
-        "key": "pad1",
-        "path": "images/Pad_02_1.png"
-      },
-      {
-        "key": "pad2",
-        "path": "images/Pad_02_2.png"
-      },
-      {
-        "key": "player",
-        "path": "images/player.png"
-      },
-      {
-        "key": "losePopup",
-        "path": "images/lose.png"
-      },
-      {
-        "key": "winPopup",
-        "path": "images/won.png"
-      },
-      {
-        "key": "wood_panel",
-        "path": "images/wood-up.png"
-      }
-    ],
-
-    "bitmapFonts": [
-      {
-        "key": "font_a",
-        "textureURL": "bitmapfonts/azo-fire.png",
-        "fontDataURL": "bitmapfonts/azo-fire.xml"
-      }
-    ]
   },
 
   "enviroment":

@@ -18,6 +18,15 @@ export class PlayerManager
     return this.player;
   }
 
+  public constructor(scene: Phaser.Scene)
+  {
+    this.player = new Player(
+      scene,
+      0, 0,
+      "",
+    );
+  }
+
   public init(
     scene: Phaser.Scene,
     playerConfiguration: PlayerConfiguration,
@@ -27,13 +36,12 @@ export class PlayerManager
     this.playerConfiguration = playerConfiguration;
     this.gameViewConfiguration = gameViewConfiguration;
 
-    this.player = new Player(
-      scene,
+    this.player.setPosition(
       gameViewConfiguration.canvasWidth / 2,
       gameViewConfiguration.canvasHeight / 2,
-      playerConfiguration.spriteKey,
     );
 
+    this.player.setTexture(playerConfiguration.spriteKey);
     this.player.setOrigin(0.5, 0.5);
     scene.add.existing(this.player);
     scene.physics.add.existing(this.player);

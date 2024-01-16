@@ -15,6 +15,17 @@ export class Player extends Phaser.Physics.Arcade.Sprite
   private playerLives: PlayerLives;
   private playerWarp: PlayerWarp;
 
+  public constructor(
+    scene: Phaser.Scene,
+    x: number,
+    y: number,
+    texture: string
+  )
+  {
+    super(scene, x, y, texture);
+    this.playerListeners = [];
+  }
+
   public init(
     configuration: PlayerConfiguration,
     canvasWidth: number,
@@ -22,7 +33,6 @@ export class Player extends Phaser.Physics.Arcade.Sprite
   ): void
   {
     this.playerConfiguration = configuration;
-    this.playerListeners = [];
     this.canvasHeight = canvasHeight;
     this.setScale(configuration.scaleX, configuration.scaleY);
     this.refreshBody();

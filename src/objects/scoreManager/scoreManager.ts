@@ -8,12 +8,16 @@ export class ScoreManager
   private initialHeight: number;
   private listeners: IScoreManagerListener[];
 
+  public constructor()
+  {
+    this.listeners = [];
+  }
+
   public init(scoreManagerConfiguration: ScoreManagerConfiguration, initialHeight: number): void
   {
     this.configuration = scoreManagerConfiguration;
     this.score = 0;
     this.initialHeight = initialHeight;
-    this.listeners = [];
   }
 
   public update(height: number): void

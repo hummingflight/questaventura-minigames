@@ -42,6 +42,16 @@ export class PadsManager
   private physicsStaticGroup: Phaser.Physics.Arcade.StaticGroup;
 
   /**
+   * Gets the physics static group of the pads.
+   * 
+   * @returns The physics static group of the pads.
+   */
+  public getPhysicsStaticGroup(): Phaser.Physics.Arcade.StaticGroup
+  {
+    return this.physicsStaticGroup;
+  }
+
+  /**
    * Initializes the pads manager.
    * 
    * @param configuration The configuration of the pads manager.
@@ -50,7 +60,6 @@ export class PadsManager
   public init(
     configuration: PadsManagerConfiguration,
     gameViewConfiguration: GameViewConfiguration,
-    physicsStaticGroup: Phaser.Physics.Arcade.StaticGroup,
     scene: Phaser.Scene
   )
   { 
@@ -59,7 +68,7 @@ export class PadsManager
     this.lastPadHeight = gameViewConfiguration.canvasHeight;
     this.inGamePads = new Array<Pad>();
     this.idlePads = new Array<Pad>();
-    this.physicsStaticGroup = physicsStaticGroup;
+    this.physicsStaticGroup = scene.physics.add.staticGroup();
     this.scene = scene;
   }
 

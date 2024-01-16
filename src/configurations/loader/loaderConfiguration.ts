@@ -1,5 +1,6 @@
 import { BitmapFontLoadConfiguration } from "./bitmapFontLoadConfiguration";
 import { ImageLoadConfiguration } from "./imageLoadConfiguration";
+import { LevelConfigLoadConfiguration } from "./levelLoadConfiguration";
 
 export class LoaderConfiguration 
 {
@@ -7,6 +8,11 @@ export class LoaderConfiguration
    * The path of the asset folder relative to the game bundle.
    */
   public assetFolderPath: string;
+
+  /**
+   * List of levels to load.
+   */
+  public levelsConfig: Array<LevelConfigLoadConfiguration>;
 
   /**
    * List of images to load.

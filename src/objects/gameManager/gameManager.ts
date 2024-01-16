@@ -1,10 +1,9 @@
 import { GameConfiguration } from "../../configurations/gameConfiguration";
+import { LevelConfiguration } from "../../configurations/levelConfiguration";
 import { CollisionManager } from "../collisionManager/collisionManager";
-import { EndlessBackground } from "../endlessBackground/endlessBackground";
 import { EnviromentManager } from "../enviromentManager/enviromentManager";
 import { InputManager } from "../inputManager/inputManager";
 import { PadsManager } from "../padsManager/padsManager";
-import { ParallaxBackground } from "../parallaxBackground/parallaxBackground";
 import { IPlayerListener } from "../player/iPlayerListener";
 import { Player } from "../player/player";
 import { PlayerManager } from "../player/playerManager";
@@ -25,6 +24,7 @@ export class GameManager implements IScoreManagerListener, IPlayerListener
    */
   private gameConfiguration: GameConfiguration;
 
+  private currentLevelIdx = -1;
   private highestY: number = 0;
   private halfHeight: number = 0;
   private enviromentManager: EnviromentManager;
@@ -33,6 +33,7 @@ export class GameManager implements IScoreManagerListener, IPlayerListener
   private padsManager: PadsManager;
   private playerManager: PlayerManager;
   private collisionManager: CollisionManager;
+  private levelConfiguration: LevelConfiguration;
   private scene: Phaser.Scene;
 
   /**
@@ -138,61 +139,81 @@ export class GameManager implements IScoreManagerListener, IPlayerListener
       this.listeners.forEach((listener) => listener.onGameLost());
   }
 
-  public init(gameConfiguration: GameConfiguration, scene: Phaser.Scene): void
+  public startNextLevel(): void
+  {
+    this.currentLevelIdx++;
+    if (this.currentLevelIdx >= this.gameConfiguration.levels.length)
+      return;
+
+    this.levelConfiguration = JSON.parse(
+      this.scene.cache.text.get(this.gameConfiguration.levels[this.currentLevelIdx])
+    );
+
+    this.initLevel();
+  }
+
+  public init(
+    gameConfiguration: GameConfiguration,
+    scene: Phaser.Scene
+  ): void
   {
     this.gameStatus = GameStatus.RUNNING;
     this.gameConfiguration = gameConfiguration;
     this.listeners = [];
 
     this.scene = scene;
-    this.halfHeight = gameConfiguration.gameView.canvasHeight / 2;
-    this.highestY = this.halfHeight;
-
-    // Setup the Managers.
+    this.halfHeight = gameConfiguration.gameView.canvasHeight / 2;    
 
     this.enviromentManager = new EnviromentManager();
-    this.enviromentManager.init(
-      scene,
-      gameConfiguration.enviroment,
-      gameConfiguration.gameView
-    );
-
-    let padStaticGroup = scene.physics.add.staticGroup();
     this.padsManager = new PadsManager();
-    this.padsManager.init(
-      gameConfiguration.padsManager,
-      gameConfiguration.gameView,
-      padStaticGroup,
-      scene
-    );
-    
-    this.playerManager = new PlayerManager();
-    this.playerManager.init(
-      scene,
-      gameConfiguration.player,
-      gameConfiguration.gameView
-    );
+    this.playerManager = new PlayerManager(this.scene);
+    this.collisionManager = new CollisionManager();
+    this.scoreManager = new ScoreManager();
 
     this.inputManager = new InputManager();
-    this.inputManager.init(scene, this.getPlayer());
-
-    this.collisionManager = new CollisionManager();
-    this.collisionManager.init(
-      scene,
-      this.getPlayer(),
-      padStaticGroup
-    );
-
-    this.scoreManager = new ScoreManager();
-    this.scoreManager.init(
-      gameConfiguration.scoreManager,
-      this.getPlayerY()
+    this.inputManager.init(
+      this.scene,
+      this.getPlayer()
     );
 
     // Setup the listeners.
 
     this.scoreManager.addListener(this);
     this.getPlayer().addPlayerListener(this);
+  }
+
+  public initLevel(): void
+  {
+    this.highestY = this.halfHeight;
+    
+    this.enviromentManager.init(
+      this.scene,
+      this.levelConfiguration.enviroment,
+      this.gameConfiguration.gameView
+    );
+
+    this.padsManager.init(
+      this.levelConfiguration.padsManager,
+      this.gameConfiguration.gameView,
+      this.scene
+    );
+    
+    this.playerManager.init(
+      this.scene,
+      this.levelConfiguration.player,
+      this.gameConfiguration.gameView
+    );
+    
+    this.collisionManager.init(
+      this.scene,
+      this.getPlayer(),
+      this.padsManager.getPhysicsStaticGroup()
+    );
+    
+    this.scoreManager.init(
+      this.levelConfiguration.scoreManager,
+      this.getPlayerY()
+    );
   }
 
   public update(): void

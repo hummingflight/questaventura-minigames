@@ -7,6 +7,14 @@ export class GameLoader
     loader: Phaser.Loader.LoaderPlugin
   )
   {
+    // Load levels
+    loaderConfig.levelsConfig.forEach(levelLoadConfig => {
+      loader.text(
+        levelLoadConfig.key,
+        loaderConfig.assetFolderPath + levelLoadConfig.path
+      )
+    });
+
     // Load images
     loaderConfig.images.forEach(imageLoadConfig =>
     { 

@@ -6,6 +6,11 @@ import { ParallaxBackground } from "../parallaxBackground/parallaxBackground";
 export class EnviromentManager
 {
   /**
+   * The scene of the enviroment manager.
+   */
+  private scene: Phaser.Scene;
+
+  /**
    * The frounground image of the game.
    */
   private foreground: Phaser.GameObjects.Image;
@@ -20,30 +25,30 @@ export class EnviromentManager
    */
   private endlessBackground: EndlessBackground;
 
-  public init(
-    scene: Phaser.Scene,
+  public constructor(scene: Phaser.Scene)
+  {
+    this.scene = scene;
+    this.foreground = scene.add.image(0, 0, "");
+    this.parallaxBackground = new ParallaxBackground();
+    this.endlessBackground = new EndlessBackground(scene);
+  }
+
+  public initLevelConfiguration(
     enviromentConfiguration: EnviromentConfiguration,
     gameViewConfiguraiton: GameViewConfiguration
   )
   {
-    this.foreground = scene.add.image(
-      0,
-      0,
-      enviromentConfiguration.foregroundLayer
-    );
-
+    this.foreground.setTexture(enviromentConfiguration.foregroundLayer);
     this.foreground.setOrigin(0, 0);
     this.foreground.setPosition(0, gameViewConfiguraiton.canvasHeight - this.foreground.height);
     this.foreground.setDepth(10);
 
-    this.parallaxBackground = new ParallaxBackground();
     this.parallaxBackground.init(
-      scene,
+      this.scene,
       enviromentConfiguration.parallaxBackgroundLayers,
       gameViewConfiguraiton.canvasHeight
     );
-
-    this.endlessBackground = new EndlessBackground(scene);
+    
     this.endlessBackground.init(
       enviromentConfiguration.endlessBackground,
       gameViewConfiguraiton.canvasHeight

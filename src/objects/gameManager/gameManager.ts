@@ -139,19 +139,6 @@ export class GameManager implements IScoreManagerListener, IPlayerListener
       this.listeners.forEach((listener) => listener.onGameLost());
   }
 
-  public startNextLevel(): void
-  {
-    this.currentLevelIdx++;
-    if (this.currentLevelIdx >= this.gameConfiguration.levels.length)
-      return;
-
-    this.levelConfiguration = JSON.parse(
-      this.scene.cache.text.get(this.gameConfiguration.levels[this.currentLevelIdx])
-    );
-
-    this.initLevel();
-  }
-
   public init(
     gameConfiguration: GameConfiguration,
     scene: Phaser.Scene
@@ -164,11 +151,19 @@ export class GameManager implements IScoreManagerListener, IPlayerListener
     this.scene = scene;
     this.halfHeight = gameConfiguration.gameView.canvasHeight / 2;    
 
-    this.enviromentManager = new EnviromentManager();
-    this.padsManager = new PadsManager();
+    // Prepare Managers.
+
+    this.enviromentManager = new EnviromentManager(this.scene);
+    this.padsManager = new PadsManager(this.scene);
     this.playerManager = new PlayerManager(this.scene);
-    this.collisionManager = new CollisionManager();
     this.scoreManager = new ScoreManager();
+
+    this.collisionManager = new CollisionManager();
+    this.collisionManager.init(
+      this.scene,
+      this.getPlayer(),
+      this.padsManager.getPhysicsStaticGroup()
+    );
 
     this.inputManager = new InputManager();
     this.inputManager.init(
@@ -182,35 +177,46 @@ export class GameManager implements IScoreManagerListener, IPlayerListener
     this.getPlayer().addPlayerListener(this);
   }
 
-  public initLevel(): void
+  /**
+   * Starts the next level.
+   */
+  public startNextLevel(): void
   {
+    this.currentLevelIdx++;
+    if (this.currentLevelIdx >= this.gameConfiguration.levels.length)
+      return;
+
+    this.initLevel(this.currentLevelIdx);
+  }
+
+  public initLevel(levelIdx: number): void
+  {
+    this.levelConfiguration = JSON.parse(
+      this.scene.cache.text.get(
+        this.gameConfiguration.levels[levelIdx]
+      )
+    );
+
     this.highestY = this.halfHeight;
     
-    this.enviromentManager.init(
-      this.scene,
+    this.enviromentManager.initLevelConfiguration(
       this.levelConfiguration.enviroment,
       this.gameConfiguration.gameView
     );
 
-    this.padsManager.init(
+    this.padsManager.initLevelConfiguration(
       this.levelConfiguration.padsManager,
       this.gameConfiguration.gameView,
       this.scene
     );
     
-    this.playerManager.init(
+    this.playerManager.initLevelConfiguration(
       this.scene,
       this.levelConfiguration.player,
       this.gameConfiguration.gameView
     );
     
-    this.collisionManager.init(
-      this.scene,
-      this.getPlayer(),
-      this.padsManager.getPhysicsStaticGroup()
-    );
-    
-    this.scoreManager.init(
+    this.scoreManager.initLevelConfiguration(
       this.levelConfiguration.scoreManager,
       this.getPlayerY()
     );

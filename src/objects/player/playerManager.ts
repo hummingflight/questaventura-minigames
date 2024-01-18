@@ -27,7 +27,7 @@ export class PlayerManager
     );
   }
 
-  public init(
+  public initLevelConfiguration(
     scene: Phaser.Scene,
     playerConfiguration: PlayerConfiguration,
     gameViewConfiguration: GameViewConfiguration

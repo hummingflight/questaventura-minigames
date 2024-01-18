@@ -51,13 +51,21 @@ export class PadsManager
     return this.physicsStaticGroup;
   }
 
+  public constructor(scene: Phaser.Scene)
+  {
+    this.scene = scene;
+    this.physicsStaticGroup = scene.physics.add.staticGroup();
+    this.inGamePads = new Array<Pad>();
+    this.idlePads = new Array<Pad>();
+  }
+
   /**
    * Initializes the pads manager.
    * 
    * @param configuration The configuration of the pads manager.
    * @param gameViewConfiguration The configuration of the game view.
    */
-  public init(
+  public initLevelConfiguration(
     configuration: PadsManagerConfiguration,
     gameViewConfiguration: GameViewConfiguration,
     scene: Phaser.Scene
@@ -65,10 +73,7 @@ export class PadsManager
   { 
     this.configuration = configuration;
     this.gameViewConfiguration = gameViewConfiguration;
-    this.lastPadHeight = gameViewConfiguration.canvasHeight;
-    this.inGamePads = new Array<Pad>();
-    this.idlePads = new Array<Pad>();
-    this.physicsStaticGroup = scene.physics.add.staticGroup();
+    this.lastPadHeight = gameViewConfiguration.canvasHeight;   
     this.scene = scene;
   }
 

@@ -13,7 +13,7 @@ export class ScoreManager
     this.listeners = [];
   }
 
-  public init(scoreManagerConfiguration: ScoreManagerConfiguration, initialHeight: number): void
+  public initLevelConfiguration(scoreManagerConfiguration: ScoreManagerConfiguration, initialHeight: number): void
   {
     this.configuration = scoreManagerConfiguration;
     this.score = 0;

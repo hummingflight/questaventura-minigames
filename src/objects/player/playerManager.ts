@@ -18,12 +18,13 @@ export class PlayerManager
     return this.player;
   }
 
-  public constructor(scene: Phaser.Scene)
+  public constructor(scene: Phaser.Scene, initialLives: number)
   {
     this.player = new Player(
       scene,
       0, 0,
       "",
+      initialLives
     );
   }
 

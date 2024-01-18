@@ -1,5 +1,5 @@
 {
-  "levelName": "Forest",  
+  "levelName": "City",  
 
   "player": {
     "spriteKey": "player",
@@ -7,23 +7,24 @@
     "scaleY": 0.2,
     "jumpVelocity": 600,
     "movementVelocity": 200,
+    "numLives": 3,
     "numHearts": 3
   },
 
   "enviroment":
   {
-    "foregroundLayer": "parallax_bg_2",
+    "foregroundLayer": "city_ground_start",
     "parallaxBackgroundLayers": [
       {
-        "imageKey": "sky",
+        "imageKey": "city_sky",
         "depth": 0
       },
       {
-        "imageKey": "parallax_bg_1",
+        "imageKey": "city_parallax_bg_1",
         "depth": 0.5
       },
       {
-        "imageKey": "parallax_bg_2",
+        "imageKey": "city_ground_start",
         "depth": 0.6
       }
     ],
@@ -31,15 +32,11 @@
     {
       "layers" : [
         {
-          "imageKey" : "clouds",
+          "imageKey" : "city_clouds",
           "depth": 0.7
         },
         {
-          "imageKey" : "sides",
-          "depth": 0
-        },
-        {
-          "imageKey" : "decor",
+          "imageKey" : "city_sides",
           "depth": 0
         }
       ]
@@ -59,14 +56,14 @@
     "pads": [
       {
         "key": "pad1",
-        "imageKey": "pad1",
+        "imageKey": "city_pad1",
         "scaleY": 0.3,
         "scaleX": 0.3,
         "type": "normal"
       },
       {
         "key": "pad2",
-        "imageKey": "pad2",
+        "imageKey": "city_pad2",
         "scaleY": 0.3,
         "scaleX": 0.3,
         "type": "dangerous"

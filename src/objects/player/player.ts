@@ -19,11 +19,18 @@ export class Player extends Phaser.Physics.Arcade.Sprite
     scene: Phaser.Scene,
     x: number,
     y: number,
-    texture: string
+    texture: string,
+    initialLives: number
   )
   {
     super(scene, x, y, texture);
     this.playerListeners = [];
+
+    this.playerLives = new PlayerLives();
+    this.playerLives.init(initialLives);
+
+    this.playerHearts = new PlayerHearts();
+    this.playerWarp = new PlayerWarp();
   }
 
   public init(
@@ -36,14 +43,8 @@ export class Player extends Phaser.Physics.Arcade.Sprite
     this.canvasHeight = canvasHeight;
     this.setScale(configuration.scaleX, configuration.scaleY);
     this.refreshBody();
-
-    this.playerHearts = new PlayerHearts();
+    
     this.playerHearts.init(configuration.numHearts);
-
-    this.playerLives = new PlayerLives();
-    this.playerLives.init(configuration.numLives);
-
-    this.playerWarp = new PlayerWarp();
     this.playerWarp.init(this, canvasWidth);
   }
 

@@ -11,8 +11,12 @@
     "fadeout": 500
   },
 
+  "playerInitialLifes": 3,
+
+  "initialLevelIdx": 1, 
   "levels":[
-    "forest"
+    "forest",
+    "city"
   ],
 
   "loader" : 
@@ -23,6 +27,10 @@
       {
         "key": "forest",
         "path": "configs/levels/forest.json"
+      },
+      {
+        "key": "city",
+        "path": "configs/levels/city.json"
       }
     ],
 
@@ -32,8 +40,16 @@
         "path": "images/sky.png"
       },
       {
+        "key": "city_sky",
+        "path": "images/city_sky.png"
+      },
+      {
         "key": "parallax_bg_1",
         "path": "images/forest.png"
+      },
+      {
+        "key": "city_parallax_bg_1",
+        "path": "images/city_cityBackground.png"
       },
       {
         "key": "parallax_bg_2",
@@ -44,8 +60,16 @@
         "path": "images/sides.png"
       },
       {
+        "key": "city_sides",
+        "path": "images/city_sides.png"
+      },
+      {
         "key": "ground_start",
         "path": "images/ground_start.png"
+      },
+      {
+        "key": "city_ground_start",
+        "path": "images/city_ground_start.png"
       },
       {
         "key": "decor",
@@ -56,12 +80,24 @@
         "path": "images/clouds.png"
       },
       {
+        "key": "city_clouds",
+        "path": "images/city_clouds.png"
+      },
+      {
         "key": "pad1",
         "path": "images/Pad_02_1.png"
       },
       {
+        "key": "city_pad1",
+        "path": "images/Pad_01_1.png"
+      },
+      {
         "key": "pad2",
         "path": "images/Pad_02_2.png"
+      },
+      {
+        "key": "city_pad2",
+        "path": "images/Pad_01_2.png"
       },
       {
         "key": "player",

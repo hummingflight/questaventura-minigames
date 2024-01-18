@@ -24,7 +24,7 @@ export class GameManager implements IScoreManagerListener, IPlayerListener
    */
   private gameConfiguration: GameConfiguration;
 
-  private currentLevelIdx = -1;
+  private nextLevelIdx = 0;
   private highestY: number = 0;
   private halfHeight: number = 0;
   private enviromentManager: EnviromentManager;
@@ -155,7 +155,7 @@ export class GameManager implements IScoreManagerListener, IPlayerListener
 
     this.enviromentManager = new EnviromentManager(this.scene);
     this.padsManager = new PadsManager(this.scene);
-    this.playerManager = new PlayerManager(this.scene);
+    this.playerManager = new PlayerManager(this.scene, gameConfiguration.playerInitialLifes);
     this.scoreManager = new ScoreManager();
 
     this.collisionManager = new CollisionManager();
@@ -177,16 +177,20 @@ export class GameManager implements IScoreManagerListener, IPlayerListener
     this.getPlayer().addPlayerListener(this);
   }
 
-  /**
-   * Starts the next level.
-   */
-  public startNextLevel(): void
+  public startLevel(index: number): void
   {
-    this.currentLevelIdx++;
-    if (this.currentLevelIdx >= this.gameConfiguration.levels.length)
-      return;
+    this.nextLevelIdx = index;
+    this.startNextLevel();
+  }
 
-    this.initLevel(this.currentLevelIdx);
+  /**
+   * Indicates if there are more levels to play.
+   * 
+   * @returns True if there are more levels to play, false otherwise.
+   */
+  public hasMoreLevels(): boolean
+  {
+    return this.nextLevelIdx < this.gameConfiguration.levels.length;
   }
 
   public initLevel(levelIdx: number): void
@@ -250,6 +254,18 @@ export class GameManager implements IScoreManagerListener, IPlayerListener
   {
     this.listeners.push(listener);
   }
+
+   /**
+   * Starts the next level.
+   */
+   private startNextLevel(): void
+   {
+     if (this.nextLevelIdx >= this.gameConfiguration.levels.length)
+       return;
+ 
+     this.initLevel(this.nextLevelIdx);
+     this.nextLevelIdx++;
+   }
 
   /**
    * 

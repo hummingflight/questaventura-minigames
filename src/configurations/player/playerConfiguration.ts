@@ -26,11 +26,6 @@ export class PlayerConfiguration
   public movementVelocity: number;
 
   /**
-   * The number of initial lives.
-   */
-  public numLives: number;
-
-  /**
    * The number of initial hearts.
    */
   public numHearts: number;

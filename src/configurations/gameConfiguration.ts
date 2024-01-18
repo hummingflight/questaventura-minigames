@@ -10,6 +10,16 @@ export class GameConfiguration
   public gameName: string;
 
   /**
+   * The initial number of lifes of the player.
+   */
+  public playerInitialLifes: number;
+
+  /**
+   * Indicates the index of the initial level.
+   */
+  public initialLevelIdx: number;
+
+  /**
    * The levels of the game.
    */
   public levels: string[];

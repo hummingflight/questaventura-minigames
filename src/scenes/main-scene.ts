@@ -22,7 +22,7 @@ export class MainScene extends Phaser.Scene {
 
     this._gameManager = new GameManager();
     this._gameManager.init(gameConfiguration, this);
-    this._gameManager.startNextLevel();
+    this._gameManager.startLevel(gameConfiguration.initialLevelIdx);
 
     this._uiManger = new UiManager();
     this._uiManger.init(

@@ -1,3 +1,4 @@
+import { LayersDepthConfiguration } from "../../configurations/layersDepthConfiguration";
 import { PlayerConfiguration } from "../../configurations/player/playerConfiguration";
 import { Pad } from "../padsManager/pad";
 import { IPlayerListener } from "./iPlayerListener";
@@ -24,6 +25,8 @@ export class Player extends Phaser.Physics.Arcade.Sprite
   )
   {
     super(scene, x, y, texture);
+    this.setDepth(LayersDepthConfiguration.PLAYER);
+
     this.playerListeners = [];
 
     this.playerLives = new PlayerLives();

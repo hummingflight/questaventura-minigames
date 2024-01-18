@@ -1,3 +1,5 @@
+import { LayersDepthConfiguration } from "../../configurations/layersDepthConfiguration";
+
 export class EndlessLoopVImages extends Phaser.GameObjects.Container
 {
   /**
@@ -17,6 +19,7 @@ export class EndlessLoopVImages extends Phaser.GameObjects.Container
   {
     super(scene, 0, 0);
 
+    this.setDepth(LayersDepthConfiguration.BACKGROUND);
     this._m_depth = depth;
     this._m_canvasHeight = canvasHeight;
     this.initImages(scene, textureKey);

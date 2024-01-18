@@ -124,7 +124,12 @@ export class GameManager implements IScoreManagerListener, IPlayerListener
       return;
 
     this.gameStatus = GameStatus.STOPPED;
-    this.listeners.forEach((listener) => listener.onGameWon());
+    this.listeners.forEach((listener) => listener.onLevelWon());
+
+    if (this.hasMoreLevels())
+      this.startNextLevel();
+    else
+      this.listeners.forEach((listener) => listener.onGameWon());    
   }
 
   public onPlayerDied(): void
@@ -202,6 +207,8 @@ export class GameManager implements IScoreManagerListener, IPlayerListener
     );
 
     this.highestY = this.halfHeight;
+    let scrollY = this.highestY - this.halfHeight;
+    this.scene.cameras.main.scrollY = scrollY;
     
     this.enviromentManager.initLevelConfiguration(
       this.levelConfiguration.enviroment,
@@ -265,6 +272,8 @@ export class GameManager implements IScoreManagerListener, IPlayerListener
  
      this.initLevel(this.nextLevelIdx);
      this.nextLevelIdx++;
+
+     this.gameStatus = GameStatus.RUNNING;
    }
 
   /**

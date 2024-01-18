@@ -73,8 +73,9 @@ export class PadsManager
   { 
     this.configuration = configuration;
     this.gameViewConfiguration = gameViewConfiguration;
-    this.lastPadHeight = gameViewConfiguration.canvasHeight;   
     this.scene = scene;
+
+    this.onLevelReset();
   }
 
   public update(currentViewTopValue: number)

@@ -7,7 +7,6 @@
     "scaleY": 0.2,
     "jumpVelocity": 600,
     "movementVelocity": 200,
-    "numLives": 3,
     "numHearts": 3
   },
 

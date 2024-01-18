@@ -1,3 +1,4 @@
+import { LayersDepthConfiguration } from "../../configurations/layersDepthConfiguration";
 import { GameManager } from "../../objects/gameManager/gameManager";
 import { UiPlayerHearts } from "../uiPlayerHearts";
 import { UiPlayerLives } from "../uiPlayerLives";
@@ -22,7 +23,7 @@ export class UiManager
   {
     this.gameManager = gameManager;
     this.container = scene.add.container();
-    this.container.setDepth(1000);
+    this.container.setDepth(LayersDepthConfiguration.UI);
 
     // Setup UI elements
     this.uiWonLosePopup = new UiWonLosePopup();

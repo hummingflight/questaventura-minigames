@@ -1,7 +1,7 @@
 import { IGameManagerListener } from "../objects/gameManager/iGameManagerListener";
 
 export class UiWonLosePopup implements IGameManagerListener
-{
+{ 
   private scene: Phaser.Scene;
   private winPopup: Phaser.GameObjects.Image;
   private losePopup: Phaser.GameObjects.Image;
@@ -36,5 +36,13 @@ export class UiWonLosePopup implements IGameManagerListener
 
   public onGameLost(): void {
     this.losePopup.setVisible(true);
+  }
+
+  public onLevelWon(): void {
+    // Intentionally left blank.
+  }
+
+  public onLevelLost(): void {
+    // Intentionally left blank.
   }
 }

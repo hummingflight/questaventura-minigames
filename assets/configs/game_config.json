@@ -13,12 +13,11 @@
 
   "playerInitialLifes": 3,
 
-  "initialLevelIdx": 1, 
+  "initialLevelIdx": 0, 
   "levels":[
     "forest",
     "city"
   ],
-
   "loader" : 
   {
     "assetFolderPath": "../assets/",

@@ -1,3 +1,4 @@
+import { LayersDepthConfiguration } from "../../configurations/layersDepthConfiguration";
 import { PadConfiguration } from "../../configurations/padsManager/padConfiguration";
 
 export class Pad extends Phaser.Physics.Arcade.Sprite
@@ -6,6 +7,17 @@ export class Pad extends Phaser.Physics.Arcade.Sprite
    * The current pad configuration.
    */
   private padConfiguration: PadConfiguration;
+
+  public constructor(
+    scene: Phaser.Scene,
+    x: number,
+    y: number,
+    texture: string
+  )
+  {
+    super(scene, x, y, texture);
+    this.setDepth(LayersDepthConfiguration.PADS);
+  }
 
   /**
    * The current pad configuration.

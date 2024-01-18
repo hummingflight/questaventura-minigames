@@ -1,4 +1,5 @@
 import { BackgroundLayerConfiguration } from "../../configurations/enviroment/backgroundLayerConfiguration";
+import { LayersDepthConfiguration } from "../../configurations/layersDepthConfiguration";
 
 export class ParallaxBackground
 {
@@ -26,6 +27,7 @@ export class ParallaxBackground
       layer.setOrigin(0, 0);
       layer.setPosition(0, canvasHeight - layer.height);
       layer.setScrollFactor(layerConfig.depth);
+      layer.setDepth(LayersDepthConfiguration.BACKGROUND);
 
       this.layers.push(layer);
     }, this);

@@ -37,11 +37,6 @@ export class PlayerManager
     this.playerConfiguration = playerConfiguration;
     this.gameViewConfiguration = gameViewConfiguration;
 
-    this.player.setPosition(
-      gameViewConfiguration.canvasWidth / 2,
-      gameViewConfiguration.canvasHeight / 2,
-    );
-
     this.player.setTexture(playerConfiguration.spriteKey);
     this.player.setOrigin(0.5, 0.5);
     scene.add.existing(this.player);
@@ -51,6 +46,11 @@ export class PlayerManager
       playerConfiguration,
       gameViewConfiguration.canvasWidth,
       gameViewConfiguration.canvasHeight
+    );
+
+    this.player.body.reset(
+      gameViewConfiguration.canvasWidth / 2,
+      gameViewConfiguration.canvasHeight / 2,
     );
   }
 
@@ -66,7 +66,7 @@ export class PlayerManager
   {
     this.player.getHearts().setNumHeart(this.playerConfiguration.numHearts);
     this.player.body.reset(
-    this.gameViewConfiguration.canvasWidth / 2,
+      this.gameViewConfiguration.canvasWidth / 2,
       this.gameViewConfiguration.canvasHeight / 2
     );
   }

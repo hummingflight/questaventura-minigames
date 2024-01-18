@@ -35,7 +35,7 @@ export class PlayerHearts
   }
 
   /**
-   * Gets a heart.
+   * Adds a new heart to the player.
    */
   public getHeart(): void
   {
@@ -55,6 +55,11 @@ export class PlayerHearts
     this.listeners.forEach((listener) => listener.onHeartsChanged(this.hearts));
   }
 
+  /**
+   * Adds a listener to the player's hearts.
+   * 
+   * @param listener The listener to add.
+   */
   public addListener(listener: IPlayerHeartsListener): void
   {
     this.listeners.push(listener);

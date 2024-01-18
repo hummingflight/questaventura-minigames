@@ -2,6 +2,9 @@ import { GameViewConfiguration } from "../../configurations/gameViewConfiguratio
 import { PlayerConfiguration } from "../../configurations/player/playerConfiguration";
 import { Player } from "./player";
 
+/**
+ * Manages the player instance of the game.
+ */
 export class PlayerManager
 {
   private player: Player;
@@ -9,7 +12,7 @@ export class PlayerManager
   private gameViewConfiguration: GameViewConfiguration;
 
   /**
-   * Gets the player.
+   * Gets the player instance.
    * 
    * @returns The player.
    */
@@ -18,6 +21,12 @@ export class PlayerManager
     return this.player;
   }
 
+  /**
+   * Instantiates a new PlayerManager.
+   * 
+   * @param scene The scene of the game. 
+   * @param initialLives The initial lives of the player.
+   */
   public constructor(scene: Phaser.Scene, initialLives: number)
   {
     this.player = new Player(
@@ -28,6 +37,14 @@ export class PlayerManager
     );
   }
 
+  /**
+   * Prepares the player for the given Level configuration. Called when a new
+   * level is going to be started.
+   *
+   * @param scene The scene of the game.
+   * @param playerConfiguration The player configuration of the level.
+   * @param gameViewConfiguration The game view configuration of the level.
+   */
   public initLevelConfiguration(
     scene: Phaser.Scene,
     playerConfiguration: PlayerConfiguration,
@@ -54,6 +71,11 @@ export class PlayerManager
     );
   }
 
+  /**
+   * Updates the player.
+   * 
+   * @param cameraY The Y Position (ScrollY) of the camera. 
+   */
   public update(cameraY: number): void
   {
     this.player.update(cameraY);

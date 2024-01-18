@@ -3,6 +3,10 @@ import { GameViewConfiguration } from "../../configurations/gameViewConfiguratio
 import { EndlessBackground } from "../endlessBackground/endlessBackground";
 import { ParallaxBackground } from "../parallaxBackground/parallaxBackground";
 
+/**
+ * Manages the enviroment of the game. It is responsible for the background
+ * images and endless layers.
+ */
 export class EnviromentManager
 {
   /**
@@ -25,6 +29,11 @@ export class EnviromentManager
    */
   private endlessBackground: EndlessBackground;
 
+  /**
+   * Instantiates a new EnviromentManager.
+   * 
+   * @param scene The scene of the game. 
+   */
   public constructor(scene: Phaser.Scene)
   {
     this.scene = scene;
@@ -33,6 +42,12 @@ export class EnviromentManager
     this.endlessBackground = new EndlessBackground(scene);
   }
 
+  /**
+   * Prepares the EnviromentManager for a new level.
+   * 
+   * @param enviromentConfiguration The configuration of the enviroment.
+   * @param gameViewConfiguraiton The configuration of the game view.
+   */
   public initLevelConfiguration(
     enviromentConfiguration: EnviromentConfiguration,
     gameViewConfiguraiton: GameViewConfiguration
@@ -55,6 +70,11 @@ export class EnviromentManager
     );
   }
 
+  /**
+   * Updates this EnviromentManager.
+   * 
+   * @param scrollY The scrollY of the camera. 
+   */
   public update(scrollY: number)
   {
     this.endlessBackground.setY(scrollY);

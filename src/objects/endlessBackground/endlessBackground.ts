@@ -1,17 +1,29 @@
 import { EndlessBackgroundConfiguration } from "../../configurations/enviroment/endlessBackgroundConfiguration";
 import { EndlessLoopVImages } from "./endlessLoopVImages";
 
+/**
+ * Class that manages endless layers along the Y axis.
+ */
 export class EndlessBackground extends Phaser.GameObjects.Group
 {
-  private endlessImages: Array<EndlessLoopVImages>;
+  /**
+   * List of endless layers.
+   */
+  private endlessLayers: Array<EndlessLoopVImages>;
 
+  /**
+   * Initializes the EndlessBackground instance.
+   * 
+   * @param configuration The configuration of the endless background.
+   * @param canvasHeight The height of the canvas.
+   */
   public init(
     configuration: EndlessBackgroundConfiguration,
     canvasHeight: number
   )
   {
     this.clear(true, true);
-    this.endlessImages = new Array<EndlessLoopVImages>();
+    this.endlessLayers = new Array<EndlessLoopVImages>();
 
     configuration.layers.forEach(layerConfig =>
     {
@@ -23,13 +35,16 @@ export class EndlessBackground extends Phaser.GameObjects.Group
       );
       
       this.add(endlessLoopImage);
-      this.endlessImages.push(endlessLoopImage);
+      this.endlessLayers.push(endlessLoopImage);
     });
   }
 
+  /**
+   * Updates the position of the endless layers.
+   */
   public update()
   {
-    this.endlessImages.forEach(endlessLoopImage =>
+    this.endlessLayers.forEach(endlessLoopImage =>
     {
       endlessLoopImage.updateImagesPositions();
     });

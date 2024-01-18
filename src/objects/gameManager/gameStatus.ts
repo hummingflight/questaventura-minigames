@@ -1,3 +1,6 @@
+/**
+ * Defines the status of the game.
+ */
 export enum GameStatus
 {
   /**

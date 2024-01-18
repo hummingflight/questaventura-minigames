@@ -1,6 +1,9 @@
 import { ScoreManagerConfiguration } from "../../configurations/scoreManager/scoreManagerConfiguration";
 import { IScoreManagerListener } from "./iScoreManagerListener";
 
+/**
+ * Manages the score of the game.
+ */
 export class ScoreManager
 {
   private configuration: ScoreManagerConfiguration;
@@ -8,18 +11,45 @@ export class ScoreManager
   private initialHeight: number;
   private listeners: IScoreManagerListener[];
 
+  /**
+   * Gets the current score of the game.
+   * 
+   * @returns The score of the game.
+   */
+  public getScore(): number
+  {
+    return this.score;
+  }
+
+  /**
+   * Instantiates a new ScoreManager.
+   */
   public constructor()
   {
     this.listeners = [];
   }
 
-  public initLevelConfiguration(scoreManagerConfiguration: ScoreManagerConfiguration, initialHeight: number): void
+  /**
+   * Prepares the ScoreManager for a new level.
+   * 
+   * @param scoreManagerConfiguration The configuration of the score manager.
+   * @param initialHeight The initial height of the player.
+   */
+  public initLevelConfiguration(
+    scoreManagerConfiguration: ScoreManagerConfiguration,
+    initialHeight: number
+  ): void
   {
     this.configuration = scoreManagerConfiguration;
     this.score = 0;
     this.initialHeight = initialHeight;
   }
 
+  /**
+   * Updates this ScoreManager.
+   * 
+   * @param height The height of the player.
+   */
   public update(height: number): void
   {
     this.score = Math.floor((this.initialHeight - height) * this.configuration.pointsPerHeightUnit);    

@@ -1,3 +1,6 @@
+/**
+ * Interface that allows a class to listen to the ScoreManager's events.
+ */
 export interface IScoreManagerListener
 {
   /**

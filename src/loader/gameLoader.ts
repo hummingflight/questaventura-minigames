@@ -1,7 +1,20 @@
 import { LoaderConfiguration } from "../configurations/loader/loaderConfiguration";
 
+/**
+ * Class that loads the game assets into the game according to the given
+ * LoaderConfiguration.
+ */
 export class GameLoader
 {
+
+  /**
+   * Loads the game assets into the game according to the given
+   * LoaderConfiguration.
+   *
+   * @param loaderConfig The LoaderConfiguration that specifies the assets to
+   * load.
+   * @param loader The Phaser loader plugin.
+   */
   public load(
     loaderConfig: LoaderConfiguration,
     loader: Phaser.Loader.LoaderPlugin

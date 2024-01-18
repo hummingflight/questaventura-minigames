@@ -6,6 +6,9 @@ import { PlayerHearts } from "./playerHearts";
 import { PlayerLives } from "./playerLives";
 import { PlayerWarp } from "./playerWarp";
 
+/**
+ * Class that represents a player of the game.
+ */
 export class Player extends Phaser.Physics.Arcade.Sprite
 {
   private canvasHeight: number;
@@ -36,6 +39,13 @@ export class Player extends Phaser.Physics.Arcade.Sprite
     this.playerWarp = new PlayerWarp();
   }
 
+  /**
+   * Initialize this Player with the given parameters.
+   * 
+   * @param configuration The configuration of this Player.
+   * @param canvasWidth The width of the canvas.
+   * @param canvasHeight The height of the canvas.
+   */
   public init(
     configuration: PlayerConfiguration,
     canvasWidth: number,
@@ -71,6 +81,11 @@ export class Player extends Phaser.Physics.Arcade.Sprite
     return this.playerHearts;
   }
 
+  /**
+   * Updates the player logic.
+   * 
+   * @param cameraY The current Y position of the camera.
+   */
   public update(cameraY: number)
   {
     if (this.isOutOfBounds(cameraY, this.canvasHeight))
@@ -98,16 +113,25 @@ export class Player extends Phaser.Physics.Arcade.Sprite
     this.playerListeners.push(listener);
   }
 
+  /**
+   * Moves the player to the left.
+   */
   public moveLeft()
   {
     this.setVelocityX(-this.playerConfiguration.movementVelocity);
   }
 
+  /**
+   * Moves the player to the right.
+   */
   public moveRight()
   {
     this.setVelocityX(this.playerConfiguration.movementVelocity);  
   }
 
+  /**
+   * Stops the player horizontal movement.
+   */
   public stopXMovement()
   {
     this.setVelocityX(0);

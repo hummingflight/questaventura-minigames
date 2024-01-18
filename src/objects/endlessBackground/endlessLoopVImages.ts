@@ -1,7 +1,36 @@
 import { LayersDepthConfiguration } from "../../configurations/layersDepthConfiguration";
 
+/**
+ * Class that represents a set of images that are displayed in a loop along the
+ * Y axis.
+ */
 export class EndlessLoopVImages extends Phaser.GameObjects.Container
 {
+  /**
+   * List of images that compund the endless loop.
+   */
+  private _m_imagesContainer: Phaser.GameObjects.Container;
+
+  /**
+   * The height of a single image texture.
+   */
+  private _m_imageHeight: number;
+
+  /**
+   * The height of the canvas that this EndlessLoopVImages instance covers.
+   */
+  private _m_canvasHeight: number;
+
+  /**
+   * The number of images that this EndlessLoopVImages instance has.
+   */
+  private _m_numImages: number;
+
+  /**
+   * the depth of the image.
+   */
+  private _m_depth: number;
+
   /**
    * Constructor.
    * 
@@ -70,29 +99,4 @@ export class EndlessLoopVImages extends Phaser.GameObjects.Container
       this._m_imagesContainer.add(image);
     }
   }
-
-  /**
-   * List of images that compund the endless loop.
-   */
-  private _m_imagesContainer: Phaser.GameObjects.Container;
-
-  /**
-   * The height of a single image texture.
-   */
-  private _m_imageHeight: number;
-
-  /**
-   * The height of the canvas that this EndlessLoopVImages instance covers.
-   */
-  private _m_canvasHeight: number;
-
-  /**
-   * The number of images that this EndlessLoopVImages instance has.
-   */
-  private _m_numImages: number;
-
-  /**
-   * the depth of the image.
-   */
-  private _m_depth: number;
 }

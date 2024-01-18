@@ -30,7 +30,7 @@ export class PlayerLives
   }
 
   /**
-   * Lose a life. Notifies the listeners.
+   * Lose a life.
    */
   public loseLife(): void
   {
@@ -39,7 +39,7 @@ export class PlayerLives
   }
 
   /**
-   * Get a life. Notifies the listeners.
+   * Adds a life.
    */
   public getLife(): void
   {

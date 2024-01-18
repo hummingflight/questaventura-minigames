@@ -4,6 +4,9 @@ import { PadsManagerConfiguration } from "../../configurations/padsManager/padsM
 import { PadsRowConfiguration } from "../../configurations/padsManager/padsRowConfiguration";
 import { Pad } from "./pad";
 
+/**
+ * Manages the pads of the game.
+ */
 export class PadsManager
 {  
   /**
@@ -51,6 +54,11 @@ export class PadsManager
     return this.physicsStaticGroup;
   }
 
+  /**
+   * Instantiates a new PadsManager.
+   * 
+   * @param scene The scene of the game.
+   */
   public constructor(scene: Phaser.Scene)
   {
     this.scene = scene;
@@ -60,7 +68,7 @@ export class PadsManager
   }
 
   /**
-   * Initializes the pads manager.
+   * Prepares the pads manager for a new level.
    * 
    * @param configuration The configuration of the pads manager.
    * @param gameViewConfiguration The configuration of the game view.
@@ -78,6 +86,11 @@ export class PadsManager
     this.onLevelReset();
   }
 
+  /**
+   * Updates the pads manager.
+   * 
+   * @param currentViewTopValue The current top value of the view.
+   */
   public update(currentViewTopValue: number)
   {
     this.updatePads(currentViewTopValue);

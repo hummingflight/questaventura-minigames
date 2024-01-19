@@ -18,6 +18,11 @@ export class PadsManagerConfiguration
   public pads: Array<PadConfiguration>;
 
   /**
+   * Indicates the key of a safe pad. Used to fill the first row of the game.
+   */
+  public safePad: String;
+
+  /**
    * The pads chance of the game.
    */
   public padsChance: Array<PadChanceConfiguration>;

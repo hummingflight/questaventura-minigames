@@ -116,6 +116,45 @@ export class PadsManager
 
     this.inGamePads = new Array<Pad>();
     this.lastPadHeight = this.gameViewConfiguration.canvasHeight;
+
+    this.placeSafeRow(0);
+    this.placeSafeRow(3);
+    this.placeSafeRow(3);
+    this.placeSafeRow(3);
+  }
+
+  /**
+   * Place a row of safe pads.
+   */
+  private placeSafeRow(numPads: number)
+  {
+    let safePadConfiguration: PadConfiguration;
+    for (let i = 0; i < this.configuration.pads.length; i++)
+    {
+      if (this.configuration.pads[i].key == this.configuration.safePad)
+      {
+        safePadConfiguration = this.configuration.pads[i];
+        break;
+      }
+    }
+
+    if (safePadConfiguration == null)
+    {
+      console.error("No safe pad configuration found");
+      return;
+    }
+
+    let yPosition = this.lastPadHeight - this.configuration.inBetweenVSpace;
+    let inBetweenHSpace = this.gameViewConfiguration.canvasWidth / (numPads + 1);
+    let xPosition = inBetweenHSpace;
+
+    for (let i = 0; i < numPads; i++)
+    {
+      this.placePad(xPosition, yPosition, safePadConfiguration);
+      xPosition += inBetweenHSpace;
+    }
+    
+    this.lastPadHeight -= this.configuration.inBetweenVSpace;
   }
 
   /**
@@ -152,11 +191,10 @@ export class PadsManager
 
     for (let i = 0; i < padsRowConfiguration.numPads; i++)
     {
-      this.placePad(xPosition, yPosition);
+      this.placeRandomPad(xPosition, yPosition);
       xPosition += inBetweenHSpace;
     }
   }
-
   /**
    * Updates the pads. If a pad is out of bounds, it will be removed from the
    * in game pads and added to the idle pads.
@@ -180,21 +218,33 @@ export class PadsManager
   }
 
   /**
-   * Place a pad at the given y position. If there are no idle pads, a new pad
-   * will be created.
+   * Place a random pad at the given y position. If there are no idle pads, a
+   * new pad will be created.
    *
    * @param xPosition The x position of the pad.
    * @param yPosition The y position of the pad.
    */
-  private placePad(xPosition: number, yPosition: number)
+  private placeRandomPad(xPosition: number, yPosition: number)
   {
     let padConfiguration = this.getRandomPadConfiguration();
     if (padConfiguration == null)
     {
       console.error("No pad configuration found");
       return;
-    }      
+    }
 
+    this.placePad(xPosition, yPosition, padConfiguration);
+  }
+
+   /**
+   * Place a pad at the given y position. If there are no idle pads, a new pad
+   * will be created.
+   *
+   * @param xPosition The x position of the pad.
+   * @param yPosition The y position of the pad.
+   */
+  private placePad(xPosition: number, yPosition: number, padConfiguration: PadConfiguration)
+  {
     if (this.idlePads.length == 0)
     {
       let pad = this.createPad(

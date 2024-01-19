@@ -69,6 +69,8 @@
       }
     ],
 
+    "safePad":"pad1",
+
     "padsChance": [
       {
         "key": "pad1",

@@ -9,6 +9,14 @@ export class PlayerLives
   private listeners: IPlayerLivesListener[];
 
   /**
+   * Instantiates a new PlayerLives.
+   */
+  public constructor()
+  {
+    this.listeners = [];
+  }
+
+  /**
    * Initializes the player lives.
    * 
    * @param lives The initial number of lives.
@@ -16,7 +24,7 @@ export class PlayerLives
   public init(lives: number): void
   {
     this.lives = lives;
-    this.listeners = [];
+    this.listeners.forEach((listener) => listener.onLivesChanged(this.lives));
   }
 
   /**

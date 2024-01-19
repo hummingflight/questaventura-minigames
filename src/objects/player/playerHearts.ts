@@ -8,10 +8,23 @@ export class PlayerHearts
   private hearts: number;
   private listeners: IPlayerHeartsListener[];
 
+  /**
+   * Instantiates a new PlayerHearts.
+   */
+  public constructor()
+  {
+    this.listeners = [];
+  }
+
+  /**
+   * Initializes the player's hearts.
+   * 
+   * @param numHearts The number of hearts.
+   */
   public init(numHearts: number): void
   {
     this.hearts = numHearts;
-    this.listeners = [];
+    this.listeners.forEach((listener) => listener.onHeartsChanged(this.hearts));
   }
 
   /**

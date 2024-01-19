@@ -16,4 +16,11 @@ export interface IPlayerLivesListener
    * @param lives The number of lives left.
    */
   onGetLife(lives: number): void;
+
+  /**
+   * Called when the number of lives changes.
+   * 
+   * @param lives The number of lives left.
+   */
+  onLivesChanged(lives: number): void;
 }

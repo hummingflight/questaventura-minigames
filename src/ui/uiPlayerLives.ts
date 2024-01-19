@@ -1,16 +1,20 @@
 import { IPlayerLivesListener } from "../objects/player/iPlayerLivesListener";
 
 export class UiPlayerLives implements IPlayerLivesListener
-{ 
+{
   private livesText: Phaser.GameObjects.Text;
 
-  onLoseLife(lives: number): void {
+  public onLoseLife(lives: number): void {
     this.livesText.text = "Lives: " + lives.toString();
   }
 
-  onGetLife(lives: number): void {
+  public onGetLife(lives: number): void {
     this.livesText.text = "Lives: " + lives.toString();
   }
+
+  public onLivesChanged(lives: number): void {
+    this.livesText.text = "Lives: " + lives.toString();
+  } 
 
   public init(
     scene: Phaser.Scene,

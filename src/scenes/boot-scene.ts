@@ -5,7 +5,7 @@ export class BootScene extends Phaser.Scene
   }
 
   preload(): void {
-    this.load.text('game-config', '../assets/configs/game_config.json');    
+    this.load.text('game-config', './assets/configs/game_config.json');    
   }
 
   create(): void {

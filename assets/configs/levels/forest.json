@@ -36,11 +36,11 @@
         },
         {
           "imageKey" : "sides",
-          "depth": 0
+          "depth": 0.1
         },
         {
           "imageKey" : "decor",
-          "depth": 0
+          "depth": 0.1
         }
       ]
     }

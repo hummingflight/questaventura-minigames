@@ -201,7 +201,8 @@ export class GameManager implements IScoreManagerListener, IPlayerListener
     this.inputManager = new InputManager();
     this.inputManager.init(
       this.scene,
-      this.getPlayer()
+      this.getPlayer(),
+      gameConfiguration.gameView.canvasWidth * 0.5
     );
 
     // Setup the listeners.

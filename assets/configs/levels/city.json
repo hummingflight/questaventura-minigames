@@ -36,7 +36,7 @@
         },
         {
           "imageKey" : "city_sides",
-          "depth": 0
+          "depth": 0.1
         }
       ]
     }

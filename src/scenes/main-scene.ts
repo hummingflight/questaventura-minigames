@@ -1,7 +1,6 @@
 import { GameConfiguration } from '../configurations/gameConfiguration';
 import { GameManager } from '../objects/gameManager/gameManager';
 import { UiManager } from '../ui/uiManager/uiManager';
-import { init_gamebox } from '../utilities/documentUtils';
 
 export class MainScene extends Phaser.Scene {
   constructor() {
@@ -18,7 +17,7 @@ export class MainScene extends Phaser.Scene {
       this.game.cache.text.get('game-config')
     );
 
-    this.prepareGameDivContainer();
+    
 
     this._gameManager = new GameManager();
     this._gameManager.init(gameConfiguration, this);
@@ -37,15 +36,6 @@ export class MainScene extends Phaser.Scene {
   {
     this._gameManager.update();
     this._uiManger.update();
-  }
-
-  private prepareGameDivContainer()
-  {
-    // The scale mode should fit the game's container.
-    this.game.scale.scaleMode = Phaser.Scale.ScaleModes.FIT;
-
-    // initialize the game's container.
-    init_gamebox();
   }
   
   private _gameManager: GameManager;

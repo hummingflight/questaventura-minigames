@@ -18,6 +18,7 @@
     "forest",
     "city"
   ],
+
   "loader" : 
   {
     "assetFolderPath": "../assets/",
@@ -121,6 +122,52 @@
         "key": "font_a",
         "textureURL": "bitmapfonts/azo-fire.png",
         "fontDataURL": "bitmapfonts/azo-fire.xml"
+      }
+    ],
+
+    "audio": [
+      {
+        "key": "jump-01",
+        "url": ["sounds/jump-01.mp3"]
+      },
+      {
+        "key": "jump-02",
+        "url": ["sounds/jump-02.mp3"]
+      },
+      {
+        "key": "jump-03",
+        "url": ["sounds/jump-03.mp3"]
+      }
+    ]
+  },
+
+  "audio" : {
+    "sounds": [
+      {
+        "key": "jump-01",
+        "audioKey": "jump-01",
+        "volume": 1,
+        "loop": false
+      },
+      {
+        "key": "jump-02",
+        "audioKey": "jump-02",
+        "volume": 1,
+        "loop": false
+      },
+      {
+        "key": "jump-03",
+        "audioKey": "jump-03",
+        "volume": 1,
+        "loop": false
+      }
+    ],
+
+    "commands": [
+      {
+        "type": "playRandomSound",
+        "key": "jump",
+        "audioKeys": ["jump-01", "jump-02", "jump-03"]
       }
     ]
   }

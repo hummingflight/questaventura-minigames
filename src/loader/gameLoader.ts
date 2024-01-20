@@ -20,11 +20,13 @@ export class GameLoader
     loader: Phaser.Loader.LoaderPlugin
   )
   {
+    loader.path = loaderConfig.assetFolderPath;
+
     // Load levels
     loaderConfig.levelsConfig.forEach(levelLoadConfig => {
       loader.text(
         levelLoadConfig.key,
-        loaderConfig.assetFolderPath + levelLoadConfig.path
+        levelLoadConfig.path
       )
     });
 
@@ -33,7 +35,7 @@ export class GameLoader
     { 
       loader.image(
         imageLoadConfig.key,
-        loaderConfig.assetFolderPath + imageLoadConfig.path
+        imageLoadConfig.path
       );  
     });
 
@@ -42,9 +44,15 @@ export class GameLoader
     {
       loader.bitmapFont(
         bitmapFontLoadConfig.key,
-        loaderConfig.assetFolderPath + bitmapFontLoadConfig.textureURL,
-        loaderConfig.assetFolderPath + bitmapFontLoadConfig.fontDataURL
+        bitmapFontLoadConfig.textureURL,
+        bitmapFontLoadConfig.fontDataURL
       );
+    });
+
+    // Load Audio
+    loaderConfig.audio.forEach(audioLoadConfig =>
+    {
+      loader.audio(audioLoadConfig);
     });
   }  
 }

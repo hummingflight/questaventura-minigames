@@ -1,5 +1,6 @@
 import { GameViewConfiguration } from "../../configurations/gameViewConfiguration/gameViewConfiguration";
 import { PlayerConfiguration } from "../../configurations/player/playerConfiguration";
+import { AudioManager } from "../audioManager/audioManager";
 import { Player } from "./player";
 
 /**
@@ -27,13 +28,18 @@ export class PlayerManager
    * @param scene The scene of the game. 
    * @param initialLives The initial lives of the player.
    */
-  public constructor(scene: Phaser.Scene, initialLives: number)
+  public constructor(
+    scene: Phaser.Scene,
+    initialLives: number,
+    audioManager: AudioManager
+  )
   {
     this.player = new Player(
       scene,
       0, 0,
       "",
-      initialLives
+      initialLives,
+      audioManager
     );
   }
 

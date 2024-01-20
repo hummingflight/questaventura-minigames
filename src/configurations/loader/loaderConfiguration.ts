@@ -1,3 +1,4 @@
+import { AudioLoadConfiguration } from "./audioLoadConfiguraiton";
 import { BitmapFontLoadConfiguration } from "./bitmapFontLoadConfiguration";
 import { ImageLoadConfiguration } from "./imageLoadConfiguration";
 import { LevelConfigLoadConfiguration } from "./levelLoadConfiguration";
@@ -23,4 +24,9 @@ export class LoaderConfiguration
    * List of bitmap fonts to load.
    */
   public bitmapFonts: Array<BitmapFontLoadConfiguration>;
+
+  /**
+   * List of audio to load.
+   */
+  public audio: Array<AudioLoadConfiguration>;
 }

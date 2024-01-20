@@ -1,5 +1,6 @@
 import { GameConfiguration } from "../../configurations/gameConfiguration";
 import { LevelConfiguration } from "../../configurations/levelConfiguration";
+import { AudioManager } from "../audioManager/audioManager";
 import { CollisionManager } from "../collisionManager/collisionManager";
 import { EnviromentManager } from "../enviromentManager/enviromentManager";
 import { InputManager } from "../inputManager/inputManager";
@@ -33,6 +34,7 @@ export class GameManager implements IScoreManagerListener, IPlayerListener
   private padsManager: PadsManager;
   private playerManager: PlayerManager;
   private collisionManager: CollisionManager;
+  private audioManager: AudioManager;
   private levelConfiguration: LevelConfiguration;
   private scene: Phaser.Scene;
 
@@ -81,6 +83,21 @@ export class GameManager implements IScoreManagerListener, IPlayerListener
     return this.collisionManager;
   }
 
+  /**
+   * Gets the AudioManager of the game.
+   * 
+   * @returns The AudioManager of the game.
+   */
+  public getAudioManager(): AudioManager
+  {
+    return this.audioManager;
+  }
+
+  /**
+   * Gets the PlayerManager of the game.
+   * 
+   * @returns The PlayerManager of the game.
+   */
   public getPlayerManager(): PlayerManager
   {
     return this.playerManager;
@@ -160,8 +177,19 @@ export class GameManager implements IScoreManagerListener, IPlayerListener
 
     this.enviromentManager = new EnviromentManager(this.scene);
     this.padsManager = new PadsManager(this.scene);
-    this.playerManager = new PlayerManager(this.scene, gameConfiguration.playerInitialLifes);
     this.scoreManager = new ScoreManager();
+
+    this.audioManager = new AudioManager();
+    this.audioManager.init(
+      this.scene,
+      gameConfiguration.audio
+    );
+    
+    this.playerManager = new PlayerManager(
+      this.scene,
+      gameConfiguration.playerInitialLifes,
+      this.audioManager
+    );
 
     this.collisionManager = new CollisionManager();
     this.collisionManager.init(

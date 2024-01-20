@@ -1,9 +1,11 @@
 import { LayersDepthConfiguration } from "../../configurations/layersDepthConfiguration";
 import { PlayerConfiguration } from "../../configurations/player/playerConfiguration";
+import { AudioManager } from "../audioManager/audioManager";
 import { Pad } from "../padsManager/pad";
 import { IPlayerListener } from "./iPlayerListener";
 import { PlayerHearts } from "./playerHearts";
 import { PlayerLives } from "./playerLives";
+import { PlayerSounds } from "./playerSounds";
 import { PlayerWarp } from "./playerWarp";
 
 /**
@@ -18,13 +20,15 @@ export class Player extends Phaser.Physics.Arcade.Sprite
   private playerHearts: PlayerHearts;
   private playerLives: PlayerLives;
   private playerWarp: PlayerWarp;
+  private playerSounds: PlayerSounds;
 
   public constructor(
     scene: Phaser.Scene,
     x: number,
     y: number,
     texture: string,
-    initialLives: number
+    initialLives: number,
+    audioManager: AudioManager
   )
   {
     super(scene, x, y, texture);
@@ -37,6 +41,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite
 
     this.playerHearts = new PlayerHearts();
     this.playerWarp = new PlayerWarp();
+    this.playerSounds = new PlayerSounds(audioManager);
   }
 
   /**
@@ -59,6 +64,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite
     
     this.playerHearts.init(configuration.numHearts);
     this.playerWarp.init(this, canvasWidth);
+    this.playerSounds.init();
   }
 
   /**
@@ -149,7 +155,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite
       if (pad.getPadConfiguration().type == "dangerous")
         this.playerHearts.loseHeart();
 
-      this.setVelocityY(-this.playerConfiguration.jumpVelocity);
+      this.jump();
     }
   }
 
@@ -167,5 +173,14 @@ export class Player extends Phaser.Physics.Arcade.Sprite
   ): boolean
   {
     return this.y > (currentViewTopValue + canvasHeight);
+  }
+
+  /**
+   * Makes the player jump.
+   */
+  private jump()
+  {
+    this.setVelocityY(-this.playerConfiguration.jumpVelocity);
+    this.playerSounds.playJumpSound();
   }
 }

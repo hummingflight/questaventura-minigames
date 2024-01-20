@@ -1,3 +1,4 @@
+import { AudioManagerConfiguration } from "./audioManagerConfiguration/audioManagerConfiguration";
 import { GameEffectsConfiguration } from "./gameEffectsConfiguration/gameEffectsConfiguration";
 import { GameViewConfiguration } from "./gameViewConfiguration/gameViewConfiguration";
 import { LoaderConfiguration } from "./loader/loaderConfiguration";
@@ -38,4 +39,9 @@ export class GameConfiguration
    * The configuration of the game effects.
    */
   public gameEffects: GameEffectsConfiguration;
+
+  /**
+   * The configuration of the audio manager.
+   */
+  public audio: AudioManagerConfiguration;
 }

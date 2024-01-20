@@ -21,7 +21,7 @@
 
   "loader" : 
   {
-    "assetFolderPath": "../assets/",
+    "assetFolderPath": "./assets/",
 
     "levelsConfig": [
       {

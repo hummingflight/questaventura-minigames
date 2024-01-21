@@ -9,7 +9,7 @@ export const GameConfig: Phaser.Types.Core.GameConfig = {
   version: '1.0',
   width: 1080,
   height: 1920,
-  backgroundColor: 0x3a404d,
+  backgroundColor: 0x000000,
   type: Phaser.WEBGL,
   parent: 'phaser-game',
   autoCenter: Phaser.Scale.CENTER_BOTH,

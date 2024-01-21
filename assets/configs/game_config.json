@@ -36,6 +36,14 @@
 
     "images": [
       {
+        "key": "menu-bg",
+        "path": "images/menu-bg.png"
+      },
+      {
+        "key": "menu-btn-start",
+        "path": "images/menu-btn-start.png"
+      },
+      {
         "key": "sky",
         "path": "images/sky.png"
       },

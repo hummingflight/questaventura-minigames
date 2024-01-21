@@ -1,6 +1,7 @@
 import { BootScene } from './scenes/boot-scene';
 import { LoaderScene } from './scenes/loader-scene';
 import { MainScene } from './scenes/main-scene';
+import { MenuScene } from './scenes/menu-scene';
 
 export const GameConfig: Phaser.Types.Core.GameConfig = {
   title: 'questaventura-minigame',
@@ -20,5 +21,5 @@ export const GameConfig: Phaser.Types.Core.GameConfig = {
       debug: true
     }
   },
-  scene: [BootScene, LoaderScene, MainScene]
+  scene: [BootScene, LoaderScene, MenuScene, MainScene]
 };

@@ -11,7 +11,7 @@
     "fadeout": 500
   },
 
-  "playerInitialLifes": 3,
+  "playerInitialLifes": 1,
 
   "initialLevelIdx": 0, 
   "levels":[
@@ -42,6 +42,10 @@
       {
         "key": "menu-btn-start",
         "path": "images/menu-btn-start.png"
+      },
+      {
+        "key": "ui-btn-restart",
+        "path": "images/btn-restart.png"
       },
       {
         "key": "sky",

@@ -291,6 +291,21 @@ export class GameManager implements IScoreManagerListener, IPlayerListener
     this.listeners.push(listener);
   }
 
+  /**
+   * Restarts the game from the first level.
+   */
+  public restartGame(): void
+  {
+    if (this.gameStatus === GameStatus.RESTARTING)
+      return;
+
+    this.gameStatus = GameStatus.RESTARTING;
+    this.scene.cameras.main.once('camerafadeoutcomplete', function (camera: Phaser.Cameras.Scene2D.Camera) {
+      this.scene.scene.restart();
+    }, this);
+    this.scene.cameras.main.fadeOut(this.gameConfiguration.gameEffects.fadeout);
+  }
+
    /**
    * Starts the next level.
    */

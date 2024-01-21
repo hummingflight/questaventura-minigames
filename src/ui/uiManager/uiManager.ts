@@ -27,7 +27,7 @@ export class UiManager
 
     // Setup UI elements
     this.uiWonLosePopup = new UiWonLosePopup();
-    this.uiWonLosePopup.init(scene, this.container, canvasWidth, canvasHeight);
+    this.uiWonLosePopup.init(scene, this.container, canvasWidth, canvasHeight, gameManager);
 
     this.uiScore = new UiScore();
     this.uiScore.init(scene, this.container, canvasWidth);

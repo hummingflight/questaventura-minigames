@@ -26,5 +26,10 @@ export enum GameStatus
   /**
    * The game is stopped.
    */
-  STOPPED
+  STOPPED,
+
+  /**
+   * The game is restarting.
+   */
+  RESTARTING
 }

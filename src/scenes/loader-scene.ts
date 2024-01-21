@@ -71,7 +71,6 @@ export class LoaderScene extends Phaser.Scene
       this.loadbar.setTexture('loadbar_3');
 
     this.loadbar.setCrop(0, 0, this.loadbarWidth * value, this.loadbarHeight);
-    console.log(value);
   }
 
   private onProgressComplete(): void

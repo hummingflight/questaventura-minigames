@@ -49,7 +49,7 @@
   "scoreManager":
   {
     "scoreToWin": 1000,
-    "pointsPerHeightUnit": 0.5
+    "pointsPerHeightUnit": 0.05
   },
 
   "padsManager":

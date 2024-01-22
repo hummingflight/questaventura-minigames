@@ -2,6 +2,7 @@ import { GameConfiguration } from "../../configurations/gameConfiguration";
 import { LevelConfiguration } from "../../configurations/levelConfiguration";
 import { AudioManager } from "../audioManager/audioManager";
 import { CollisionManager } from "../collisionManager/collisionManager";
+import { EffectsManager } from "../effectsManager/effectsManager";
 import { EnviromentManager } from "../enviromentManager/enviromentManager";
 import { InputManager } from "../inputManager/inputManager";
 import { PadsManager } from "../padsManager/padsManager";
@@ -34,6 +35,7 @@ export class GameManager implements IScoreManagerListener, IPlayerListener
   private padsManager: PadsManager;
   private playerManager: PlayerManager;
   private collisionManager: CollisionManager;
+  private effectsManager: EffectsManager;
   private audioManager: AudioManager;
   private levelConfiguration: LevelConfiguration;
   private scene: Phaser.Scene;
@@ -173,7 +175,15 @@ export class GameManager implements IScoreManagerListener, IPlayerListener
     this.scene = scene;
     this.halfHeight = gameConfiguration.gameView.canvasHeight / 2;    
 
+    // Create animations
+    
+    gameConfiguration.animations.forEach((animation) => {
+      this.scene.anims.create(animation);
+    });
+
     // Prepare Managers.
+    this.effectsManager = new EffectsManager();
+    this.effectsManager.init(this.scene, gameConfiguration.effects);
 
     this.enviromentManager = new EnviromentManager(this.scene);
     this.padsManager = new PadsManager(this.scene);
@@ -188,7 +198,8 @@ export class GameManager implements IScoreManagerListener, IPlayerListener
     this.playerManager = new PlayerManager(
       this.scene,
       gameConfiguration.playerInitialLifes,
-      this.audioManager
+      this.audioManager,
+      this.effectsManager
     );
 
     this.collisionManager = new CollisionManager();

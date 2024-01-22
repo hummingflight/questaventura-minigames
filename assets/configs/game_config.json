@@ -36,6 +36,38 @@
 
     "images": [
       {
+        "key": "jump-land-01",
+        "path": "images/land_01.png"
+      },
+      {
+        "key": "jump-land-02",
+        "path": "images/land_02.png"
+      },
+      {
+        "key": "jump-land-03",
+        "path": "images/land_03.png"
+      },
+      {
+        "key": "jump-land-04",
+        "path": "images/land_04.png"
+      },
+      {
+        "key": "jump-land-05",
+        "path": "images/land_05.png"
+      },
+      {
+        "key": "jump-land-06",
+        "path": "images/land_06.png"
+      },
+      {
+        "key": "jump-land-07",
+        "path": "images/land_07.png"
+      },
+      {
+        "key": "jump-land-08",
+        "path": "images/land_08.png"
+      },
+      {
         "key": "ui-heart",
         "path": "images/ui-heart.png"
       },
@@ -190,5 +222,35 @@
         "audioKeys": ["jump-01", "jump-02", "jump-03"]
       }
     ]
+  },
+
+  "animations" : [
+    {
+      "key": "jump-land",
+      "frames": [
+          { "key": "jump-land-01" },
+          { "key": "jump-land-02" },
+          { "key": "jump-land-03" },
+          { "key": "jump-land-04" },
+          { "key": "jump-land-05" },
+          { "key": "jump-land-06" },
+          { "key": "jump-land-07" },
+          { "key": "jump-land-08" }
+      ],
+      "frameRate": 24
+    }
+  ],
+
+  "effects": {
+    "jump" : 
+    {
+      "initialPoolSize": 3,
+      "effectConfiguration": {
+        "originX": 0.5,
+        "originY": 1,
+        "initialFrame": "jump-land-01",
+        "animationKey": "jump-land"
+      }
+    }
   }
 }

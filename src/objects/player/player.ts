@@ -1,6 +1,7 @@
 import { LayersDepthConfiguration } from "../../configurations/layersDepthConfiguration";
 import { PlayerConfiguration } from "../../configurations/player/playerConfiguration";
 import { AudioManager } from "../audioManager/audioManager";
+import { EffectsManager } from "../effectsManager/effectsManager";
 import { Pad } from "../padsManager/pad";
 import { IPlayerListener } from "./iPlayerListener";
 import { PlayerHearts } from "./playerHearts";
@@ -21,6 +22,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite
   private playerLives: PlayerLives;
   private playerWarp: PlayerWarp;
   private playerSounds: PlayerSounds;
+  private effectsManager: EffectsManager;
 
   public constructor(
     scene: Phaser.Scene,
@@ -28,7 +30,8 @@ export class Player extends Phaser.Physics.Arcade.Sprite
     y: number,
     texture: string,
     initialLives: number,
-    audioManager: AudioManager
+    audioManager: AudioManager,
+    effectsManager: EffectsManager
   )
   {
     super(scene, x, y, texture);
@@ -42,6 +45,8 @@ export class Player extends Phaser.Physics.Arcade.Sprite
     this.playerHearts = new PlayerHearts();
     this.playerWarp = new PlayerWarp();
     this.playerSounds = new PlayerSounds(audioManager);
+
+    this.effectsManager = effectsManager;
   }
 
   /**
@@ -182,5 +187,6 @@ export class Player extends Phaser.Physics.Arcade.Sprite
   {
     this.setVelocityY(-this.playerConfiguration.jumpVelocity);
     this.playerSounds.playJumpSound();
+    this.effectsManager.playJump(this.x, this.y + this.height / 2);
   }
 }

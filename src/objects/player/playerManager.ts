@@ -1,6 +1,7 @@
 import { GameViewConfiguration } from "../../configurations/gameViewConfiguration/gameViewConfiguration";
 import { PlayerConfiguration } from "../../configurations/player/playerConfiguration";
 import { AudioManager } from "../audioManager/audioManager";
+import { EffectsManager } from "../effectsManager/effectsManager";
 import { Player } from "./player";
 
 /**
@@ -31,7 +32,8 @@ export class PlayerManager
   public constructor(
     scene: Phaser.Scene,
     initialLives: number,
-    audioManager: AudioManager
+    audioManager: AudioManager,
+    effectsManager: EffectsManager
   )
   {
     this.player = new Player(
@@ -39,7 +41,8 @@ export class PlayerManager
       0, 0,
       "",
       initialLives,
-      audioManager
+      audioManager,
+      effectsManager
     );
   }
 

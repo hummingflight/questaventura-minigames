@@ -3,8 +3,8 @@
 
   "player": {
     "spriteKey": "player",
-    "scaleX": 0.2,
-    "scaleY": 0.2,
+    "scaleX": 1,
+    "scaleY": 1,
     "jumpVelocity": 600,
     "movementVelocity": 200,
     "numHearts": 3

@@ -1,4 +1,5 @@
 import { AudioManagerConfiguration } from "./audioManagerConfiguration/audioManagerConfiguration";
+import { EffectsManagerConfiguration } from "./effectsConfiguration/effectsManagerConfiguration";
 import { GameEffectsConfiguration } from "./gameEffectsConfiguration/gameEffectsConfiguration";
 import { GameViewConfiguration } from "./gameViewConfiguration/gameViewConfiguration";
 import { LoaderConfiguration } from "./loader/loaderConfiguration";
@@ -44,4 +45,14 @@ export class GameConfiguration
    * The configuration of the audio manager.
    */
   public audio: AudioManagerConfiguration;
+
+  /**
+   * The configuration of the animations.
+   */
+  public animations: Array<object>;
+
+  /**
+   * The configuration of the effects.
+   */
+  public effects: EffectsManagerConfiguration;
 }

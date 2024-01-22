@@ -36,6 +36,14 @@
 
     "images": [
       {
+        "key": "ui-heart",
+        "path": "images/ui-heart.png"
+      },
+      {
+        "key": "ui-star",
+        "path": "images/ui-star.png"
+      },
+      {
         "key": "menu-bg",
         "path": "images/menu-bg.png"
       },

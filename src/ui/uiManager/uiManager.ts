@@ -43,7 +43,8 @@ export class UiManager
     this.uiPlayerLives.init(
       scene,
       this.container,
-      gameManager.getPlayer().getLives().getLives()
+      gameManager.getPlayer().getLives().getLives(),
+      canvasWidth
     );
 
     // Setup listeners

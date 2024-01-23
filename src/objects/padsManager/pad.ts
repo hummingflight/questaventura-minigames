@@ -54,6 +54,8 @@ export class Pad extends Phaser.Physics.Arcade.Sprite
       padConfiguration.scaleY
     );
 
+    this.body.checkCollision.left = false;
+    this.body.checkCollision.right = false;
     this.body.checkCollision.down = false;
     this.refreshBody();
   }

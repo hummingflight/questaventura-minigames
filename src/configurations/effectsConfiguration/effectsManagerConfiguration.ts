@@ -1,6 +1,6 @@
-import { EffectPoolConfiguration } from "./effectPoolConfiguration";
+import { effectSimpleConfiguration } from "./effectSimpleConfiguration";
 
 export class EffectsManagerConfiguration 
 {
-  jump: EffectPoolConfiguration;
+  simpleEffects: Array<effectSimpleConfiguration>;
 }

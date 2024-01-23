@@ -4,7 +4,7 @@ import { EffectPool } from "./effectPool";
 
 export class EffectsManager
 {
-  private jumpPool: EffectPool;
+  private simpleEffects: Map<String, EffectPool>;
   private effectsContainer: Phaser.GameObjects.Container;
 
   public init(scene: Phaser.Scene, config: EffectsManagerConfiguration)
@@ -12,12 +12,21 @@ export class EffectsManager
     this.effectsContainer = scene.add.container();
     this.effectsContainer.setDepth(LayersDepthConfiguration.EFFECTS);
 
-    this.jumpPool = new EffectPool();
-    this.jumpPool.init(scene, this.effectsContainer, config.jump);
+    this.simpleEffects = new Map<String, EffectPool>();
+    for (let effect of config.simpleEffects)
+    {
+      let pool = new EffectPool();
+      pool.init(scene, this.effectsContainer, effect.poolSettings);
+      
+      this.simpleEffects.set(effect.key, pool);
+    }
   }
 
-  public playJump(x: number, y: number)
+  public playSimpleEffect(key: string, x: number, y: number)
   {
-    this.jumpPool.playEffect(x, y);
+    if (!this.simpleEffects.has(key))
+      return;
+
+    this.simpleEffects.get(key).playEffect(x, y);
   }
 }

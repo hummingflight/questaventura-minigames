@@ -181,6 +181,18 @@ export class GameManager implements IScoreManagerListener, IPlayerListener
       this.scene.anims.create(animation);
     });
 
+    gameConfiguration.spriteSheetAnimations.forEach((spriteSheetAnimation) => {
+      
+      let settings: any = spriteSheetAnimation.settings;
+      settings.key = spriteSheetAnimation.key;
+      settings.frames = this.scene.anims.generateFrameNumbers(
+        spriteSheetAnimation.spriteSheetKey,
+        spriteSheetAnimation.framesSettings
+      );
+
+      this.scene.anims.create(settings);
+    });
+
     // Prepare Managers.
     this.effectsManager = new EffectsManager();
     this.effectsManager.init(this.scene, gameConfiguration.effects);
@@ -266,11 +278,19 @@ export class GameManager implements IScoreManagerListener, IPlayerListener
       this.levelConfiguration.player,
       this.gameConfiguration.gameView
     );
+
+    this.playerManager.pufPlayerToPosition(
+      this.scene,
+      this.gameConfiguration.gameView.canvasWidth / 2,
+      this.gameConfiguration.gameView.canvasHeight / 2
+    );
     
     this.scoreManager.initLevelConfiguration(
       this.levelConfiguration.scoreManager,
       this.getPlayerY()
     );
+
+    this.scene.cameras.main.fadeIn(this.gameConfiguration.gameEffects.fadein);
   }
 
   public update(): void
@@ -339,9 +359,17 @@ export class GameManager implements IScoreManagerListener, IPlayerListener
     this.gameStatus = GameStatus.STOPPED;
 
     this.scene.cameras.main.once('camerafadeoutcomplete', function (camera: Phaser.Cameras.Scene2D.Camera) {
+      
       this.resetGameManagers();
+
+      this.playerManager.pufPlayerToPosition(
+        this.scene,
+        this.gameConfiguration.gameView.canvasWidth / 2,
+        this.gameConfiguration.gameView.canvasHeight / 2
+      );
+
       this.gameStatus = GameStatus.RUNNING;
-      camera.fadeIn(this.gameConfiguration.gameEffects.fadeIn);
+      camera.fadeIn(this.gameConfiguration.gameEffects.fadein);
     }, this);
 
     this.scene.cameras.main.once('camerafadeincomplete', function (camera: Phaser.Cameras.Scene2D.Camera) {      

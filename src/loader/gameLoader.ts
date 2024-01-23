@@ -49,6 +49,16 @@ export class GameLoader
       );
     });
 
+    // Load Sprie Sheet Animations
+    loaderConfig.spriteSheets.forEach(spriteSheetAnimationLoadConfig =>
+    {
+      loader.spritesheet(
+        spriteSheetAnimationLoadConfig.key,
+        spriteSheetAnimationLoadConfig.path,
+        spriteSheetAnimationLoadConfig.settings
+      );
+    });
+
     // Load Audio
     loaderConfig.audio.forEach(audioLoadConfig =>
     {

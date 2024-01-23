@@ -164,6 +164,18 @@ export class Player extends Phaser.Physics.Arcade.Sprite
     }
   }
 
+  public pauseAndHidePlayer()
+  {
+    this.setVisible(false);
+    this.body.enable = false;
+  }
+
+  public resumeAndShowPlayer()
+  {
+    this.setVisible(true);
+    this.body.enable = true;
+  }
+
   /**
    * Indicates if the player is out of bounds (below the camera view).
    * 
@@ -187,6 +199,6 @@ export class Player extends Phaser.Physics.Arcade.Sprite
   {
     this.setVelocityY(-this.playerConfiguration.jumpVelocity);
     this.playerSounds.playJumpSound();
-    this.effectsManager.playJump(this.x, this.y + this.height / 2);
+    this.effectsManager.playSimpleEffect("jump", this.x, this.y + this.height / 2);
   }
 }

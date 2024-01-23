@@ -2,6 +2,7 @@ import { AudioLoadConfiguration } from "./audioLoadConfiguraiton";
 import { BitmapFontLoadConfiguration } from "./bitmapFontLoadConfiguration";
 import { ImageLoadConfiguration } from "./imageLoadConfiguration";
 import { LevelConfigLoadConfiguration } from "./levelLoadConfiguration";
+import { SpriteSheetLoadConfiguration } from "./spriteSheetLoadConfiguration";
 
 export class LoaderConfiguration 
 {
@@ -29,4 +30,9 @@ export class LoaderConfiguration
    * List of audio to load.
    */
   public audio: Array<AudioLoadConfiguration>;
+
+  /**
+   * List of sprite sheets to load.
+   */
+  public spriteSheets: Array<SpriteSheetLoadConfiguration>;
 }

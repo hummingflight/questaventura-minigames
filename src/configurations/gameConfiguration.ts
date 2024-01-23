@@ -3,6 +3,7 @@ import { EffectsManagerConfiguration } from "./effectsConfiguration/effectsManag
 import { GameEffectsConfiguration } from "./gameEffectsConfiguration/gameEffectsConfiguration";
 import { GameViewConfiguration } from "./gameViewConfiguration/gameViewConfiguration";
 import { LoaderConfiguration } from "./loader/loaderConfiguration";
+import { SpriteSheetAnimationLoadConfiguration } from "./loader/spriteSheetAnimationLoadConfiguration";
 
 export class GameConfiguration
 {
@@ -50,6 +51,11 @@ export class GameConfiguration
    * The configuration of the animations.
    */
   public animations: Array<object>;
+
+  /**
+   * The configuration of the sprite sheet animations.
+   */
+  public spriteSheetAnimations: Array<SpriteSheetAnimationLoadConfiguration>;
 
   /**
    * The configuration of the effects.

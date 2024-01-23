@@ -12,6 +12,8 @@ export class PlayerManager
   private player: Player;
   private playerConfiguration: PlayerConfiguration;
   private gameViewConfiguration: GameViewConfiguration;
+  private effectsManager: EffectsManager;
+  private audioManager: AudioManager;
 
   /**
    * Gets the player instance.
@@ -36,6 +38,8 @@ export class PlayerManager
     effectsManager: EffectsManager
   )
   {
+    this.audioManager = audioManager;
+    this.effectsManager = effectsManager;
     this.player = new Player(
       scene,
       0, 0,
@@ -76,7 +80,7 @@ export class PlayerManager
 
     this.player.body.reset(
       gameViewConfiguration.canvasWidth / 2,
-      gameViewConfiguration.canvasHeight / 2,
+      gameViewConfiguration.canvasHeight / 2
     );
   }
 
@@ -100,5 +104,26 @@ export class PlayerManager
       this.gameViewConfiguration.canvasWidth / 2,
       this.gameViewConfiguration.canvasHeight / 2
     );
+  }
+
+  /**
+   * Called by the GameManager when the level is started.
+   */
+  public pufPlayerToPosition(scene: Phaser.Scene, x: number, y: number): void
+  {
+    this.player.body.reset(x, y);
+    this.player.pauseAndHidePlayer();
+
+    scene.tweens.add({
+      targets: this.player,
+      alpha: 1,
+      duration: 500,
+      ease: "Linear",
+      onComplete: () => {
+        this.player.resumeAndShowPlayer();
+        this.effectsManager.playSimpleEffect("puff", x, y);
+        this.audioManager.playSound("poof");
+      }
+    });
   }
 }

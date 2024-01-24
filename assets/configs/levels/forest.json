@@ -86,18 +86,31 @@
       }
     ],
 
-    "padsRows": [
+    "safePadsRowGenerator": {
+      "type": "distributed",
+      "weight": 1,
+      "randomPadsArrange": false,
+      "padsKey": ["pad1", "pad1", "pad1"]
+    },
+
+    "padsRowGenerators": [
       {
-        "numPads": 1,
-        "chance": 0.3
+        "type": "distributed",
+        "weight": 1,
+        "randomPadsArrange": true,
+        "padsKey": ["pad1"]
       },
       {
-        "numPads": 2,
-        "chance": 0.4
+        "type": "distributed",
+        "weight": 1,
+        "randomPadsArrange": true,
+        "padsKey": ["pad1", "pad2"]
       },
       {
-        "numPads": 3,
-        "chance": 0.3
+        "type": "distributed",
+        "weight": 1,
+        "randomPadsArrange": true,
+        "padsKey": ["pad1", "pad2", "pad1"]
       }
     ]
   }

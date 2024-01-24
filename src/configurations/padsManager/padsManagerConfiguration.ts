@@ -1,6 +1,6 @@
+import { IPadsRowGeneratorConfiguration } from "./IPadsRowGeneratorConfiguration";
 import { PadChanceConfiguration } from "./padChanceConfiguration";
 import { PadConfiguration } from "./padConfiguration";
-import { PadsRowConfiguration } from "./padsRowConfiguration";
 
 /**
 * The pads manager configuration.
@@ -28,7 +28,12 @@ export class PadsManagerConfiguration
   public padsChance: Array<PadChanceConfiguration>;
 
   /**
-   * The pads rows of the game.
+   * The safe pads row generator of the game.
    */
-  public padsRows: Array<PadsRowConfiguration>;
+  public safePadsRowGenerator: IPadsRowGeneratorConfiguration;
+
+  /**
+   * The pads row generators of the game.
+   */
+  public padsRowGenerators: Array<IPadsRowGeneratorConfiguration>;
 }

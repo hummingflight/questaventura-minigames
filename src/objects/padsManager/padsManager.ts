@@ -1,8 +1,9 @@
 import { GameViewConfiguration } from "../../configurations/gameViewConfiguration/gameViewConfiguration";
 import { PadConfiguration } from "../../configurations/padsManager/padConfiguration";
 import { PadsManagerConfiguration } from "../../configurations/padsManager/padsManagerConfiguration";
-import { PadsRowConfiguration } from "../../configurations/padsManager/padsRowConfiguration";
+import { IPadsRowGenerator } from "./IPadsRowGenerator";
 import { Pad } from "./pad";
+import { PadsRowGeneratorFactory } from "./padsRowGeneratorFactory";
 
 /**
  * Manages the pads of the game.
@@ -45,6 +46,21 @@ export class PadsManager
   private physicsStaticGroup: Phaser.Physics.Arcade.StaticGroup;
 
   /**
+   * The pads row generators of the game.
+   */
+  private padsRowGenerators: Array<IPadsRowGenerator>;
+
+  /**
+   * The safe pads row generator of the game.
+   */
+  private safePadsRowGenerator: IPadsRowGenerator;
+
+  /**
+   * The total weight of the pads row generators.
+   */
+  private padsRowGeneratorsTotalWeight: number;
+
+  /**
    * Gets the physics static group of the pads.
    * 
    * @returns The physics static group of the pads.
@@ -83,6 +99,25 @@ export class PadsManager
     this.gameViewConfiguration = gameViewConfiguration;
     this.scene = scene;
 
+    // Create the pads row generators.
+    this.padsRowGeneratorsTotalWeight = 0;
+    this.padsRowGenerators = new Array<IPadsRowGenerator>();
+    for (let i = 0; i < this.configuration.padsRowGenerators.length; i++)
+    {
+      this.padsRowGenerators.push(
+        PadsRowGeneratorFactory.Create(
+          this.gameViewConfiguration,
+          this.configuration.padsRowGenerators[i]
+        )
+      );
+      this.padsRowGeneratorsTotalWeight += this.configuration.padsRowGenerators[i].weight;
+    }
+
+    this.safePadsRowGenerator = PadsRowGeneratorFactory.Create(
+      this.gameViewConfiguration,
+      this.configuration.safePadsRowGenerator
+    );
+
     this.onLevelReset();
   }
 
@@ -95,7 +130,7 @@ export class PadsManager
   {
     this.updatePads(currentViewTopValue);
     
-    while (Math.abs(currentViewTopValue - this.lastPadHeight) >= this.configuration.inBetweenVSpace)
+    while (this.lastPadHeight - currentViewTopValue >= this.configuration.inBetweenVSpace)
     {
       this.placePadsRow(this.lastPadHeight - this.configuration.inBetweenVSpace);
       this.lastPadHeight -= this.configuration.inBetweenVSpace;
@@ -115,86 +150,35 @@ export class PadsManager
     });
 
     this.inGamePads = new Array<Pad>();
-    this.lastPadHeight = this.gameViewConfiguration.canvasHeight;
+    this.lastPadHeight = this.gameViewConfiguration.canvasHeight - this.configuration.inBetweenVSpace;
 
-    this.placeSafeRow(0);
-    this.placeSafeRow(3);
-    this.placeSafeRow(3);
-    this.placeSafeRow(3);
+    this.placeSafeRow();
+    this.placeSafeRow();
+    this.placeSafeRow();
+    this.placeSafeRow();
+  }
+
+  public placePadBykey(x: number, y: number, key: string)
+  {
+    let padConfiguration = this.getPadConfiguration(key);
+    if (padConfiguration == null)
+    {
+      console.error("No pad configuration found for: " + key);
+      return;
+    }
+
+    this.placePad(x, y, padConfiguration);
   }
 
   /**
    * Place a row of safe pads.
    */
-  private placeSafeRow(numPads: number)
+  private placeSafeRow()
   {
-    let safePadConfiguration: PadConfiguration;
-    for (let i = 0; i < this.configuration.pads.length; i++)
-    {
-      if (this.configuration.pads[i].key == this.configuration.safePad)
-      {
-        safePadConfiguration = this.configuration.pads[i];
-        break;
-      }
-    }
-
-    if (safePadConfiguration == null)
-    {
-      console.error("No safe pad configuration found");
-      return;
-    }
-
-    let yPosition = this.lastPadHeight - this.configuration.inBetweenVSpace;
-    let inBetweenHSpace = this.gameViewConfiguration.canvasWidth / (numPads + 1);
-    let xPosition = inBetweenHSpace;
-
-    for (let i = 0; i < numPads; i++)
-    {
-      this.placePad(xPosition, yPosition, safePadConfiguration);
-      xPosition += inBetweenHSpace;
-    }
-    
     this.lastPadHeight -= this.configuration.inBetweenVSpace;
+    this.safePadsRowGenerator.generateRow(this, this.lastPadHeight);
   }
 
-  /**
-   * Places a row of pads at the given y position. The pads will be placed
-   * according to the configuration. If there are no idle pads, new pads will
-   * be created.
-   * 
-   * @param yPosition  The y position of the row.
-   */
-  private placePadsRow(yPosition: number)
-  {
-    let padRowsConfiguration = this.getRandomPadsRowConfiguration();
-    if (padRowsConfiguration == null)
-    {
-      console.error("No pad row configuration found");
-      return;
-    }
-
-    this.placePadsRowByConfig(yPosition, padRowsConfiguration);
-  }
-
-  /**
-   * Places a row of pads at the given y position. The pads will be placed
-   * according to the given configuration. If there are no idle pads, new pads
-   * will be created.
-   * 
-   * @param yPosition The y position of the row. 
-   * @param padsRowConfiguration The configuration of the row.
-   */
-  private placePadsRowByConfig(yPosition: number, padsRowConfiguration: PadsRowConfiguration)
-  {
-    let inBetweenHSpace = this.gameViewConfiguration.canvasWidth / (padsRowConfiguration.numPads + 1);
-    let xPosition = inBetweenHSpace;
-
-    for (let i = 0; i < padsRowConfiguration.numPads; i++)
-    {
-      this.placeRandomPad(xPosition, yPosition);
-      xPosition += inBetweenHSpace;
-    }
-  }
   /**
    * Updates the pads. If a pad is out of bounds, it will be removed from the
    * in game pads and added to the idle pads.
@@ -215,25 +199,6 @@ export class PadsManager
         pad.disableBody(true, true);
       }
     }
-  }
-
-  /**
-   * Place a random pad at the given y position. If there are no idle pads, a
-   * new pad will be created.
-   *
-   * @param xPosition The x position of the pad.
-   * @param yPosition The y position of the pad.
-   */
-  private placeRandomPad(xPosition: number, yPosition: number)
-  {
-    let padConfiguration = this.getRandomPadConfiguration();
-    if (padConfiguration == null)
-    {
-      console.error("No pad configuration found");
-      return;
-    }
-
-    this.placePad(xPosition, yPosition, padConfiguration);
   }
 
    /**
@@ -302,26 +267,38 @@ export class PadsManager
   }
 
   /**
-   * Returns a random pads row configuration.
+   * Places a row of pads at the given y position. The pads will be placed
+   * according to the configuration. If there are no idle pads, new pads will
+   * be created.
    * 
-   * @returns A random pads row configuration.
+   * @param yPosition  The y position of the row.
    */
-  private getRandomPadsRowConfiguration(): PadsRowConfiguration
+  private placePadsRow(yPosition: number)
   {
-    let totalWeight = 0;
-    for (let i = 0; i < this.configuration.padsRows.length; i++)
+    let padRowConfiguration = this.getRandomPadsRowGenerator();
+    if (padRowConfiguration == null)
     {
-      totalWeight += this.configuration.padsRows[i].chance;
+      console.error("No pad row configuration found");
+      return;
     }
 
-    let randomValue = Math.random() * totalWeight;
-    let accumulatedWeight = 0;
-    for (let i = 0; i < this.configuration.padsRows.length; i++)
+    padRowConfiguration.generateRow(this, yPosition);
+  }
+
+  /**
+   * Returns the pad configuration for the given key.
+   * 
+   * @param key The key of the pad configuration.
+   * 
+   * @returns The pad configuration for the given key.
+   */
+  private getPadConfiguration(key: string): PadConfiguration
+  {
+    for (let i = 0; i < this.configuration.pads.length; i++)
     {
-      accumulatedWeight += this.configuration.padsRows[i].chance;
-      if (randomValue < accumulatedWeight)
+      if (this.configuration.pads[i].key == key)
       {
-        return this.configuration.padsRows[i];
+        return this.configuration.pads[i];
       }
     }
 
@@ -329,39 +306,20 @@ export class PadsManager
   }
 
   /**
-   * Returns a random pad configuration.
+   * Returns a random pads row generator.
    * 
-   * @returns A random pad configuration.
+   * @returns A random pads row generator.
    */
-  private getRandomPadConfiguration(): PadConfiguration
+  private getRandomPadsRowGenerator(): IPadsRowGenerator
   {
-    let totalWeight = 0;
-    for (let i = 0; i < this.configuration.padsChance.length; i++)
-    {
-      totalWeight += this.configuration.padsChance[i].chance;
-    }
-
-    let randomValue = Math.random() * totalWeight;
+    let randomValue = Math.random() * this.padsRowGeneratorsTotalWeight;
     let accumulatedWeight = 0;
-    let padChanceConfiguration = null;
-    for (let i = 0; i < this.configuration.padsChance.length; i++)
+    for (let i = 0; i < this.padsRowGenerators.length; i++)
     {
-      accumulatedWeight += this.configuration.padsChance[i].chance;
+      accumulatedWeight += this.padsRowGenerators[i].getWeight();
       if (randomValue < accumulatedWeight)
       {
-        padChanceConfiguration = this.configuration.padsChance[i];
-        break;
-      }
-    }
-
-    if (padChanceConfiguration != null)
-    {
-      for (let i = 0; i < this.configuration.pads.length; i++)
-      {
-        if (this.configuration.pads[i].key == padChanceConfiguration.key)
-        {
-          return this.configuration.pads[i];
-        }
+        return this.padsRowGenerators[i];
       }
     }
 

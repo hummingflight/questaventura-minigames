@@ -72,24 +72,12 @@
         "type": "dangerous"
       }
     ],
-
-    "safePad":"pad1",
-
-    "padsChance": [
-      {
-        "key": "pad1",
-        "chance": 0.8
-      },
-      {
-        "key": "pad2",
-        "chance" : 0.2
-      }
-    ],
-
+    
     "safePadsRowGenerator": {
       "type": "distributed",
       "weight": 1,
       "randomPadsArrange": false,
+      "errorRangeX": 0,
       "padsKey": ["pad1", "pad1", "pad1"]
     },
 
@@ -98,19 +86,21 @@
         "type": "distributed",
         "weight": 1,
         "randomPadsArrange": true,
-        "padsKey": ["pad1"]
-      },
-      {
-        "type": "distributed",
-        "weight": 1,
-        "randomPadsArrange": true,
+        "errorRangeX": 50,
         "padsKey": ["pad1", "pad2"]
       },
       {
         "type": "distributed",
         "weight": 1,
         "randomPadsArrange": true,
+        "errorRangeX": 50,
         "padsKey": ["pad1", "pad2", "pad1"]
+      },
+      {
+        "type": "random",
+        "weight": 1,
+        "xPadding": 200,
+        "padsKey": ["pad1"]
       }
     ]
   }

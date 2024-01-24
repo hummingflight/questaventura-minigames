@@ -8,5 +8,7 @@ export class PadsRowGeneratorDistributedConfiguration implements IPadsRowGenerat
 
   public randomPadsArrange: boolean;
 
+  public errorRangeX: number;
+
   public padsKey: string[];
 }

@@ -31,7 +31,7 @@ export class PadsRowGeneratorDistributed implements IPadsRowGenerator
   }
 
   public generateRowRandom(manager: PadsManager, y: number): void {
-    let x = this.inBetweenPadsDistance;
+    let x = this.inBetweenPadsDistance + Phaser.Math.Between(-this.config.errorRangeX, this.config.errorRangeX);
     let randomPadsKey = this.config.padsKey.slice();
     Phaser.Utils.Array.Shuffle(randomPadsKey);
     for (let i = 0; i < randomPadsKey.length; i++)
@@ -42,7 +42,7 @@ export class PadsRowGeneratorDistributed implements IPadsRowGenerator
   }
 
   public generateRowOrdered(manager: PadsManager, y: number): void {
-    let x = this.inBetweenPadsDistance;
+    let x = this.inBetweenPadsDistance + Phaser.Math.Between(-this.config.errorRangeX, this.config.errorRangeX);
     for (let i = 0; i < this.config.padsKey.length; i++)
     {
       manager.placePadBykey(x, y, this.config.padsKey[i]);

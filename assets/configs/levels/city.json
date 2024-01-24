@@ -69,31 +69,34 @@
       }
     ],
 
-    "safePad":"pad1",
+    "safePadsRowGenerator": {
+      "type": "distributed",
+      "weight": 1,
+      "randomPadsArrange": false,
+      "errorRangeX": 0,
+      "padsKey": ["pad1", "pad1", "pad1"]
+    },
 
-    "padsChance": [
+    "padsRowGenerators": [
       {
-        "key": "pad1",
-        "chance": 0.8
+        "type": "distributed",
+        "weight": 1,
+        "randomPadsArrange": true,
+        "errorRangeX": 50,
+        "padsKey": ["pad1", "pad2"]
       },
       {
-        "key": "pad2",
-        "chance" : 0.2
-      }
-    ],
-
-    "padsRows": [
-      {
-        "numPads": 1,
-        "chance": 0.3
+        "type": "distributed",
+        "weight": 1,
+        "randomPadsArrange": true,
+        "errorRangeX": 50,
+        "padsKey": ["pad1", "pad2", "pad1"]
       },
       {
-        "numPads": 2,
-        "chance": 0.4
-      },
-      {
-        "numPads": 3,
-        "chance": 0.3
+        "type": "random",
+        "weight": 1,
+        "xPadding": 200,
+        "padsKey": ["pad1"]
       }
     ]
   }

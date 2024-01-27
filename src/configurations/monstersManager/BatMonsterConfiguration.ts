@@ -6,7 +6,9 @@ export class BatMonsterConfiguration implements IMonsterConfiguration
 
   type: string;
   
-  velocity: number;
+  maxSeekVelocity: number;
+
+  maxFlyingVelocity: number;
 
   flyingAnimation: string;
 

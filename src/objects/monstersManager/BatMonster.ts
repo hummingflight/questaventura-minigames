@@ -1,5 +1,6 @@
 import { LayersDepthConfiguration } from "../../configurations/layersDepthConfiguration";
 import { BatMonsterConfiguration } from "../../configurations/monstersManager/BatMonsterConfiguration";
+import { SteeringForces } from "../../utilities/steeringForces";
 import { Player } from "../player/player";
 import { IMonster } from "./IMonster";
 import { IMonsterListener } from "./IMonsterListeners";
@@ -31,8 +32,8 @@ export class BatMonster extends Phaser.Physics.Arcade.Sprite implements IMonster
   {
     this.configuration = configuration;
     this.monsterState = MonsterState.Inactive;
+    this.player = player;
 
-    // Set circle in the middle of the texture
     this.body.setCircle(
       this.configuration.colliderRadius,
       this.configuration.colliderRadius,
@@ -60,6 +61,8 @@ export class BatMonster extends Phaser.Physics.Arcade.Sprite implements IMonster
 
     if (this.monsterState === MonsterState.Inactive)
       return;
+    else if (this.monsterState === MonsterState.Seeking)
+      this.updateSeekingState(dt);
 
     if (this.isOutOfBounds(this.scene.cameras.main.worldView.y, this.scene.game.canvas.height))
     {
@@ -86,6 +89,32 @@ export class BatMonster extends Phaser.Physics.Arcade.Sprite implements IMonster
     // TODO
   }
 
+  private updateSeekingState(dt: number): void
+  {
+    if (this.player == null)
+      return;
+
+    // calculate flying force
+    const currentVelocity = this.body.velocity;
+    const desiredFlyingVelocity = new Phaser.Math.Vector2(0, -this.configuration.maxFlyingVelocity);    
+    const flyingForce = desiredFlyingVelocity.subtract(currentVelocity);
+
+    // calculate seek force
+    const forceV = SteeringForces.Seek(
+      this.player.body.center,
+      this.body.center,
+      this.body.velocity,
+      this.configuration.maxSeekVelocity
+    );
+
+    // Apply total force
+    const totalForce = forceV.add(flyingForce);
+    this.body.velocity.add(totalForce.scale(dt * 0.001));
+  }
+
+  /**
+   * Disable the monster body and hide it.
+   */
   private disable(): void
   {
     this.body.enable = false;

@@ -5,6 +5,8 @@ import { CollisionManager } from "../collisionManager/collisionManager";
 import { EffectsManager } from "../effectsManager/effectsManager";
 import { EnviromentManager } from "../enviromentManager/enviromentManager";
 import { InputManager } from "../inputManager/inputManager";
+import { MonsterFactory } from "../monstersManager/MonsterFactory";
+import { MonstersManager } from "../monstersManager/MonstersManager";
 import { PadsManager } from "../padsManager/padsManager";
 import { IPlayerListener } from "../player/iPlayerListener";
 import { Player } from "../player/player";
@@ -38,6 +40,8 @@ export class GameManager implements IScoreManagerListener, IPlayerListener
   private effectsManager: EffectsManager;
   private audioManager: AudioManager;
   private levelConfiguration: LevelConfiguration;
+  private monstersFactory: MonsterFactory;
+  private monstersManager: MonstersManager;
   private scene: Phaser.Scene;
 
   /**
@@ -191,7 +195,7 @@ export class GameManager implements IScoreManagerListener, IPlayerListener
       );
 
       this.scene.anims.create(settings);
-    });
+    });        
 
     // Prepare Managers.
     this.effectsManager = new EffectsManager();
@@ -213,6 +217,15 @@ export class GameManager implements IScoreManagerListener, IPlayerListener
       this.audioManager,
       this.effectsManager
     );
+
+    this.monstersFactory = new MonsterFactory();
+    this.monstersFactory.init(
+      this.scene,
+      gameConfiguration.monsters,
+      this.playerManager
+    );
+
+    this.monstersManager = new MonstersManager();   
 
     this.collisionManager = new CollisionManager();
     this.collisionManager.init(
@@ -262,6 +275,12 @@ export class GameManager implements IScoreManagerListener, IPlayerListener
     let scrollY = this.highestY - this.halfHeight;
     this.scene.cameras.main.scrollY = scrollY;
     
+    this.monstersManager.initLevelConfiguration(
+      this.levelConfiguration.monstersManager,
+      this.gameConfiguration.gameView,
+      this.monstersFactory
+    );
+    
     this.enviromentManager.initLevelConfiguration(
       this.levelConfiguration.enviroment,
       this.gameConfiguration.gameView
@@ -293,7 +312,7 @@ export class GameManager implements IScoreManagerListener, IPlayerListener
     this.scene.cameras.main.fadeIn(this.gameConfiguration.gameEffects.fadein);
   }
 
-  public update(): void
+  public update(dt: number): void
   {
     if (this.gameStatus !== GameStatus.RUNNING)
       return;
@@ -310,6 +329,7 @@ export class GameManager implements IScoreManagerListener, IPlayerListener
     this.inputManager.update();
     this.scoreManager.update(this.highestY);
     this.enviromentManager.update(scrollY);
+    this.monstersManager.update(scrollY, dt);
   }
 
   /**

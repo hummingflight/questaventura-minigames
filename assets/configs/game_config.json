@@ -177,6 +177,30 @@
           "frameWidth": 282.5,
           "frameHeight": 282.5       
         }
+      },
+      {
+        "key": "monster-1-flying",
+        "path": "images/monster_1_flying.png",
+        "settings": {
+          "frameWidth": 206,
+          "frameHeight": 174.6       
+        }
+      },
+      {
+        "key": "monster-1-dying",
+        "path": "images/monster_1_dying.png",
+        "settings": {
+          "frameWidth": 206,
+          "frameHeight": 174.6       
+        }
+      },
+      {
+        "key": "monster-1-attacking",
+        "path": "images/monster_1_attacking.png",
+        "settings": {
+          "frameWidth": 206,
+          "frameHeight": 174.6       
+        }
       }
     ],
 
@@ -279,6 +303,42 @@
         "frameRate": 24,
         "repeat": false
       }
+    },
+    {
+      "key": "monster-1-flying",
+      "spriteSheetKey": "monster-1-flying",
+      "framesSettings": {
+        "start": 0,
+        "end": 11
+      },
+      "settings": {
+        "frameRate": 24,
+        "repeat": -1
+      }
+    },
+    {
+      "key": "monster-1-attacking",
+      "spriteSheetKey": "monster-1-attacking",
+      "framesSettings": {
+        "start": 0,
+        "end": 11
+      },
+      "settings": {
+        "frameRate": 24,
+        "repeat": -1
+      }
+    },
+    {
+      "key": "monster-1-dying",
+      "spriteSheetKey": "monster-1-dying",
+      "framesSettings": {
+        "start": 0,
+        "end": 3
+      },
+      "settings": {
+        "frameRate": 24,
+        "repeat": -1
+      }
     }
   ],
 
@@ -310,5 +370,17 @@
         }
       }
     ]
-  }
+  },
+
+  "monsters": [
+    {
+      "key": "black-bat",
+      "type": "bat",
+      "velocity": 100,
+      "flyingAnimation": "monster-1-flying",
+      "dyingAnimation": "monster-1-dying",
+      "attackingAnimation": "monster-1-attacking",
+      "colliderRadius": 50
+    }
+  ]
 }

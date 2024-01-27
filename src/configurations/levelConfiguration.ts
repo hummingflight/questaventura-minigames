@@ -1,4 +1,5 @@
 import { EnviromentConfiguration } from "./enviroment/enviromentConfiguration";
+import { MonsterManagerConfiguration } from "./monstersManager/MonsterManagerConfiguration";
 import { PadsManagerConfiguration } from "./padsManager/padsManagerConfiguration";
 import { PlayerConfiguration } from "./player/playerConfiguration";
 import { ScoreManagerConfiguration } from "./scoreManager/scoreManagerConfiguration";
@@ -28,5 +29,10 @@ export class LevelConfiguration
    /**
     * The configuration of the score manager.
     */
-   public scoreManager: ScoreManagerConfiguration
+  public scoreManager: ScoreManagerConfiguration
+  
+  /**
+   * The configuration of the monsters manager.
+   */
+  public monstersManager: MonsterManagerConfiguration;
 }

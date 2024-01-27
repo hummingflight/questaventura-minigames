@@ -78,6 +78,7 @@
       "weight": 1,
       "randomPadsArrange": false,
       "errorRangeX": 0,
+      "errorRangeYPerPad": 0,
       "padsKey": ["pad1", "pad1", "pad1"]
     },
 
@@ -86,7 +87,8 @@
         "type": "distributed",
         "weight": 1,
         "randomPadsArrange": true,
-        "errorRangeX": 50,
+        "errorRangeX": 150,
+        "errorRangeYPerPad": 50,
         "padsKey": ["pad1", "pad2"]
       },
       {
@@ -94,6 +96,7 @@
         "weight": 1,
         "randomPadsArrange": true,
         "errorRangeX": 50,
+        "errorRangeYPerPad": 50,
         "padsKey": ["pad1", "pad2", "pad1"]
       },
       {
@@ -103,5 +106,26 @@
         "padsKey": ["pad1"]
       }
     ]
+  },
+
+  "monstersManager": {
+    "frequency": 1000,
+
+    "monstersGenerators": [
+      {
+        "weight" : 1,
+        "initialPoolSize" : 1,
+        "monstersKey" : ["black-bat"]
+      }
+    ],
+    
+    "monstersPool": {
+      "pools": [
+        {
+          "monsterKey": "black-bat",
+          "initialPoolSize": 1
+        }
+      ]
+    }
   }
 }

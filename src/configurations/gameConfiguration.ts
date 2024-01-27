@@ -4,6 +4,7 @@ import { GameEffectsConfiguration } from "./gameEffectsConfiguration/gameEffects
 import { GameViewConfiguration } from "./gameViewConfiguration/gameViewConfiguration";
 import { LoaderConfiguration } from "./loader/loaderConfiguration";
 import { SpriteSheetAnimationLoadConfiguration } from "./loader/spriteSheetAnimationLoadConfiguration";
+import { IMonsterConfiguration } from "./monstersManager/IMonsterConfiguration";
 
 export class GameConfiguration
 {
@@ -61,4 +62,9 @@ export class GameConfiguration
    * The configuration of the effects.
    */
   public effects: EffectsManagerConfiguration;
+
+  /**
+   * The configuration of the monsters.
+   */
+  public monsters: Array<IMonsterConfiguration>
 }

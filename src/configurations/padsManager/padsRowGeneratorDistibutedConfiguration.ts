@@ -10,5 +10,7 @@ export class PadsRowGeneratorDistributedConfiguration implements IPadsRowGenerat
 
   public errorRangeX: number;
 
+  public errorRangeYPerPad: number;
+
   public padsKey: string[];
 }

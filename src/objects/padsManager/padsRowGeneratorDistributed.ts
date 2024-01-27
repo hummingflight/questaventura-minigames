@@ -36,7 +36,11 @@ export class PadsRowGeneratorDistributed implements IPadsRowGenerator
     Phaser.Utils.Array.Shuffle(randomPadsKey);
     for (let i = 0; i < randomPadsKey.length; i++)
     {
-      manager.placePadBykey(x, y, randomPadsKey[i]);
+      manager.placePadBykey(
+        x,
+        y + Phaser.Math.Between(-this.config.errorRangeYPerPad, this.config.errorRangeYPerPad),
+        randomPadsKey[i]
+      );
       x += this.inBetweenPadsDistance;
     }
   }

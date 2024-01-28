@@ -164,6 +164,16 @@ export class Player extends Phaser.Physics.Arcade.Sprite
     }
   }
 
+  public isDead(): boolean
+  {
+    return this.playerHearts.getNumHearts() <= 0;
+  }
+
+  public receiveDamage()
+  {
+    this.playerHearts.loseHeart();
+  }
+
   public pauseAndHidePlayer()
   {
     this.setVisible(false);

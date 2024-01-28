@@ -22,6 +22,16 @@ export class ScoreManager
   }
 
   /**
+   * Indicates if the score has reached the score to win.
+   *
+   * @returns True if the score has reached the score to win. False otherwise. 
+   */
+  public hasReachedScore(): boolean
+  {
+    return this.score >= this.configuration.scoreToWin;
+  }
+
+  /**
    * Instantiates a new ScoreManager.
    */
   public constructor()

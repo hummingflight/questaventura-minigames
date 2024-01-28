@@ -1,3 +1,4 @@
+import { Player } from "../player/player";
 import { IMonsterListener } from "./IMonsterListeners";
 
 /**
@@ -16,15 +17,16 @@ export interface IMonster extends Phaser.Physics.Arcade.Sprite
   kill(): void;
 
   /**
+   * Called when this IMonster instance collides with the player.
+   *
+   * @param player The player that this IMonster instance collided with. 
+   */
+  onPlayerCollision(player: Player): void;
+
+  /**
    * Adds a listener to this IMonster instance.
    * 
    * @param listener The listener to add.
    */
   addMonsterListener(listener: IMonsterListener): void;
-
-  /**
-   * Destroys this IMonster instance. If you want to reuse this instance, use
-   * the kill method instead.
-   */
-  destroy(): void;
 }

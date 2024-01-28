@@ -17,4 +17,6 @@ export class BatMonsterConfiguration implements IMonsterConfiguration
   attackingAnimation: string;
 
   colliderRadius: number;
+
+  monsterDyingRotationSpeed: number;
 }

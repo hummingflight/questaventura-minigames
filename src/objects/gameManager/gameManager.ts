@@ -16,7 +16,7 @@ import { ScoreManager } from "../scoreManager/scoreManager";
 import { GameStatus } from "./gameStatus";
 import { IGameManagerListener } from "./iGameManagerListener";
 
-export class GameManager implements IScoreManagerListener, IPlayerListener
+export class GameManager
 {
   /**
    * Indicates if the game is won.
@@ -139,34 +139,6 @@ export class GameManager implements IScoreManagerListener, IPlayerListener
     return this.scene.cameras.main.scrollY;
   }
 
-  public onScoreChanged(score: number): void { }
-  
-  public onScoreReached(score: number): void
-  {
-    if (this.gameStatus !== GameStatus.RUNNING)
-      return;
-
-    this.gameStatus = GameStatus.STOPPED;
-    this.listeners.forEach((listener) => listener.onLevelWon());
-
-    if (this.hasMoreLevels())
-      this.startNextLevel();
-    else
-      this.listeners.forEach((listener) => listener.onGameWon());    
-  }
-
-  public onPlayerDied(): void
-  {
-    if (this.gameStatus !== GameStatus.RUNNING)
-      return;
-
-    this.gameStatus = GameStatus.STOPPED;
-    if (this.playerManager.getPlayer().getLives().getLives() > 0)
-      this.resetLevel();
-    else
-      this.listeners.forEach((listener) => listener.onGameLost());
-  }
-
   public init(
     gameConfiguration: GameConfiguration,
     scene: Phaser.Scene
@@ -231,7 +203,8 @@ export class GameManager implements IScoreManagerListener, IPlayerListener
     this.collisionManager.init(
       this.scene,
       this.getPlayer(),
-      this.padsManager.getPhysicsStaticGroup()
+      this.padsManager.getPhysicsStaticGroup(),
+      this.monstersFactory.getMonstersGroup()
     );
 
     this.inputManager = new InputManager();
@@ -240,11 +213,6 @@ export class GameManager implements IScoreManagerListener, IPlayerListener
       this.getPlayer(),
       gameConfiguration.gameView.canvasWidth * 0.5
     );
-
-    // Setup the listeners.
-
-    this.scoreManager.addListener(this);
-    this.getPlayer().addPlayerListener(this);
   }
 
   public startLevel(index: number): void
@@ -321,15 +289,26 @@ export class GameManager implements IScoreManagerListener, IPlayerListener
     if (this.getPlayerY() < this.highestY)
       this.highestY = this.getPlayerY();
     
-    let scrollY = this.highestY - this.halfHeight;
-
+    const scrollY = this.highestY - this.halfHeight;
     this.scene.cameras.main.scrollY = scrollY;
     this.playerManager.update(scrollY);
     this.padsManager.update(scrollY);
-    this.inputManager.update();
-    this.scoreManager.update(this.highestY);
+    this.inputManager.update();    
     this.enviromentManager.update(scrollY);
-    this.monstersManager.update(scrollY, dt);
+    this.monstersManager.update(scrollY, dt);    
+    this.scoreManager.update(this.highestY);
+
+    if (this.playerManager.getPlayer().isDead())
+    {
+      this.onPlayerDied();
+      return;
+    }
+
+    if (this.scoreManager.hasReachedScore())
+    {
+      this.onScoreReached(this.scoreManager.getScore());
+      return;
+    }
   }
 
   /**
@@ -404,5 +383,32 @@ export class GameManager implements IScoreManagerListener, IPlayerListener
     this.scoreManager.onLevelReset();
     this.padsManager.onLevelReset();
     this.playerManager.onLevelReset();
+    this.monstersManager.onLevelReset();
+  }
+
+  private onScoreReached(score: number): void
+  {
+    if (this.gameStatus !== GameStatus.RUNNING)
+      return;
+
+    this.gameStatus = GameStatus.STOPPED;
+    this.listeners.forEach((listener) => listener.onLevelWon());
+
+    if (this.hasMoreLevels())
+      this.startNextLevel();
+    else
+      this.listeners.forEach((listener) => listener.onGameWon());    
+  }
+
+  private onPlayerDied(): void
+  {
+    if (this.gameStatus !== GameStatus.RUNNING)
+      return;
+
+    this.gameStatus = GameStatus.STOPPED;
+    if (this.playerManager.getPlayer().getLives().getLives() > 0)
+      this.resetLevel();
+    else
+      this.listeners.forEach((listener) => listener.onGameLost());
   }
 }

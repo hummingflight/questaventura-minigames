@@ -337,7 +337,7 @@
       },
       "settings": {
         "frameRate": 24,
-        "repeat": -1
+        "repeat": 1
       }
     }
   ],
@@ -381,7 +381,8 @@
       "flyingAnimation": "monster-1-flying",
       "dyingAnimation": "monster-1-dying",
       "attackingAnimation": "monster-1-attacking",
-      "colliderRadius": 50
+      "colliderRadius": 50,
+      "monsterDyingRotationSpeed": 200
     }
   ]
 }

@@ -26,6 +26,12 @@ export class MonstersPool
       pool.update(dt);
   }
 
+  public onLevelReset(): void
+  {
+    for (const pool of this.monstersPool.values())
+      pool.onLevelReset();
+  }
+
   public getMonster(key: string): IMonster
   {
     const pool = this.monstersPool.get(key);

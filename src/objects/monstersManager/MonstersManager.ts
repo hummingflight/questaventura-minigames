@@ -18,6 +18,8 @@ export class MonstersManager
     factory: MonsterFactory
   ): void
   {
+    this.lastMonsterSpawnHeight = 0;
+
     if (this.monstersPool != null)
       this.monstersPool.destroy();
 
@@ -35,8 +37,6 @@ export class MonstersManager
       this.monstersGenerators.push(monstersGenerator);
       this.totalMonstersGeneratorsWeight += monstersGeneratorConfiguration.weight;
     }
-
-    this.lastMonsterSpawnHeight = 0;
   }
 
   public update(height: number, dt: number): void
@@ -49,6 +49,12 @@ export class MonstersManager
     }
 
     this.monstersPool.update(dt);
+  }
+
+  public onLevelReset(): void
+  {
+    this.monstersPool.onLevelReset();
+    this.lastMonsterSpawnHeight = 0;
   }
 
   public selectRandomMonsterGenerator(): MonstersGenerator

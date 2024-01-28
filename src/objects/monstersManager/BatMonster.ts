@@ -23,7 +23,7 @@ export class BatMonster extends Phaser.Physics.Arcade.Sprite implements IMonster
     this.batListeners = [];
     this.setOrigin(0.5, 0.5);
     this.setDepth(LayersDepthConfiguration.ENEMIES);
-  }
+  } 
 
   public init(
     configuration: BatMonsterConfiguration,
@@ -49,6 +49,8 @@ export class BatMonster extends Phaser.Physics.Arcade.Sprite implements IMonster
     
     this.body.enable = true;
     this.visible = true;
+    this.body.checkCollision.none = false;
+    this.angle = 0;
     
     this.monsterState = MonsterState.Seeking;
     this.play(this.configuration.flyingAnimation);
@@ -63,6 +65,9 @@ export class BatMonster extends Phaser.Physics.Arcade.Sprite implements IMonster
       return;
     else if (this.monsterState === MonsterState.Seeking)
       this.updateSeekingState(dt);
+    else if (this.monsterState === MonsterState.Dead)
+      this.updateDyingState(dt);
+      
 
     if (this.isOutOfBounds(this.scene.cameras.main.worldView.y, this.scene.game.canvas.height))
     {
@@ -73,7 +78,9 @@ export class BatMonster extends Phaser.Physics.Arcade.Sprite implements IMonster
 
   public kill(): void
   {
-    this.state = MonsterState.Inactive;
+    this.monsterState = MonsterState.Inactive;
+    this.disable();
+    
     this.batListeners.forEach((listener) => {
       listener.onMonsterKilled(this);
     });
@@ -82,11 +89,15 @@ export class BatMonster extends Phaser.Physics.Arcade.Sprite implements IMonster
   public addMonsterListener(listener: IMonsterListener): void
   {
     this.batListeners.push(listener);
-  } 
+  }
 
-  public destroy(): void
-  {
-    // TODO
+  public onPlayerCollision(player: Player): void {
+    if (this.monsterState === MonsterState.Inactive
+      || this.monsterState === MonsterState.Dead)
+      return;
+
+    player.receiveDamage();
+    this.startDeath();
   }
 
   private updateSeekingState(dt: number): void
@@ -107,9 +118,20 @@ export class BatMonster extends Phaser.Physics.Arcade.Sprite implements IMonster
       this.configuration.maxSeekVelocity
     );
 
+    // Flip texture according to the direction of the seeking force
+    if (forceV.x > 0)
+      this.setFlipX(true);
+    else if (forceV.x < 0)
+      this.setFlipX(false);
+
     // Apply total force
     const totalForce = forceV.add(flyingForce);
     this.body.velocity.add(totalForce.scale(dt * 0.001));
+  }
+
+  private updateDyingState(dt: number): void
+  {
+    this.angle += this.configuration.monsterDyingRotationSpeed * dt * 0.001;
   }
 
   /**
@@ -119,6 +141,13 @@ export class BatMonster extends Phaser.Physics.Arcade.Sprite implements IMonster
   {
     this.body.enable = false;
     this.visible = false;
+  }
+
+  private startDeath(): void
+  {
+    this.body.checkCollision.none = true;
+    this.monsterState = MonsterState.Dead;
+    this.play(this.configuration.dyingAnimation);
   }
 
   /**

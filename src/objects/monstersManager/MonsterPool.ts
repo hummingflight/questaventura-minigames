@@ -63,6 +63,15 @@ export class MonsterPool implements IMonsterListener
     this.activeMonsters = [];
   }
 
+  public onLevelReset(): void
+  {
+    for (let i = this.activeMonsters.length - 1; i >= 0; i--)
+    {
+      const monster = this.activeMonsters[i];
+      monster.kill();
+    }
+  }
+
   private createMonster(): IMonster
   {
     const monster = this.factory.create(this.monsterKey);

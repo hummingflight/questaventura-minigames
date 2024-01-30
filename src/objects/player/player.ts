@@ -7,6 +7,7 @@ import { IPlayerListener } from "./iPlayerListener";
 import { PlayerHearts } from "./playerHearts";
 import { PlayerLives } from "./playerLives";
 import { PlayerSounds } from "./playerSounds";
+import { PlayerState } from "./playerState";
 import { PlayerWarp } from "./playerWarp";
 
 /**
@@ -17,12 +18,33 @@ export class Player extends Phaser.Physics.Arcade.Sprite
   private canvasHeight: number;
   private playerConfiguration: PlayerConfiguration;
   private playerListeners: IPlayerListener[];
+  private playerState: PlayerState;
 
   private playerHearts: PlayerHearts;
   private playerLives: PlayerLives;
   private playerWarp: PlayerWarp;
   private playerSounds: PlayerSounds;
   private effectsManager: EffectsManager;
+
+  /**
+   * The current state of the player.
+   * 
+   * @returns The current state of the player.
+   */
+  public getPlayerState(): PlayerState
+  {
+    return this.playerState;
+  }
+
+  /**
+   * Sets the current state of the player.
+   * 
+   * @param state The new state of the player.
+   */
+  public setPlayerState(state: PlayerState)
+  {
+    this.playerState = state;
+  }
 
   public constructor(
     scene: Phaser.Scene,
@@ -47,6 +69,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite
     this.playerSounds = new PlayerSounds(audioManager);
 
     this.effectsManager = effectsManager;
+    this.playerState = PlayerState.JUMPING;
   }
 
   /**
@@ -70,6 +93,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite
     this.playerHearts.init(configuration.numHearts);
     this.playerWarp.init(this, canvasWidth);
     this.playerSounds.init();
+    this.playerState = PlayerState.JUMPING;
   }
 
   /**
@@ -103,12 +127,12 @@ export class Player extends Phaser.Physics.Arcade.Sprite
     {
       this.playerLives.loseLife();
       this.playerListeners.forEach((listener) => listener.onPlayerDied());
-    } 
-
-    if (this.playerHearts.getNumHearts() <= 0)
+      this.playerState = PlayerState.DEAD;
+    } else if (this.playerHearts.getNumHearts() <= 0)
     {
       this.playerLives.loseLife();
       this.playerListeners.forEach((listener) => listener.onPlayerDied());
+      this.playerState = PlayerState.DEAD;
     }
 
     this.playerWarp.update();
@@ -162,11 +186,6 @@ export class Player extends Phaser.Physics.Arcade.Sprite
 
       this.jump();
     }
-  }
-
-  public isDead(): boolean
-  {
-    return this.playerHearts.getNumHearts() <= 0;
   }
 
   public receiveDamage()

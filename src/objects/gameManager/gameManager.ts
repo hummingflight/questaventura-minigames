@@ -11,6 +11,7 @@ import { PadsManager } from "../padsManager/padsManager";
 import { IPlayerListener } from "../player/iPlayerListener";
 import { Player } from "../player/player";
 import { PlayerManager } from "../player/playerManager";
+import { PlayerState } from "../player/playerState";
 import { IScoreManagerListener } from "../scoreManager/iScoreManagerListener";
 import { ScoreManager } from "../scoreManager/scoreManager";
 import { GameStatus } from "./gameStatus";
@@ -298,7 +299,7 @@ export class GameManager
     this.monstersManager.update(scrollY, dt);    
     this.scoreManager.update(this.highestY);
 
-    if (this.playerManager.getPlayer().isDead())
+    if (this.playerManager.getPlayer().getPlayerState() === PlayerState.DEAD)
     {
       this.onPlayerDied();
       return;

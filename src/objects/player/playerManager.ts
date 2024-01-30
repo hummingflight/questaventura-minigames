@@ -3,6 +3,7 @@ import { PlayerConfiguration } from "../../configurations/player/playerConfigura
 import { AudioManager } from "../audioManager/audioManager";
 import { EffectsManager } from "../effectsManager/effectsManager";
 import { Player } from "./player";
+import { PlayerState } from "./playerState";
 
 /**
  * Manages the player instance of the game.
@@ -99,6 +100,7 @@ export class PlayerManager
    */
   public onLevelReset(): void
   {
+    this.player.setPlayerState(PlayerState.JUMPING);
     this.player.getHearts().setNumHeart(this.playerConfiguration.numHearts);
     this.player.body.reset(
       this.gameViewConfiguration.canvasWidth / 2,

@@ -5,7 +5,7 @@
     "spriteKey": "player",
     "scaleX": 1,
     "scaleY": 1,
-    "jumpVelocity": 600,
+    "jumpVelocity": 800,
     "movementVelocity": 200,
     "numHearts": 3
   },

@@ -377,7 +377,7 @@
       "key": "black-bat",
       "type": "bat",
       "maxSeekVelocity": 250,
-      "maxFlyingVelocity": 50,
+      "maxFlyingVelocity": 200,
       "flyingAnimation": "monster-1-flying",
       "dyingAnimation": "monster-1-dying",
       "attackingAnimation": "monster-1-attacking",

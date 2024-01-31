@@ -1,0 +1,12 @@
+<TextureAtlas imagePath="main-menu.png">
+	<SubTexture name="humming-logo.png" x="0" y="1157" width="273" height="165"/>
+	<SubTexture name="menu-btn-start.png" x="0" y="853" width="301" height="302"/>
+	<SubTexture name="settings-bar.png" x="0" y="789" width="530" height="62"/>
+	<SubTexture name="settings-close.png" x="0" y="1622" width="99" height="97"/>
+	<SubTexture name="settings-minus-button.png" x="0" y="1786" width="62" height="63"/>
+	<SubTexture name="settings-mute-off.png" x="0" y="1388" width="176" height="62"/>
+	<SubTexture name="settings-mute-on.png" x="0" y="1324" width="176" height="62"/>
+	<SubTexture name="settings-panel.png" x="0" y="0" width="858" height="787"/>
+	<SubTexture name="settings-plus-button.png" x="0" y="1721" width="62" height="63"/>
+	<SubTexture name="settings-settings.png" x="0" y="1452" width="168" height="168"/>
+</TextureAtlas>

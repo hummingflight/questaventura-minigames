@@ -1,3 +1,4 @@
+import { AtlasLoadConfiguration } from "./atlasLoadConfiguration";
 import { AudioLoadConfiguration } from "./audioLoadConfiguraiton";
 import { BitmapFontLoadConfiguration } from "./bitmapFontLoadConfiguration";
 import { ImageLoadConfiguration } from "./imageLoadConfiguration";
@@ -20,6 +21,11 @@ export class LoaderConfiguration
    * List of images to load.
    */
   public images: Array<ImageLoadConfiguration>;
+
+  /**
+   * List of atlases to load.
+   */
+  public atlases: Array<AtlasLoadConfiguration>;
 
   /**
    * List of bitmap fonts to load.

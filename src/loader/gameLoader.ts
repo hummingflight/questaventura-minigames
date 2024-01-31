@@ -64,5 +64,15 @@ export class GameLoader
     {
       loader.audio(audioLoadConfig);
     });
+
+    // Load Atlases
+    loaderConfig.atlases.forEach(atlasLoadConfig =>
+    {
+      loader.atlasXML(
+        atlasLoadConfig.key,
+        atlasLoadConfig.texture,
+        atlasLoadConfig.xml
+      );
+    });
   }  
 }

@@ -3,6 +3,7 @@ import { GameManager } from '../objects/gameManager/gameManager';
 import { UiManager } from '../ui/uiManager/uiManager';
 
 export class MainScene extends Phaser.Scene {
+
   constructor() {
     super({ key: 'MainScene' });
   }
@@ -13,11 +14,11 @@ export class MainScene extends Phaser.Scene {
 
   create(): void {
     
+    this.input.topOnly = true;
+
     let gameConfiguration: GameConfiguration = JSON.parse(
       this.game.cache.text.get('game-config')
-    );
-
-    
+    );    
 
     this._gameManager = new GameManager();
     this._gameManager.init(gameConfiguration, this);

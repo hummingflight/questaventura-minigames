@@ -36,6 +36,10 @@
 
     "images": [
       {
+        "key": "settings-bg",
+        "path": "images/settings-bg.png"
+      },
+      {
         "key": "jump-land-01",
         "path": "images/land_01.png"
       },
@@ -166,6 +170,14 @@
       {
         "key": "wood_panel",
         "path": "images/wood-up.png"
+      }
+    ],
+
+    "atlases": [
+      {
+        "key": "main-menu",
+        "texture": "images/main-menu.png",
+        "xml": "images/main-menu.xml"
       }
     ],
 

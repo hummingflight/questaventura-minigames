@@ -1,4 +1,8 @@
+import { UiSettings } from "../ui/uiSettings";
+
 export class MenuScene extends Phaser.Scene {
+
+  private uiSettings: UiSettings;
 
   constructor() {
     super({ key: 'MenuScene' });
@@ -23,6 +27,13 @@ export class MenuScene extends Phaser.Scene {
       repeat: -1,
       ease: 'Sine.easeInOut'
     })
+
+    // Prepare Settings UI
+
+    const uiContainer = this.add.container(0, 0);
+
+    this.uiSettings = new UiSettings();
+    this.uiSettings.init(this, uiContainer);
   }
 
   onClickPlay(): void {

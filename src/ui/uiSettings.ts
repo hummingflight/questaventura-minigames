@@ -94,6 +94,6 @@ export class UiSettings
 
   private onClosePressed(): void
   {
-
+    this.close();
   }
 }

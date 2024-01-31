@@ -30,13 +30,27 @@ export class MenuScene extends Phaser.Scene {
 
     // Prepare Settings UI
 
-    const uiContainer = this.add.container(0, 0);
+    const settingsBtn = this.add.sprite(
+      864.4,
+      37.16,
+      "main-menu",
+      "settings-settings.png"
+    );
+    settingsBtn.setOrigin(0, 0);
+    settingsBtn.setInteractive();
+    settingsBtn.on("pointerdown", this.onSetttingsPressed, this);
 
+    const uiContainer = this.add.container(0, 0);
     this.uiSettings = new UiSettings();
     this.uiSettings.init(this, uiContainer);
+    this.uiSettings.close();
   }
 
   onClickPlay(): void {
     this.scene.start('MainScene');
+  }
+
+  onSetttingsPressed(): void {
+    this.uiSettings.show();
   }
 }

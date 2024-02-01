@@ -1,3 +1,6 @@
+import { AudioChannel } from "../objects/audioManager/audioChannel";
+import { AudioManager } from "../objects/audioManager/audioManager";
+
 export class UiSettings
 {
   private SOUND_STEP = 0.1;
@@ -5,9 +8,21 @@ export class UiSettings
   private MUTE_OFF_KEY = "settings-mute-off.png";
 
   private uiSettingsContainer: Phaser.GameObjects.Container;
+  private audioManager: AudioManager;
+  private muteToggleBtn: Phaser.GameObjects.Sprite;
+  private musicVolumeBar: Phaser.GameObjects.Sprite;
+  private sfxVolumeBar: Phaser.GameObjects.Sprite;
 
-  public init(scene: Phaser.Scene, uiContainer: Phaser.GameObjects.Container): void
+  private volumeBarHeight: number;
+  private volumeBarWidth: number;
+
+  public init(
+    scene: Phaser.Scene,
+    uiContainer: Phaser.GameObjects.Container,
+    audioManager: AudioManager
+  ): void
   {
+    this.audioManager = audioManager;
     this.uiSettingsContainer = scene.add.container(0, 0);
     uiContainer.add(this.uiSettingsContainer);    
 
@@ -50,50 +65,87 @@ export class UiSettings
     sfxDownBtn.on("pointerdown", this.onSfxDownPressed, this);
     this.uiSettingsContainer.add(sfxDownBtn);
 
-    const muteToggleBtn = scene.add.sprite(599.1, 1171.912, "main-menu", this.MUTE_OFF_KEY);
-    muteToggleBtn.setOrigin(0, 0);
-    muteToggleBtn.setInteractive();
-    muteToggleBtn.on("pointerdown", this.onMuteTogglePressed, this);
-    this.uiSettingsContainer.add(muteToggleBtn);
+    this.musicVolumeBar = scene.add.sprite(270.9, 909.8, "main-menu", "settings-bar.png");
+    this.musicVolumeBar.setOrigin(0, 0);
+    this.uiSettingsContainer.add(this.musicVolumeBar);
+    this.volumeBarHeight = this.musicVolumeBar.height;
+    this.volumeBarWidth = this.musicVolumeBar.width;
+
+    this.sfxVolumeBar = scene.add.sprite(270.9, 1067.225, "main-menu", "settings-bar.png");
+    this.sfxVolumeBar.setOrigin(0, 0);
+    this.uiSettingsContainer.add(this.sfxVolumeBar);
+
+    this.muteToggleBtn = scene.add.sprite(599.1, 1171.912, "main-menu", this.MUTE_OFF_KEY);
+    this.muteToggleBtn.setOrigin(0, 0);
+    this.muteToggleBtn.setInteractive();
+    this.muteToggleBtn.on("pointerdown", this.onMuteTogglePressed, this);
+    this.uiSettingsContainer.add(this.muteToggleBtn);
+
+    this.updateVolumeBar(this.musicVolumeBar, this.audioManager.MusicVolume);
+    this.updateVolumeBar(this.sfxVolumeBar, this.audioManager.SfxVolume);
+    this.updateMuteToggleBtn();
   }
 
   public show(): void
   {
     this.uiSettingsContainer.setVisible(true);
+    this.audioManager.playSoundAtChannel("ui-open", AudioChannel.Sfx);
   }
 
   public close(): void
   {
     this.uiSettingsContainer.setVisible(false);
+    this.audioManager.playSoundAtChannel("ui-close", AudioChannel.Sfx);
   }
 
   private onMusicUpPressed(): void
   {
-    // Intentionally left empty.
+    this.audioManager.MusicVolume += this.SOUND_STEP;
+    this.audioManager.playSoundAtChannel("toom", AudioChannel.Music);
+    this.updateVolumeBar(this.musicVolumeBar, this.audioManager.MusicVolume);
   }
 
   private onMusicDownPressed(): void
   {
-    // Intentionally left empty.
+    this.audioManager.MusicVolume -= this.SOUND_STEP;
+    this.audioManager.playSoundAtChannel("toom", AudioChannel.Music);
+    this.updateVolumeBar(this.musicVolumeBar, this.audioManager.MusicVolume);
   }
 
   private onSfxUpPressed(): void
   {
-    // Intentionally left empty.
+    this.audioManager.SfxVolume += this.SOUND_STEP;
+    this.audioManager.playSoundAtChannel("toom", AudioChannel.Sfx);
+    this.updateVolumeBar(this.sfxVolumeBar, this.audioManager.SfxVolume);
   }
 
   private onSfxDownPressed(): void
   {
-    // Intentionally left empty.
+    this.audioManager.SfxVolume -= this.SOUND_STEP;
+    this.audioManager.playSoundAtChannel("toom", AudioChannel.Sfx);
+    this.updateVolumeBar(this.sfxVolumeBar, this.audioManager.SfxVolume);
   }
 
   private onMuteTogglePressed(): void
   {
-
+    this.audioManager.Mute = !this.audioManager.Mute;
+    this.updateMuteToggleBtn();
   }
 
   private onClosePressed(): void
   {
     this.close();
+  }
+
+  private updateMuteToggleBtn(): void
+  {
+    this.muteToggleBtn.setTexture("main-menu",
+      this.audioManager.Mute ? this.MUTE_ON_KEY : this.MUTE_OFF_KEY
+    );
+  }
+
+  private updateVolumeBar(bar: Phaser.GameObjects.Sprite, volume: number): void
+  {
+    bar.setCrop(0, 0, this.volumeBarWidth * volume, this.volumeBarHeight);
   }
 }

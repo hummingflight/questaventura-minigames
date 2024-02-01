@@ -1,3 +1,4 @@
+import { GameManager } from "../objects/gameManager/gameManager";
 import { UiSettings } from "../ui/uiSettings";
 
 export class MenuScene extends Phaser.Scene {
@@ -28,6 +29,9 @@ export class MenuScene extends Phaser.Scene {
       ease: 'Sine.easeInOut'
     })
 
+    const gm: GameManager = GameManager.GetInstance();
+    gm.prepareMenuScene(this);
+
     // Prepare Settings UI
 
     const settingsBtn = this.add.sprite(
@@ -42,7 +46,7 @@ export class MenuScene extends Phaser.Scene {
 
     const uiContainer = this.add.container(0, 0);
     this.uiSettings = new UiSettings();
-    this.uiSettings.init(this, uiContainer);
+    this.uiSettings.init(this, uiContainer, gm.getAudioManager());
     this.uiSettings.close();
   }
 

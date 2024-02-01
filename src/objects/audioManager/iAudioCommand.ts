@@ -8,5 +8,5 @@ export interface IAudioCommand
   /**
    * Executes this command.
    */
-  execute(audioManager: AudioManager): void;
+  execute(audioManager: AudioManager, volumen: number): void;
 }

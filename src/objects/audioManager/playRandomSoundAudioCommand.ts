@@ -25,12 +25,12 @@ export class PlayRandomSoundAudioCommand implements IAudioCommand
   /**
    * Executes this command.
    */
-  execute(audioManager: AudioManager): void
+  execute(audioManager: AudioManager, volumen: number): void
   {
     if (this.configuration.audioKeys.length === 0)
       return;
 
     const randomIndex = Phaser.Math.Between(0, this.configuration.audioKeys.length - 1);
-    audioManager.playSound(this.configuration.audioKeys[randomIndex]);
+    audioManager.playSound(this.configuration.audioKeys[randomIndex], volumen);
   }
 }

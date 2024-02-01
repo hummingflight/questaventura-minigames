@@ -18,6 +18,11 @@ import { IGameManagerListener } from "./iGameManagerListener";
 export class GameManager
 {
   /**
+   * Singleton instance of the GameManager.
+   */
+  private static _INSTANCE: GameManager;
+
+  /**
    * Indicates if the game is won.
    */
   private gameStatus: GameStatus;
@@ -47,6 +52,49 @@ export class GameManager
    * The listeners of the game manager.
    */
   private listeners: IGameManagerListener[];
+
+  /**
+   * Starts the GameManager module.
+   * 
+   * @param configuration The game configuration.
+   * 
+   * @returns 
+   */
+  public static Start(configuration: GameConfiguration): GameManager
+  {
+    if (GameManager._INSTANCE !== undefined)
+      return GameManager._INSTANCE;
+    
+    GameManager._INSTANCE = new GameManager();
+    GameManager._INSTANCE.init(configuration);
+    
+    return GameManager._INSTANCE;
+  }
+
+  /**
+   * Gets the singleton instance of the GameManager. 
+   * 
+   * @returns The singleton instance of the GameManager.
+   */
+  public static GetInstance(): GameManager
+  {
+    if (GameManager._INSTANCE === undefined)
+      GameManager._INSTANCE = new GameManager();
+
+    return GameManager._INSTANCE;
+  }
+
+  /**
+   * Shuts down the GameManager module.
+   */
+  public static Shutdown(): void
+  {
+    if (GameManager._INSTANCE === undefined)
+      return;
+
+    GameManager._INSTANCE = undefined;
+    // TODO: Shutdown all the managers.
+  }
 
   /**
    * Gets the InputManager of the game.
@@ -138,25 +186,36 @@ export class GameManager
     return this.scene.cameras.main.scrollY;
   }
 
-  public init(
-    gameConfiguration: GameConfiguration,
-    scene: Phaser.Scene
-  ): void
+  /**
+   * Private constructor.
+   */
+  private constructor()
+  {
+    // Intentionally blank.
+  }
+
+  public prepareMenuScene(scene: Phaser.Scene): void
+  {
+    this.gameStatus = GameStatus.STOPPED;
+    
+    this.audioManager.prepareScene(scene, this.gameConfiguration.audio);
+  }
+
+  public prepareLevelScene(scene: Phaser.Scene): void
   {
     this.gameStatus = GameStatus.RUNNING;
-    this.gameConfiguration = gameConfiguration;
     this.listeners = [];
 
     this.scene = scene;
-    this.halfHeight = gameConfiguration.gameView.canvasHeight / 2;    
+    this.halfHeight = this.gameConfiguration.gameView.canvasHeight / 2;    
 
     // Create animations
     
-    gameConfiguration.animations.forEach((animation) => {
+    this.gameConfiguration.animations.forEach((animation) => {
       this.scene.anims.create(animation);
     });
 
-    gameConfiguration.spriteSheetAnimations.forEach((spriteSheetAnimation) => {
+    this.gameConfiguration.spriteSheetAnimations.forEach((spriteSheetAnimation) => {
       
       let settings: any = spriteSheetAnimation.settings;
       settings.key = spriteSheetAnimation.key;
@@ -170,21 +229,20 @@ export class GameManager
 
     // Prepare Managers.
     this.effectsManager = new EffectsManager();
-    this.effectsManager.init(this.scene, gameConfiguration.effects);
+    this.effectsManager.init(this.scene, this.gameConfiguration.effects);
 
     this.enviromentManager = new EnviromentManager(this.scene);
     this.padsManager = new PadsManager(this.scene);
     this.scoreManager = new ScoreManager();
-
-    this.audioManager = new AudioManager();
-    this.audioManager.init(
+    
+    this.audioManager.prepareScene(
       this.scene,
-      gameConfiguration.audio
+      this.gameConfiguration.audio
     );
     
     this.playerManager = new PlayerManager(
       this.scene,
-      gameConfiguration.playerInitialLifes,
+      this.gameConfiguration.playerInitialLifes,
       this.audioManager,
       this.effectsManager
     );
@@ -192,7 +250,7 @@ export class GameManager
     this.monstersFactory = new MonsterFactory();
     this.monstersFactory.init(
       this.scene,
-      gameConfiguration.monsters,
+      this.gameConfiguration.monsters,
       this.playerManager
     );
 
@@ -210,7 +268,7 @@ export class GameManager
     this.inputManager.init(
       this.scene,
       this.getPlayer(),
-      gameConfiguration.gameView.canvasWidth * 0.5
+      this.gameConfiguration.gameView.canvasWidth * 0.5
     );
   }
 
@@ -333,6 +391,22 @@ export class GameManager
       this.scene.scene.restart();
     }, this);
     this.scene.cameras.main.fadeOut(this.gameConfiguration.gameEffects.fadeout);
+  }
+
+  /**
+   * Initialize this GameManager. Call this method once during the setup of the
+   * game.
+   * 
+   * @param gameConfiguration The configuration of this GameManager instance.
+   */
+  private init(gameConfiguration: GameConfiguration): void
+  {
+    this.gameStatus = GameStatus.STOPPED;
+    this.gameConfiguration = gameConfiguration;
+    this.listeners = [];
+
+    this.audioManager = new AudioManager();
+    this.audioManager.prepareAudioCommands(this.gameConfiguration.audio);
   }
 
    /**

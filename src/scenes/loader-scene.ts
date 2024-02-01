@@ -1,5 +1,6 @@
 import { GameConfiguration } from "../configurations/gameConfiguration";
 import { GameLoader } from "../loader/gameLoader";
+import { GameManager } from "../objects/gameManager/gameManager";
 
 export class LoaderScene extends Phaser.Scene
 {
@@ -22,7 +23,7 @@ export class LoaderScene extends Phaser.Scene
     this.load.on('complete', this.onProgressComplete, this);
 
     // Load the assets of the game
-    let gameConfiguration: GameConfiguration = JSON.parse(
+    const gameConfiguration: GameConfiguration = JSON.parse(
       this.game.cache.text.get('game-config')
     );
 
@@ -30,10 +31,22 @@ export class LoaderScene extends Phaser.Scene
     gameLoader.load(gameConfiguration.loader, this.load);
   }
 
-  create(): void {
+  create(): void
+  {
+    // Prepare the GameManager module.
+    const gameConfiguration: GameConfiguration = JSON.parse(
+      this.game.cache.text.get('game-config')
+    );
+
+    GameManager.Start(gameConfiguration);
+
+    // Go to the menu scene
     this.scene.start('MenuScene');
   }
 
+  /**
+   * Prepares the loading graphics.
+   */
   private prepareLoadingGraphics(): void 
   {
     this.loadingText = this.add.image(
@@ -61,6 +74,11 @@ export class LoaderScene extends Phaser.Scene
     this.loadbarWidth = this.loadbar.width;
   }
 
+  /**
+   * Updates the loading bar images based on the progress value.
+   * 
+   * @param value The progress value. 
+   */
   private onProgress(value: number): void
   {
     if (value < 0.33)
@@ -73,6 +91,9 @@ export class LoaderScene extends Phaser.Scene
     this.loadbar.setCrop(0, 0, this.loadbarWidth * value, this.loadbarHeight);
   }
 
+  /**
+   * Removes the loading bar images when the loading is complete.
+   */
   private onProgressComplete(): void
   {
     this.loadbar.destroy();

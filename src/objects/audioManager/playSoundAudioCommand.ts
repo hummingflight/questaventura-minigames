@@ -22,8 +22,8 @@ export class PlaySoundAudioCommand implements IAudioCommand
   /**
    * Executes this command.
    */
-  public execute(audioManager: AudioManager): void
+  public execute(audioManager: AudioManager, volumen: number): void
   {
-    audioManager.playSound(this.configuration.audioKey);
+    audioManager.playSound(this.configuration.audioKey, volumen);
   }
 }

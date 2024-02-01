@@ -240,6 +240,18 @@
       {
         "key": "poof",
         "url": ["sounds/poof.mp3"]
+      },
+      {
+        "key": "toom",
+        "url": ["sounds/toom.mp3"]
+      },
+      {
+        "key": "ui-open",
+        "url": ["sounds/ui-open.mp3"]
+      },
+      {
+        "key": "ui-close",
+        "url": ["sounds/ui-close.mp3"]
       }
     ]
   },
@@ -267,6 +279,24 @@
       {
         "key": "poof",
         "audioKey": "poof",
+        "volume": 1,
+        "loop": false
+      },
+      {
+        "key": "toom",
+        "audioKey": "toom",
+        "volume": 1,
+        "loop": false
+      },
+      {
+        "key": "ui-open",
+        "audioKey": "ui-open",
+        "volume": 1,
+        "loop": false
+      },
+      {
+        "key": "ui-close",
+        "audioKey": "ui-close",
         "volume": 1,
         "loop": false
       }

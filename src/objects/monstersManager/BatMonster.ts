@@ -67,7 +67,6 @@ export class BatMonster extends Phaser.Physics.Arcade.Sprite implements IMonster
       this.updateSeekingState(dt);
     else if (this.monsterState === MonsterState.Dead)
       this.updateDyingState(dt);
-      
 
     if (this.isOutOfBounds(this.scene.cameras.main.worldView.y, this.scene.game.canvas.height))
     {
@@ -164,5 +163,5 @@ export class BatMonster extends Phaser.Physics.Arcade.Sprite implements IMonster
   ): boolean
   {
     return this.y > (currentViewTopValue + canvasHeight);
-  }
+  }  
 }

@@ -213,6 +213,14 @@
           "frameWidth": 206,
           "frameHeight": 174.6       
         }
+      },
+      {
+        "key": "monster-spikes",
+        "path": "images/monster-spikes.png",
+        "settings": {
+          "frameWidth": 156,
+          "frameHeight": 154.5
+        }
       }
     ],
 
@@ -381,6 +389,42 @@
         "frameRate": 24,
         "repeat": 1
       }
+    },
+    {
+      "key": "monster-spikes-idle",
+      "spriteSheetKey": "monster-spikes",
+      "framesSettings": {
+        "start": 0,
+        "end": 19
+      },
+      "settings": {
+        "frameRate": 24,
+        "repeat": -1
+      }
+    },
+    {
+      "key": "monster-spikes-mad",
+      "spriteSheetKey": "monster-spikes",
+      "framesSettings": {
+        "start": 20,
+        "end": 39
+      },
+      "settings": {
+        "frameRate": 24,
+        "repeat": -1
+      }
+    },
+    {
+      "key": "monster-spikes-explode",
+      "spriteSheetKey": "monster-spikes",
+      "framesSettings": {
+        "start": 40,
+        "end": 44
+      },
+      "settings": {
+        "frameRate": 24,
+        "repeat": 1
+      }
     }
   ],
 
@@ -425,6 +469,16 @@
       "attackingAnimation": "monster-1-attacking",
       "colliderRadius": 50,
       "monsterDyingRotationSpeed": 200
+    },
+    {
+      "key": "green-spikes",
+      "type": "spikes",
+      "maxFlyingVelocity": 200,
+      "idleAnimation": "monster-spikes-idle",
+      "madAnimation": "monster-spikes-mad",
+      "explodeAnimation": "monster-spikes-explode",
+      "colliderRadius": 40,
+      "visionRadius" : 300
     }
   ]
 }

@@ -114,8 +114,7 @@
     "monstersGenerators": [
       {
         "weight" : 1,
-        "initialPoolSize" : 1,
-        "monstersKey" : ["black-bat"]
+        "monstersKey" : ["green-spikes"]
       }
     ],
     
@@ -123,6 +122,10 @@
       "pools": [
         {
           "monsterKey": "black-bat",
+          "initialPoolSize": 1
+        },
+        {
+          "monsterKey": "green-spikes",
           "initialPoolSize": 1
         }
       ]

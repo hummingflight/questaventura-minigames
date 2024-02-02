@@ -1,9 +1,11 @@
 import { LayersDepthConfiguration } from "../../configurations/layersDepthConfiguration";
 import { BatMonsterConfiguration } from "../../configurations/monstersManager/BatMonsterConfiguration";
 import { IMonsterConfiguration } from "../../configurations/monstersManager/IMonsterConfiguration";
+import { SpikeMonsterConfiguration } from "../../configurations/monstersManager/SpikeMonsterConfiguraiton";
 import { PlayerManager } from "../player/playerManager";
 import { BatMonster } from "./BatMonster";
 import { IMonster } from "./IMonster";
+import { SpikeMonster } from "./SpikeMonster";
 
 export class MonsterFactory
 {
@@ -45,8 +47,10 @@ export class MonsterFactory
     switch (monsterConfiguration.key)
     {
       case "black-bat":
-        let bat = this.createBat(monsterConfiguration as BatMonsterConfiguration);
-        return bat;
+        return this.createBat(monsterConfiguration as BatMonsterConfiguration);
+      
+      case "green-spikes":
+        return this.createSpike(monsterConfiguration as SpikeMonsterConfiguration);
       
       default:
         throw new Error(`Monster: ${monsterKey}, does not have an impelmentation in the factory.`);
@@ -59,5 +63,13 @@ export class MonsterFactory
     this.monstersGroup.add(bat);
     bat.init(config, this.playerManager.getPlayer());
     return bat;
+  }
+
+  public createSpike(config: SpikeMonsterConfiguration): SpikeMonster
+  {
+    const spike = new SpikeMonster(this.scene, 0, 0);
+    this.monstersGroup.add(spike);
+    spike.init(config, this.playerManager.getPlayer());
+    return spike;
   }
 }

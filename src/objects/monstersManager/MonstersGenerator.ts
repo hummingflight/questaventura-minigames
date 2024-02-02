@@ -24,8 +24,38 @@ export class MonstersGenerator
 
   public generate(y: number): void
   {
-    const monster = this.monstersPool.getMonster(this.configuration.monstersKey[0]);
+    if (this.configuration.spawnStrategy === "middle")
+      this.generateMiddle(y);
+    else if (this.configuration.spawnStrategy === "random")
+      this.generateRandom(y);
+    else
+      throw new Error("Invalid spawn strategy");
+  }
+
+  private generateMiddle(y: number): void
+  {
+    const monsterKey = this.configuration.monstersKey[
+      Math.floor(Math.random() * this.configuration.monstersKey.length)
+    ];
+    
+    const monster = this.monstersPool.getMonster(monsterKey);
     monster.body.reset(500, y);
+    monster.start();
+  }
+
+  private generateRandom(y: number): void
+  {
+    const monsterKey = this.configuration.monstersKey[
+      Math.floor(Math.random() * this.configuration.monstersKey.length)
+    ];
+
+    const monster = this.monstersPool.getMonster(monsterKey);
+    
+    // reset on random x position
+    monster.body.reset(
+      200 + (Math.random() * this.gameViewConfiguration.canvasWidth - 200),
+      y
+    );
     monster.start();
   }
 }

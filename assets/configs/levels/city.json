@@ -110,7 +110,7 @@
     "monstersGenerators": [
       {
         "weight" : 1,
-        "initialPoolSize" : 1,
+        "spawnStrategy" : "middle",
         "monstersKey" : ["black-bat"]
       }
     ],

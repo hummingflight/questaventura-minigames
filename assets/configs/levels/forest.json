@@ -114,6 +114,7 @@
     "monstersGenerators": [
       {
         "weight" : 1,
+        "spawnStrategy" : "random",
         "monstersKey" : ["green-spikes"]
       }
     ],

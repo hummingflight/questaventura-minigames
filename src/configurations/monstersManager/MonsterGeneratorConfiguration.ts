@@ -5,4 +5,6 @@ export class MonsterGeneratorConfiguration
   public initialPoolSize: number;
 
   public monstersKey: Array<string>;
+
+  public spawnStrategy: string;
 }

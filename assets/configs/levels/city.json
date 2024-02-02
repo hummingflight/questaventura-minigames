@@ -6,7 +6,7 @@
     "scaleX": 1,
     "scaleY": 1,
     "jumpVelocity": 800,
-    "movementVelocity": 200,
+    "movementVelocity": 400,
     "numHearts": 3
   },
 

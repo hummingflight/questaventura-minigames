@@ -7,6 +7,7 @@ export class MonstersGenerator
   private configuration: MonsterGeneratorConfiguration;
   private gameViewConfiguration: GameViewConfiguration;
   private monstersPool: MonstersPool;
+  private randomRangePadding: number = 200;
 
   public GetWeight(): number {
     return this.configuration.weight;
@@ -53,7 +54,7 @@ export class MonstersGenerator
     
     // reset on random x position
     monster.body.reset(
-      200 + (Math.random() * this.gameViewConfiguration.canvasWidth - 200),
+      this.randomRangePadding + (Math.random() * this.gameViewConfiguration.canvasWidth - this.randomRangePadding * 2),
       y
     );
     monster.start();
